@@ -2,15 +2,19 @@ package com.sunrin.tint;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -29,13 +33,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init(); // 초기 설정
+
         // 액션바 대신 툴바 사용
-        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 안 보이기
-
-        tabLayout = findViewById(R.id.tabs);
-        pager = findViewById(R.id.pager);
 
         // 프래그먼트 객체 ArrayList에 담기
         for (int i = 0; i < 4; i++) {
@@ -48,9 +50,34 @@ public class MainActivity extends AppCompatActivity {
         PagerAdapter adapter = new PagerAdapter(manager);
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
+        // TabLayout 아이콘 적용
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(icon_list.get(i));
         }
+        // 선택 안 된 탭 색깔 변경
+        /*tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int unSelectedColor = ContextCompat.getColor(getApplicationContext(), R.color.pink_200);
+                tab.getIcon().setColorFilter(unSelectedColor, PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                int unSelectedColor = ContextCompat.getColor(getApplicationContext(), R.color.gray);
+                tab.getIcon().setColorFilter(unSelectedColor, PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });*/
+    }
+    private void init() {
+        toolbar = findViewById(R.id.toolbar);
+        tabLayout = findViewById(R.id.tabs);
+        pager = findViewById(R.id.pager);
     }
 
     private void addIconsToList() {

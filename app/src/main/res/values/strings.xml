@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TinT</string>
+
+    <string name="filter_name1">메이크업</string>
+    <string name="filter_name2">헤어</string>
+    <string name="filter_name3">패션</string>
+    <string name="filter_name4">네일</string>
+    <string name="filter_name5">다이어트</string>
 </resources>
