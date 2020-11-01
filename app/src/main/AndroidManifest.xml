@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sunrin.tint">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-feature android:name="android.hardware.type.watch" />
+    <!--uses-feature android:name="android.hardware.type.watch" /-->
 
     <application
         android:allowBackup="true"
@@ -13,9 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TinT">
-        <uses-library
+        <!--uses-library
             android:name="com.google.android.wearable"
-            android:required="true" />
+            android:required="true" /-->
 
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
@@ -30,8 +31,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
