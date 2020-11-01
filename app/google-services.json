@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "963494232514",
+    "firebase_url": "https://tint-360b3.firebaseio.com",
+    "project_id": "tint-360b3",
+    "storage_bucket": "tint-360b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963494232514:android:ea84d166c50e7e9380d65b",
+        "android_client_info": {
+          "package_name": "com.sunrin.tint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "963494232514-e0mlpbierp6490ijh3i34ds2pjahsc78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALfMywS3zWOByOGEXy7opYU-M_pcjGYgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "963494232514-e0mlpbierp6490ijh3i34ds2pjahsc78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
