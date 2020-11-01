@@ -40,13 +40,64 @@
             app:singleLine="true">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chip1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/filter_name1"
-                app:chipBackgroundColor="@color/chip_background_state"
+                android:textColor="@color/chip_text_state"
+                android:backgroundTint="@color/chip_background_state"
+                android:checkable="true"
                 app:chipStrokeWidth="1dp"
                 app:chipStrokeColor="@color/chip_stroke_state"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_name2"
+                android:textColor="@color/chip_text_state"
+                android:backgroundTint="@color/chip_background_state"
+                android:checkable="true"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/chip_stroke_state"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_name3"
+                android:textColor="@color/chip_text_state"
+                android:backgroundTint="@color/chip_background_state"
+                android:checkable="true"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/chip_stroke_state"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_name4"
+                android:textColor="@color/chip_text_state"
+                android:backgroundTint="@color/chip_background_state"
+                android:checkable="true"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/chip_stroke_state"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_name5"
+                android:textColor="@color/chip_text_state"
+                android:backgroundTint="@color/chip_background_state"
+                android:checkable="true"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/chip_stroke_state"
+                app:checkedIconVisible="false" />
 
         </com.google.android.material.chip.ChipGroup>
 
