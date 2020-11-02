@@ -1,6 +1,7 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Feed;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.sunrin.tint.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class FeedFragment extends Fragment {
@@ -79,9 +79,11 @@ public class FeedFragment extends Fragment {
         FeedAdapter adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);
 
-        // 구분선 추가
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
+        //recyclerView.addItemDecoration(dividerItemDecoration);
+        // 아이템 간 간격 조정
+        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
+        recyclerView.addItemDecoration(itemDecoration);
 
         return view;
     }
@@ -107,6 +109,22 @@ public class FeedFragment extends Fragment {
             chipsBooleans.add(false);
             chips.get(i).setTag(i);
             chips.get(i).setOnCheckedChangeListener(chipChangeListener);
+        }
+    }
+
+    class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
+
+        private final int interval;
+
+        VerticalSpaceDecoration(int interval) {
+            this.interval = interval;
+        }
+
+        @Override
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1)
+                outRect.bottom = interval;
         }
     }
 

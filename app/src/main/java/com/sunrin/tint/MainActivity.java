@@ -2,21 +2,17 @@ package com.sunrin.tint;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.tabs.TabLayout;
+import com.sunrin.tint.Feed.FeedFragment;
 
 import java.util.ArrayList;
 
@@ -37,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 액션바 대신 툴바 사용
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 안 보이기
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 안 보이기
 
         init(); // 초기 설정
 

@@ -1,17 +1,14 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Feed;
 
 import android.graphics.drawable.Drawable;
 
 public class FeedItem {
 
-    public static Drawable defaultFeedImg;
-    public static Drawable defaultUserProfile; // TODO:
-
-    private Drawable[] feed_img;
+    private Drawable feed_img;
     private Drawable userProfile;
     private String title, subTitle, timeInterval, userName;
 
-    FeedItem(Drawable[] feed_img, Drawable userProfile, String title, String subTitle, String timeInterval, String userName) {
+    FeedItem(Drawable feed_img, Drawable userProfile, String title, String subTitle, String timeInterval, String userName) {
         setFeed_img(feed_img);
         setUserProfile(userProfile);
         setTitle(title);
@@ -20,11 +17,11 @@ public class FeedItem {
         setUserName(userName);
     }
 
-    public Drawable[] getFeed_img() {
+    public Drawable getFeed_img() {
         return feed_img;
     }
 
-    public void setFeed_img(Drawable[] feed_img) {
+    public void setFeed_img(Drawable feed_img) {
         this.feed_img = feed_img;
     }
 

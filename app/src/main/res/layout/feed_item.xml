@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/colorOnPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
+            android:paddingLeft="16dp"
             android:paddingBottom="10dp">
 
             <TextView
@@ -44,23 +45,23 @@
                 android:layout_height="wrap_content"
                 android:text="Title example"
                 android:textColor="@color/white"
-                android:textSize="16pt" />
+                android:textSize="38sp" />
 
             <TextView
                 android:id="@+id/feed_subTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="소제목예시 소제목예시 소제목예시 "
+                android:text="소제목예시 소제목예시 소제목예시"
                 android:textColor="@color/white"
-                android:textSize="8pt" />
+                android:textSize="20sp" />
         </LinearLayout>
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/feed_userProfile"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/profile_empty_feed"
@@ -74,10 +75,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="2dp"
         android:text="6 hours age"
         android:textColor="@color/gray"
-        android:textSize="5pt"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/feed_userName"
         app:layout_constraintStart_toEndOf="@+id/feed_userProfile" />
 
@@ -86,17 +86,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="닉네임"
-        android:textSize="8pt"
+        android:layout_marginBottom="6dp"
+        android:text="userName"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/feed_userProfile"
         app:layout_constraintStart_toEndOf="@+id/feed_userProfile" />
 
     <ImageButton
         android:id="@+id/feed_comment"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/comment"
@@ -106,9 +108,11 @@
 
     <ImageButton
         android:id="@+id/feed_share"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/share"

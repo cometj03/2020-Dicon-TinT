@@ -1,7 +1,6 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Feed;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.sunrin.tint.R;
 
 import java.util.ArrayList;
 
@@ -35,16 +36,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         FeedItem item = mData.get(position);
 
-        Drawable[] feed_img = item.getFeed_img();
-//        if (feed_img[0] == null)
-//            feed_img[0] = FeedItem.defaultFeedImg;
-        holder.feed_img[0].setImageDrawable(feed_img[0]);
-
-        Drawable userProfile = item.getUserProfile();
-//        if (userProfile == null)
-//            userProfile = FeedItem.defaultUserProfile;
-        holder.userProfile.setImageDrawable(userProfile);
-
+        if (item.getFeed_img() != null)
+            holder.feed_img.setImageDrawable(item.getFeed_img());
+        if (item.getUserProfile() != null)
+            holder.userProfile.setImageDrawable(item.getUserProfile());
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
         holder.timeInterval.setText(item.getTimeInterval());
@@ -57,14 +52,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
-        ImageView[] feed_img;
+        ImageView feed_img;
         ImageView userProfile;
         ImageButton commentBtn, shareBtn;
         TextView title, subTitle, timeInterval, userName;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            feed_img[0] = itemView.findViewById(R.id.feed_img);
+            feed_img = itemView.findViewById(R.id.feed_img);
             userProfile = itemView.findViewById(R.id.feed_userProfile);
             commentBtn = itemView.findViewById(R.id.feed_comment);
             shareBtn = itemView.findViewById(R.id.feed_share);
