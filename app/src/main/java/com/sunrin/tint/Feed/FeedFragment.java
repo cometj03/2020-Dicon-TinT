@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -38,6 +39,7 @@ public class FeedFragment extends Fragment {
     HorizontalScrollView scrollView;
     ImageButton filterToggle;
 
+    SwipeRefreshLayout refreshLayout;
     RecyclerView recyclerView;
 
     // chip 클릭 리스너 생성
@@ -85,6 +87,16 @@ public class FeedFragment extends Fragment {
         VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
         recyclerView.addItemDecoration(itemDecoration);
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 새로 고침 코드 작성
+
+                // 새로 고침 완료
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
         return view;
     }
 
@@ -98,6 +110,7 @@ public class FeedFragment extends Fragment {
         chipGroup = view.findViewById(R.id.chipGroup);
         scrollView = view.findViewById(R.id.scrollView);
         filterToggle = view.findViewById(R.id.filterToggle);
+        refreshLayout = view.findViewById(R.id.swipeLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
 
         chips.add(view.findViewById(R.id.chip1));
