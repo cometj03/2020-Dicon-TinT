@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -28,10 +31,14 @@ public class FeedFragment extends Fragment {
     private ArrayList<Chip> chips = new ArrayList<>();
     private ArrayList<Boolean> chipsBooleans = new ArrayList<>();
 
+    // RecyclerView Item Data
+    ArrayList<FeedItem> feedItemData = new ArrayList<>();
 
-    private ChipGroup chipGroup;
-    private HorizontalScrollView scrollView;
-    private ImageButton filterToggle;
+    ChipGroup chipGroup;
+    HorizontalScrollView scrollView;
+    ImageButton filterToggle;
+
+    RecyclerView recyclerView;
 
     // chip 클릭 리스너 생성
     private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
@@ -51,6 +58,7 @@ public class FeedFragment extends Fragment {
 
         init(view);
 
+        //***** Chip *****//
         filterToggle.setOnClickListener(v -> {
             if (scrollView.getVisibility() == View.VISIBLE)
                 scrollView.setVisibility(View.INVISIBLE);
@@ -63,6 +71,17 @@ public class FeedFragment extends Fragment {
             Chip chip = group.findViewById(checkedId);
             Toast.makeText(mContext, chip.getTag() + "번째", Toast.LENGTH_SHORT).show();
         });
+
+        //***** RecyclerView *****//
+        feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
+        feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        FeedAdapter adapter = new FeedAdapter(feedItemData);
+        recyclerView.setAdapter(adapter);
+
+        // 구분선 추가
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         return view;
     }
@@ -77,6 +96,7 @@ public class FeedFragment extends Fragment {
         chipGroup = view.findViewById(R.id.chipGroup);
         scrollView = view.findViewById(R.id.scrollView);
         filterToggle = view.findViewById(R.id.filterToggle);
+        recyclerView = view.findViewById(R.id.recyclerView);
 
         chips.add(view.findViewById(R.id.chip1));
         chips.add(view.findViewById(R.id.chip2));

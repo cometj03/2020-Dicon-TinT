@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.PorterDuff;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    // 프래그먼트 TabLayout Data
     private ArrayList<Fragment> frag_list = new ArrayList<>();
     private ArrayList<Integer> icon_list = new ArrayList<>();
 
@@ -33,12 +35,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init(); // 초기 설정
-
         // 액션바 대신 툴바 사용
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 안 보이기
 
+        init(); // 초기 설정
+
+        //***** Fragment (TabLayout) *****//
         // 프래그먼트 객체 ArrayList에 담기
         for (int i = 0; i < 4; i++) {
             frag_list.add(new FeedFragment());
@@ -74,10 +77,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
     }
+
     private void init() {
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabs);
         pager = findViewById(R.id.pager);
+    }
+
+    private void ManageFragment() {
+
     }
 
     private void addIconsToList() {
