@@ -101,7 +101,7 @@ public class PostActivity extends AppCompatActivity {
         final String title = ((EditText)findViewById(R.id.editText1)).getText().toString();
         final String contents = ((EditText)findViewById(R.id.editText2)).getText().toString();
 
-        if(title.length()>0 && contents.length() >0){
+        if(title.length()>0 && contents.length() > 0){
             user = FirebaseAuth.getInstance().getCurrentUser();
             Post_content post_content = new Post_content(title,contents, user.getUid());
             regisetr(post_content);
