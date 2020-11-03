@@ -41,6 +41,7 @@ public class FeedFragment extends Fragment {
 
     SwipeRefreshLayout refreshLayout;
     RecyclerView recyclerView;
+    FeedAdapter adapter;
 
     // chip 클릭 리스너 생성
     private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
@@ -76,9 +77,8 @@ public class FeedFragment extends Fragment {
 
         //***** RecyclerView *****//
         feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
-        feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        FeedAdapter adapter = new FeedAdapter(feedItemData);
+        adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);
 
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
@@ -96,9 +96,11 @@ public class FeedFragment extends Fragment {
                 int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
 
-                if (lastVisible >= totalItemCount - 1) {
+                if (lastVisible >= totalItemCount - 2) {
                     // 마지막 아이템을 보고있음 -> 아이템 추가
-                    // TODO:
+                    feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(mContext, "데이터 추가됨", Toast.LENGTH_SHORT).show();
                 }
             }
         });
