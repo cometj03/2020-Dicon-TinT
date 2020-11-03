@@ -1,6 +1,7 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Feed;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.sunrin.tint.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class FeedFragment extends Fragment {
@@ -38,6 +39,7 @@ public class FeedFragment extends Fragment {
     HorizontalScrollView scrollView;
     ImageButton filterToggle;
 
+    SwipeRefreshLayout refreshLayout;
     RecyclerView recyclerView;
 
     // chip 클릭 리스너 생성
@@ -66,7 +68,7 @@ public class FeedFragment extends Fragment {
                 scrollView.setVisibility(View.VISIBLE);
         });
 
-        // chip을 클릭함
+        // chip 클릭함
         chipGroup.setOnCheckedChangeListener((ChipGroup group, int checkedId) -> {
             Chip chip = group.findViewById(checkedId);
             Toast.makeText(mContext, chip.getTag() + "번째", Toast.LENGTH_SHORT).show();
@@ -79,9 +81,37 @@ public class FeedFragment extends Fragment {
         FeedAdapter adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);
 
-        // 구분선 추가
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
+        //recyclerView.addItemDecoration(dividerItemDecoration);
+        // 아이템 간 간격 조정
+        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
+        recyclerView.addItemDecoration(itemDecoration);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
+                int totalItemCount = layoutManager.getItemCount();
+
+                if (lastVisible >= totalItemCount - 1) {
+                    // 마지막 아이템을 보고있음 -> 아이템 추가
+                    // TODO:
+                }
+            }
+        });
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 새로 고침 코드 작성
+
+                // 새로 고침 완료
+                refreshLayout.setRefreshing(false);
+            }
+        });
 
         return view;
     }
@@ -96,6 +126,7 @@ public class FeedFragment extends Fragment {
         chipGroup = view.findViewById(R.id.chipGroup);
         scrollView = view.findViewById(R.id.scrollView);
         filterToggle = view.findViewById(R.id.filterToggle);
+        refreshLayout = view.findViewById(R.id.swipeLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
 
         chips.add(view.findViewById(R.id.chip1));
@@ -107,6 +138,22 @@ public class FeedFragment extends Fragment {
             chipsBooleans.add(false);
             chips.get(i).setTag(i);
             chips.get(i).setOnCheckedChangeListener(chipChangeListener);
+        }
+    }
+
+    class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
+
+        private final int interval;
+
+        VerticalSpaceDecoration(int interval) {
+            this.interval = interval;
+        }
+
+        @Override
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1)
+                outRect.bottom = interval;
         }
     }
 
