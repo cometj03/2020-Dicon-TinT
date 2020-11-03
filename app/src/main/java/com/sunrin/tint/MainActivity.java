@@ -13,6 +13,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.sunrin.tint.Feed.FeedFragment;
+import com.sunrin.tint.Posting.PostingFragment;
+import com.sunrin.tint.Profile.ProfileFragment;
+import com.sunrin.tint.Search.SearchFragment;
 
 import java.util.ArrayList;
 
@@ -39,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         //***** Fragment (TabLayout) *****//
         // 프래그먼트 객체 ArrayList에 담기
-        for (int i = 0; i < 4; i++) {
-            frag_list.add(new FeedFragment());
-        }
+        frag_list.add(new FeedFragment());  // 첫번째 프래그먼트
+        frag_list.add(new SearchFragment());  // 두번째 프래그먼트
+        frag_list.add(new PostingFragment());  // 세번째 프래그먼트
+        frag_list.add(new ProfileFragment());   // 네번째 프래그먼트
         addIconsToList();   // 아이콘 담기
 
         // 뷰페이저 설정
@@ -78,10 +82,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabs);
         pager = findViewById(R.id.pager);
-    }
-
-    private void ManageFragment() {
-
     }
 
     private void addIconsToList() {
