@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sunrin.tint.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
 
@@ -44,6 +45,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
         holder.subTitle.setText(item.getSubTitle());
         holder.timeInterval.setText(item.getTimeInterval());
         holder.userName.setText(item.getUserName());
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+        /*if (payloads.isEmpty()) {
+            // Perform a full update
+            onBindViewHolder(holder, position);
+        } else {
+            // Perform a partial update
+            for (Object payload : payloads) {
+                if (payload instanceof TimeFormatPayload) {
+                    holder.bindTimePayload((TimeFormatPayload) payload);
+                }
+            }
+        }*/
     }
 
     @Override

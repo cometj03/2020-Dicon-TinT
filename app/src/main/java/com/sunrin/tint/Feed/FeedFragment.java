@@ -68,7 +68,7 @@ public class FeedFragment extends Fragment {
                 scrollView.setVisibility(View.VISIBLE);
         });
 
-        // chip을 클릭함
+        // chip 클릭함
         chipGroup.setOnCheckedChangeListener((ChipGroup group, int checkedId) -> {
             Chip chip = group.findViewById(checkedId);
             Toast.makeText(mContext, chip.getTag() + "번째", Toast.LENGTH_SHORT).show();
@@ -86,6 +86,22 @@ public class FeedFragment extends Fragment {
         // 아이템 간 간격 조정
         VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
         recyclerView.addItemDecoration(itemDecoration);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
+                int totalItemCount = layoutManager.getItemCount();
+
+                if (lastVisible >= totalItemCount - 1) {
+                    // 마지막 아이템을 보고있음 -> 아이템 추가
+                    // TODO:
+                }
+            }
+        });
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
