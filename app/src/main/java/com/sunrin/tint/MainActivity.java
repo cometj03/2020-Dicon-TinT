@@ -2,25 +2,26 @@ package com.sunrin.tint;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.tabs.TabLayout;
+import com.sunrin.tint.Feed.FeedFragment;
+import com.sunrin.tint.Posting.PostingFragment;
+import com.sunrin.tint.Profile.ProfileFragment;
+import com.sunrin.tint.Search.SearchFragment;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    // 프래그먼트 TabLayout Data
     private ArrayList<Fragment> frag_list = new ArrayList<>();
     private ArrayList<Integer> icon_list = new ArrayList<>();
 
@@ -33,16 +34,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init(); // 초기 설정
-
         // 액션바 대신 툴바 사용
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 안 보이기
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 안 보이기
 
+        init(); // 초기 설정
+
+        //***** Fragment (TabLayout) *****//
         // 프래그먼트 객체 ArrayList에 담기
-        for (int i = 0; i < 4; i++) {
-            frag_list.add(new FeedFragment());
-        }
+        frag_list.add(new FeedFragment());  // 첫번째 프래그먼트
+        frag_list.add(new SearchFragment());  // 두번째 프래그먼트
+        frag_list.add(new PostingFragment());  // 세번째 프래그먼트
+        frag_list.add(new ProfileFragment());   // 네번째 프래그먼트
         addIconsToList();   // 아이콘 담기
 
         // 뷰페이저 설정
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
     }
+
     private void init() {
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabs);
