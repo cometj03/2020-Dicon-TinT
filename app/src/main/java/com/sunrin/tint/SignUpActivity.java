@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private static final String TAG = "SingUpActivity";
 
     @Override
@@ -29,14 +30,12 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.button).setOnClickListener(onClickListener);
-        // Access a Cloud Firestore instance from your Activity
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
     }
@@ -46,34 +45,41 @@ public class SignUpActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.button:
-                    //Log.e("click","click");
                     SignUp();
                     break;
             }
         }
     };
 
+
+
     private void SignUp(){
         String email = ((EditText)findViewById(R.id.editTextTextEmailAddress)).getText().toString();
         String password = ((EditText)findViewById(R.id.editTextTextPassword)).getText().toString();
+        String nickname = ((EditText)findViewById(R.id.nickname)).getText().toString();
+
+       FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+       FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+       User_Info user_info = new User_Info(email,password,nickname);
+       db.collection("users").document(user.getUid()).set(user_info);
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             //updateUI(null);
                         }
-
-                        // ...
                     }
                 });
 }
+
+
+
 }
