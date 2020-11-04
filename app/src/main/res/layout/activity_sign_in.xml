@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:theme="">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
