@@ -173,7 +173,6 @@ public class FeedFragment extends Fragment {
                 outRect.bottom = interval;
         }
     }
-
 //    private void spawnFilterChip() {
 //        for (int i = 0; i < 5; i++) {
 //            Chip chip = new Chip(mContext);

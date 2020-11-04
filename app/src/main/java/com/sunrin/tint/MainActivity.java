@@ -2,12 +2,16 @@ package com.sunrin.tint;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -56,13 +60,17 @@ public class MainActivity extends AppCompatActivity {
         // TabLayout 아이콘 적용
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(icon_list.get(i));
+            if (i != 0) {
+                // 2, 3, 4 번째 탭 색깔 바꿈
+                int unSelectedColor = ContextCompat.getColor(getApplicationContext(), R.color.gray);
+                tabLayout.getTabAt(i).getIcon().setColorFilter(unSelectedColor, PorterDuff.Mode.SRC_IN);
+            }
         }
-        // 선택 안 된 탭 색깔 변경
-        /*tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int unSelectedColor = ContextCompat.getColor(getApplicationContext(), R.color.pink_200);
-                tab.getIcon().setColorFilter(unSelectedColor, PorterDuff.Mode.SRC_IN);
+                int selectedColor = ContextCompat.getColor(getApplicationContext(), R.color.pink_200);
+                tab.getIcon().setColorFilter(selectedColor, PorterDuff.Mode.SRC_IN);
             }
 
             @Override
@@ -73,9 +81,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                // Tab 다시 선택됨
+                switch (tab.getPosition()) {
+                    case 0:
+                        // TODO: recyclerView goes to top
+                        break;
+                }
             }
-        });*/
+        });
     }
 
     private void init() {
