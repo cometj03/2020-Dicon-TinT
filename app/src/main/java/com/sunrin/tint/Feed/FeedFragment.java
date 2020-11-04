@@ -1,8 +1,10 @@
 package com.sunrin.tint.Feed;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.R;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 public class FeedFragment extends Fragment {
 
@@ -49,11 +53,6 @@ public class FeedFragment extends Fragment {
         chipsBooleans.set(tag, isChecked);
     };
 
-
-    public static FeedFragment newInstance() {
-        return new FeedFragment();
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,18 +60,12 @@ public class FeedFragment extends Fragment {
 
         init(view);
 
-        //***** Chip *****//
+        //***** Chip Toggle *****//
         filterToggle.setOnClickListener(v -> {
             if (scrollView.getVisibility() == View.VISIBLE)
                 scrollView.setVisibility(View.INVISIBLE);
             else
                 scrollView.setVisibility(View.VISIBLE);
-        });
-
-        // chip 클릭함
-        chipGroup.setOnCheckedChangeListener((ChipGroup group, int checkedId) -> {
-            Chip chip = group.findViewById(checkedId);
-            Toast.makeText(mContext, chip.getTag() + "번째", Toast.LENGTH_SHORT).show();
         });
 
         //***** RecyclerView *****//
@@ -92,15 +85,37 @@ public class FeedFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                assert layoutManager != null;   // null 이라면 강제종료
                 int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
 
-                if (lastVisible >= totalItemCount - 2) {
+                if (lastVisible >= totalItemCount - 3) {
                     // 마지막 아이템을 보고있음 -> 아이템 추가
                     feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(mContext, "데이터 추가됨", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onScrolled: Item added");
+                }
+            }
+        });
+        // 피드 아이템 클릭 리스너 구현
+        adapter.setOnItemClickListener(new FeedAdapter.OnItemClickListener() {
+            @SuppressLint("NonConstantResourceId")  // 밑에 사용할 아이디가 유효한지 검사해줌
+            @Override
+            public void OnItemClick(View v, int position) {
+                switch (v.getId()) {
+                    case R.id.feed_share:
+                        // 공유버튼
+                        Toast.makeText(mContext, "Share", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.feed_comment:
+                        // 댓글버튼
+                        Toast.makeText(mContext, "Comment", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.feed_storageBox:
+                        // 보관하기 버튼
+                        Toast.makeText(mContext, "StorageBox", Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         });
@@ -143,7 +158,7 @@ public class FeedFragment extends Fragment {
         }
     }
 
-    class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
+    static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
 
         private final int interval;
 

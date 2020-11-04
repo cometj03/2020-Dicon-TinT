@@ -33,7 +33,8 @@ public class GalleryActivity extends AppCompatActivity {
 //            recyclerView.setLayoutManager(layoutManager);
 //
 //            String[] myDataset = {"이제니","박서영","이채원","정해성"};
-            mAdapter = new GalleryAdapter(this,getImagesPath(this));
+            // mAdapter = new GalleryAdapter(this,getImagesPath(this)); 에러나서 잠시 주석
+            assert mAdapter != null;    // null 이면 강제종료 (임시)
             recyclerView.setAdapter(mAdapter);
         }
 
