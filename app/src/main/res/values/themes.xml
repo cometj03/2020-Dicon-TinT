@@ -11,15 +11,12 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:button">?attr/btn_pink700</item>
+
 
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-        <item name="btn_pink200">@color/pink_200</item>
-
-        <item name="btn_pink700">@color/pink_700</item>
     </style>
 
     <style name="ChipTextStyle" parent="TextAppearance.MaterialComponents.Chip">
