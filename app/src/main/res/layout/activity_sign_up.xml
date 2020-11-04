@@ -123,6 +123,13 @@
             android:hint="비밀번호"
             android:inputType="textPassword" />
 
+        <EditText
+            android:id="@+id/nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="닉네임" />
+
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"

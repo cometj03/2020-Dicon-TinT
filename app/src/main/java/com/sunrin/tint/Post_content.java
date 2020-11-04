@@ -5,10 +5,10 @@ public class Post_content {
     public String contents;
     private String publisher;
 
-    public Post_content(String title, String contents, String writer){
+    public Post_content(String title, String contents, String publisher){
         this.title = title;
         this.contents = contents;
-        this.publisher = writer;
+        this.publisher = publisher;
     }
 
     public String getTitle(){return this.title;}
