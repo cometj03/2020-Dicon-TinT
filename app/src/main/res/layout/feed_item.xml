@@ -135,6 +135,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/feed_thumbnail" />
 
+            <ImageButton
+                android:id="@+id/feed_storageBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/storage_box_feed"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/feed_comment"
+                app:layout_constraintTop_toBottomOf="@+id/feed_thumbnail" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
