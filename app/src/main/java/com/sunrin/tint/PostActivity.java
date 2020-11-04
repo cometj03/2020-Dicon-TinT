@@ -3,11 +3,15 @@ package com.sunrin.tint;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +37,9 @@ import androidx.core.content.ContextCompat;
 public class PostActivity extends AppCompatActivity {
     private FirebaseUser user;
     private static final String TAG = "PostActivity";
+    private final int GET_GALLERY_IMAGE = 200;
+    private ImageView imageView;
+    //private ImageButton image_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +47,8 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Button post_btn = findViewById(R.id.post);
-        Button image_btn = findViewById(R.id.img_btn);
+        //image_btn = findViewById(R.id.img_btn);
+        imageView = findViewById(R.id.img_btn);
 
         post_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +58,7 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        image_btn.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(
@@ -69,18 +77,27 @@ public class PostActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "권한 허용이 필요합니다.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    //StartActivity(GalleryActivity.class);
-                    //Log.e("success","success");
-                    Intent intent = new Intent(view.getContext(),GalleryActivity.class);
-                    startActivity(intent);
-
-
+//                    Intent intent = new Intent(view.getContext(),GalleryActivity.class);
+//                    startActivity(intent);
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                    startActivityForResult(intent, GET_GALLERY_IMAGE);
                 }
             }
 
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int RequestCode, int ResultCode, Intent data) {
+        super.onActivityResult(RequestCode, ResultCode, data);
+        if (RequestCode == GET_GALLERY_IMAGE && ResultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedImageUri = data.getData();
+            imageView.setImageURI(selectedImageUri);
+
+        }
     }
 
     @Override
@@ -100,6 +117,7 @@ public class PostActivity extends AppCompatActivity {
     private void Post(){
         final String title = ((EditText)findViewById(R.id.editText1)).getText().toString();
         final String contents = ((EditText)findViewById(R.id.editText2)).getText().toString();
+        //final ImageView imageView = findViewById(R.id.img_btn).get
 
         if(title.length()>0 && contents.length() > 0){
             user = FirebaseAuth.getInstance().getCurrentUser();

@@ -41,7 +41,7 @@ public class GalleryActivity extends AppCompatActivity {
         Uri uri;
         ArrayList<String> listOfAllImages = new ArrayList<String>();
         Cursor cursor;
-        int column_index_data;
+        int column_index_data, column_index_folder_name;
         String PathOfImage = null;
         String[] projection;
 
