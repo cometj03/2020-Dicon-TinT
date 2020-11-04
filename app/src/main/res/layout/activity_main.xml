@@ -24,7 +24,7 @@
                 android:padding="11dp"
                 android:layout_marginVertical="5dp"
                 android:layout_gravity="center"
-                android:src="@drawable/logo_color_small"/>
+                android:src="@drawable/logo_small"/>
 
         </androidx.appcompat.widget.Toolbar>
 

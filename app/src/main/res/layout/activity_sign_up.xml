@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
     <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo_small"
-            android:layout_marginBottom="40dp"
-            android:layout_gravity="center" />
+            android:src="@drawable/logo_large"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp"/>
+
         <EditText
             android:id="@+id/editTextTextEmailAddress"
             android:layout_width="match_parent"
@@ -71,20 +71,15 @@
             android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:textColor="@color/pink_200"
             android:textSize="6pt"
-            android:background="@drawable/border_radius_stroke_pink"
             android:text="회원가입"
-            style="?android:attr/borderlessButtonStyle"
-            />
-
+            style="?attr/materialButtonOutlinedStyle" />
 
     </LinearLayout>
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 <!--
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"

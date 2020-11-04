@@ -1,11 +1,9 @@
 package com.sunrin.tint;
 
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.button:
-                    SignUp();
+                    //SignUp();
                     break;
             }
         }
@@ -56,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void SignUp(){
         String email = ((EditText)findViewById(R.id.editTextTextEmailAddress)).getText().toString();
         String password = ((EditText)findViewById(R.id.editTextTextPassword)).getText().toString();
-        String nickname = ((EditText)findViewById(R.id.nickname)).getText().toString();
+        String nickname = ((EditText)findViewById(R.id.editTextNickname)).getText().toString();
 
        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
        FirebaseFirestore db = FirebaseFirestore.getInstance();
