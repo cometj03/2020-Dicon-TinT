@@ -8,14 +8,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_tint"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon_tint"
         android:supportsRtl="true"
         android:theme="@style/Theme.TinT"
         android:usesCleartextTraffic="true">
       
-        <activity android:name=".SignInActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,8 +31,9 @@
         </activity>
 
         <activity android:name=".GalleryActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".SignInActivity" />
         <activity android:name=".SignUpActivity" />
+        <activity android:name=".PostViewActivity" />
 
     </application>
 
