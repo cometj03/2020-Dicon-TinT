@@ -33,10 +33,10 @@ apply plugin: 'com.google.gms.google-services'
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.0.0')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-core:17.0.0'
-    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-core:18.0.0'
+    implementation 'com.google.firebase:firebase-auth:20.0.0'
     implementation 'com.google.firebase:firebase-database'
-    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+    implementation 'com.google.firebase:firebase-firestore:22.0.0'
     implementation "gun0912.ted:tedpermission:2.1.0"
 
 

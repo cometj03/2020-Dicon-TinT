@@ -2,6 +2,7 @@ package com.sunrin.tint.Feed;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.SaveSharedPreference;
 
@@ -55,6 +57,11 @@ public class FeedFragment extends Fragment {
         SaveSharedPreference.setPrefFilterBool(mContext, chipsBooleans);
     };
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,7 +78,7 @@ public class FeedFragment extends Fragment {
         });
 
         //***** RecyclerView *****//
-        feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
+        feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, null, null, "Title example", "subTitle example", "6 hours ago", "userName", ""));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);
@@ -94,7 +101,7 @@ public class FeedFragment extends Fragment {
 
                 if (lastVisible >= totalItemCount - 3) {
                     // 마지막 아이템을 보고있음 -> 아이템 추가
-                    feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
+                    feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, null, null, "Title example", "subTitle example", "6 hours ago", "userName", ""));
                     adapter.notifyDataSetChanged();
                     Log.d(TAG, "onScrolled: Item added");
                 }
@@ -117,6 +124,13 @@ public class FeedFragment extends Fragment {
                     case R.id.feed_storageBox:
                         // 보관하기 버튼
                         Toast.makeText(mContext, "StorageBox", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.feed_img:
+                        // 이미지 클릭
+                        // 몀시적 인텐트에 FeedData 객체 담아서 보내기
+                        Intent intent = new Intent(mContext, PostViewActivity.class);
+                        intent.putExtra("FeedItem", feedItemData.get(position));
+                        startActivity(intent);
                         break;
                 }
             }

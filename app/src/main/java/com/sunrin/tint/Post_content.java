@@ -1,8 +1,8 @@
 package com.sunrin.tint;
 
 public class Post_content {
-    public String title;
-    public String contents;
+    private String title;
+    private String contents;
     private String publisher;
 
     public Post_content(String title, String contents, String publisher){

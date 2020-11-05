@@ -1,6 +1,5 @@
 package com.sunrin.tint;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String email, password, nickname;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +32,9 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         mAuth = FirebaseAuth.getInstance();
 
-        findViewById(R.id.button).setOnClickListener(onClickListener);
-
+        findViewById(R.id.button_sign_up).setOnClickListener(onClickListener);
+        findViewById(R.id.buttonBack).setOnClickListener(onClickListener);
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -49,6 +50,11 @@ public class SignUpActivity extends AppCompatActivity {
             switch (view.getId()){
                 case R.id.button:
                     SignUp();
+                case R.id.button_sign_up:
+                    SignUp();
+                    break;
+                case R.id.buttonBack:
+                    finish();
                     break;
             }
         }
@@ -57,13 +63,16 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private void SignUp(){
-        String email = ((EditText)findViewById(R.id.editTextTextEmailAddress)).getText().toString();
-        String password = ((EditText)findViewById(R.id.editTextTextPassword)).getText().toString();
-        String nickname = ((EditText)findViewById(R.id.editTextNickname)).getText().toString();
+        email = ((EditText)findViewById(R.id.editTextTextEmailAddress)).getText().toString();
+        password = ((EditText)findViewById(R.id.editTextTextPassword)).getText().toString();
+        nickname = ((EditText)findViewById(R.id.editTextNickname)).getText().toString();
 
+       //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+       //FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-       User_Info user_info = new User_Info(email,password,nickname);
-       db.collection("users").document(user.getUid()).set(user_info);
+       //User_Info user_info = new User_Info(email,password,nickname);
+        //assert user != null;
+        //db.collection("users").document(user.getUid()).set(user_info);
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -75,6 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
                             updateUI(user);
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(SignUpActivity.this, "인증 : 안 됨", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }
@@ -93,5 +103,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
+    //Change UI according to user data.
+    public void updateUI(FirebaseUser account) {
+        if (account != null){
+            Toast.makeText(this,"환영합니다 (" + account.getUid() + ")",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }else {
+            Toast.makeText(this,"로그인 되지 않았습니다",Toast.LENGTH_LONG).show();
+        }
+    }
 }

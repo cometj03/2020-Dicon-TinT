@@ -2,19 +2,36 @@ package com.sunrin.tint.Feed;
 
 import android.graphics.drawable.Drawable;
 
-public class FeedItem {
+import java.io.Serializable;
 
+public class FeedItem implements Serializable {
+
+    private Filter filter;
     private Drawable feed_img;
     private Drawable userProfile;
-    private String title, subTitle, timeInterval, userName;
+    private String title, subTitle, dateFormat, userName, content;
 
-    FeedItem(Drawable feed_img, Drawable userProfile, String title, String subTitle, String timeInterval, String userName) {
+    FeedItem(Filter filter, Drawable feed_img, Drawable userProfile, String title, String subTitle, String dateFormat, String userName, String content) {
+        setFilter(filter);
         setFeed_img(feed_img);
         setUserProfile(userProfile);
         setTitle(title);
         setSubTitle(subTitle);
-        setTimeInterval(timeInterval);
+        setDateFormat(dateFormat);
         setUserName(userName);
+        setContent(content);
+    }
+
+    public enum Filter {
+        eMakeUp, eHair, eFashion, eNail, eDiet
+    }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Filter filter) {
+        this.filter = filter;
     }
 
     public Drawable getFeed_img() {
@@ -49,12 +66,12 @@ public class FeedItem {
         this.subTitle = subTitle;
     }
 
-    public String getTimeInterval() {
-        return timeInterval;
+    public String getDateFormat() {
+        return dateFormat;
     }
 
-    public void setTimeInterval(String timeInterval) {
-        this.timeInterval = timeInterval;
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
     }
 
     public String getUserName() {
@@ -63,5 +80,13 @@ public class FeedItem {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

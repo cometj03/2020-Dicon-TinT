@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SignInActivity extends AppCompatActivity {
 
     //Button signUpBtn, signInBtn;
@@ -27,6 +35,7 @@ public class SignInActivity extends AppCompatActivity {
     String password = ((EditText)findViewById(R.id.editTextTextPassword)).getText().toString();
     //String nickname = ((EditText)findViewById(R.id.editTextNickname)).getText().toString();
     String TAG = "SignInActivity";
+    // 파이어베이스 인증 초기화
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
@@ -36,67 +45,43 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        mAuth = FirebaseAuth.getInstance();
-        findViewById(R.id.sign_in_btn).setOnClickListener(onClickListener);
-        findViewById(R.id.sign_up_btn).setOnClickListener(onClickListener);
-        //signUpBtn = findViewById(R.id.sign_up_btn);
 
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
+        signInBtn = findViewById(R.id.sign_in_btn);
+        signUpBtn = findViewById(R.id.sign_up_btn);
+        emailText = findViewById(R.id.editTextTextEmailAddress);
+        pwText = findViewById(R.id.editTextTextPassword);
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.sign_in_btn:
-                    SignIn();
-                case R.id.sign_up_btn:
-                    gotosignup();
-            }
-        }
-    };
-
-
-
-    private void SignIn(){
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //Log.d(TAG, "createUserWithEmail:success");
-                            Toast.makeText(getApplicationContext(),"로그인 성공",Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(),"로그인 실패",Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+        signInBtn.setOnClickListener(view -> {
+            input_email = emailText.getText().toString();
+            input_pw = pwText.getText().toString();
+            mAuth.signInWithEmailAndPassword(input_email, input_pw)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SignInActivity.this, "로그인 : 성공", Toast.LENGTH_SHORT).show();
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+                            } else {
+                                Toast.makeText(SignInActivity.this, "로그인 : 안 됨", Toast.LENGTH_SHORT).show();
+                                updateUI(null);
+                            }
                         }
-                    }
-
-                });
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+                    });
+        });
+        signUpBtn.setOnClickListener(view -> {
+            startActivity(new Intent(this, SignUpActivity.class));
+        });
     }
 
-    private void gotosignup(){
-        startActivity(new Intent(this, SignUpActivity.class));
-        finish();
-    }
-
-    private void updateUI(FirebaseUser user){
-        if(user != null){
-            Toast.makeText(this,"로그인 성공",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this,MainActivity.class));
+    //Change UI according to user data.
+    public void updateUI(FirebaseUser account){
+        if(account != null){
+            Toast.makeText(this,"환영합니다 (" + account.getUid() + ")",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, MainActivity.class));
 
         }else {
-            Toast.makeText(this,"로그인 실패",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"로그인 되지 않았습니다",Toast.LENGTH_LONG).show();
         }
     }
 }
