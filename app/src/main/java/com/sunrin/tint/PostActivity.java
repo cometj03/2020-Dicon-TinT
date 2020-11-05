@@ -1,6 +1,7 @@
 package com.sunrin.tint;
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -22,11 +23,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +43,8 @@ public class PostActivity extends AppCompatActivity {
     private ImageView imageView;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     //private ImageButton image_btn;
+    private ArrayList<ClipData.Item> items = new ArrayList<>();
+    FirebaseFirestore database;
 
     Bitmap image;
 
@@ -149,7 +154,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void register(Post_content post_content){ //제목 내용 등록
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database = FirebaseFirestore.getInstance();
         database.collection("posts").add(post_content)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -165,6 +170,19 @@ public class PostActivity extends AppCompatActivity {
                 });
 
 
+    }
+
+    private void Get_post(){
+        items.clear();
+        database.collection("posts")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        for(QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                            Post_content item = documentSnapshot.toObject(Post_content.class);
+                        }
+                    }
+                });
     }
 
 

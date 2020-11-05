@@ -22,6 +22,8 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "SingUpActivity";
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email, password, nickname;
 
     @Override
@@ -39,13 +41,15 @@ public class SignUpActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
+                case R.id.button:
+                    SignUp();
                 case R.id.button_sign_up:
                     SignUp();
                     break;
@@ -84,8 +88,20 @@ public class SignUpActivity extends AppCompatActivity {
                             updateUI(null);
                         }
                     }
+
                 });
+}
+
+    private void updateUI(FirebaseUser user){
+        if(user != null){
+            Toast.makeText(this,"회원가입 성공",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this,SignInActivity.class));
+
+        }else {
+            Toast.makeText(this,"회원가입 실패",Toast.LENGTH_LONG).show();
+        }
     }
+
 
     //Change UI according to user data.
     public void updateUI(FirebaseUser account) {
