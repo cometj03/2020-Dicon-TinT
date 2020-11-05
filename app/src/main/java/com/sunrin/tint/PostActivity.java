@@ -43,6 +43,7 @@ public class PostActivity extends AppCompatActivity {
 
     Bitmap image;
 
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     @Override //onCreate
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +59,16 @@ public class PostActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() { //imgView클릭 시 사진 권한 및 가져오기
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(
-                        PostActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(PostActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(PostActivity.this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(PostActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
-                        ActivityCompat.requestPermissions(PostActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                        String[] strings = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+                        ActivityCompat.requestPermissions(PostActivity.this, strings, 1);
 
                     } else {
-                        ActivityCompat.requestPermissions(PostActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                        String[] strings = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+                        ActivityCompat.requestPermissions(PostActivity.this, strings, 1);
                         Toast.makeText(getApplicationContext(), "권한 허용이 필요합니다.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -84,9 +82,6 @@ public class PostActivity extends AppCompatActivity {
                 }
 
             }
-
-
-
         });
 
 
@@ -134,10 +129,16 @@ public class PostActivity extends AppCompatActivity {
         final String contents = ((EditText)findViewById(R.id.editText2)).getText().toString();
         //final ImageView imageView = findViewById(R.id.img_btn).get
 
-        if(title.length()>0 && contents.length() > 0){
-            user = FirebaseAuth.getInstance().getCurrentUser();
+        if(title.length() > 0 && contents.length() > 0){
+            /*user = FirebaseAuth.getInstance().getCurrentUser();
             Post_content post_content = new Post_content(title,contents, user.getUid());
-            register(post_content);
+            register(post_content);*/
+            firebaseFirestore
+                    .collection("posts")
+                    .document("test")
+                    .set(new Post_content(title, contents, "test user"))
+                    .addOnSuccessListener(command -> Toast.makeText(this, "올리기 성공", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(command -> Toast.makeText(this, "올리기 실패", Toast.LENGTH_SHORT).show());
         }
 
        // imgRegister();
