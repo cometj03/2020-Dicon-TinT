@@ -23,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.SaveSharedPreference;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class FeedFragment extends Fragment {
     private final int[] filterNames = {
             R.string.filter_name1, R.string.filter_name2, R.string.filter_name3, R.string.filter_name4, R.string.filter_name5 };
     private ArrayList<Chip> chips = new ArrayList<>();
-    private ArrayList<Boolean> chipsBooleans = new ArrayList<>();
+    private ArrayList<Boolean> chipsBooleans = new ArrayList<>(5);
 
     // RecyclerView Item Data
     ArrayList<FeedItem> feedItemData = new ArrayList<>();
@@ -51,6 +52,7 @@ public class FeedFragment extends Fragment {
     private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
         int tag = (int) buttonView.getTag();
         chipsBooleans.set(tag, isChecked);
+        SaveSharedPreference.setPrefFilterBool(mContext, chipsBooleans);
     };
 
     @Nullable
@@ -140,6 +142,11 @@ public class FeedFragment extends Fragment {
     }
 
     private void init(View view) {
+        chipsBooleans = SaveSharedPreference.getPrefFilterBool(mContext);
+        if (chipsBooleans.isEmpty())
+            for (int i = 0; i < 5; i++)
+                chipsBooleans.add(false);
+
         chipGroup = view.findViewById(R.id.chipGroup);
         scrollView = view.findViewById(R.id.scrollView);
         filterToggle = view.findViewById(R.id.filterToggle);
@@ -152,9 +159,9 @@ public class FeedFragment extends Fragment {
         chips.add(view.findViewById(R.id.chip4));
         chips.add(view.findViewById(R.id.chip5));
         for (int i = 0; i < 5; i++) {
-            chipsBooleans.add(false);
             chips.get(i).setTag(i);
             chips.get(i).setOnCheckedChangeListener(chipChangeListener);
+            chips.get(i).setChecked(chipsBooleans.get(i));
         }
     }
 

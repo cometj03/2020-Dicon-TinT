@@ -29,7 +29,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:inputType="textEmailAddress"
-            android:textColorHint="@color/gray"
+            android:textColorHint="@color/gray_200"
             android:background="@drawable/border_radius_stroke_black"
             android:hint="@string/ID"/>
 
@@ -42,7 +42,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:inputType="textPassword"
-            android:textColorHint="@color/gray"
+            android:textColorHint="@color/gray_200"
             android:background="@drawable/border_radius_stroke_black"
             android:hint="@string/password"/>
 
