@@ -15,7 +15,7 @@
         android:theme="@style/Theme.TinT"
         android:usesCleartextTraffic="true">
       
-        <activity android:name=".SignInActivity">
+        <activity android:name=".PostActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
