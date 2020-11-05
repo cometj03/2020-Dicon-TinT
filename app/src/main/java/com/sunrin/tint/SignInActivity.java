@@ -18,8 +18,6 @@ public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-//    String TAG = "SignInActivity";
-
     private Button signInBtn, signUpBtn;
     private EditText emailTxt, pwTxt;
 

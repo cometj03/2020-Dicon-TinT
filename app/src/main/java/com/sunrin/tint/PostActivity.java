@@ -38,7 +38,6 @@ import androidx.core.content.ContextCompat;
 
 public class PostActivity extends AppCompatActivity {
     private FirebaseUser user;
-    private static final String TAG = "PostActivity";
     private final int GET_GALLERY_IMAGE = 200;
     private ImageView imageView;
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -56,37 +55,34 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Button post_btn = findViewById(R.id.post);
-        //image_btn = findViewById(R.id.img_btn);
-        imageView = findViewById(R.id.img_btn);
-
         post_btn.setOnClickListener(view -> Post());
 
-        imageView.setOnClickListener(new View.OnClickListener() { //imgView클릭 시 사진 권한 및 가져오기
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(PostActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        imageView = findViewById(R.id.imgBtn);
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(PostActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        //imgView 클릭 시 사진 권한 및 가져오기
+        imageView.setOnClickListener(view -> {
+            if (ContextCompat.checkSelfPermission(PostActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                        String[] strings = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-                        ActivityCompat.requestPermissions(PostActivity.this, strings, 1);
+                if (ActivityCompat.shouldShowRequestPermissionRationale(PostActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
-                    } else {
-                        String[] strings = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-                        ActivityCompat.requestPermissions(PostActivity.this, strings, 1);
-                        Toast.makeText(getApplicationContext(), "권한 허용이 필요합니다.", Toast.LENGTH_SHORT).show();
-                    }
+                    String[] strings = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+                    ActivityCompat.requestPermissions(PostActivity.this, strings, 1);
+
                 } else {
+                    String[] strings = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+                    ActivityCompat.requestPermissions(PostActivity.this, strings, 1);
+                    Toast.makeText(getApplicationContext(), "권한 허용이 필요합니다.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
 //                    Intent intent = new Intent(view.getContext(),GalleryActivity.class);
 //                    startActivity(intent);
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                    //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    startActivityForResult(intent, GET_GALLERY_IMAGE);
-
-                }
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(intent, GET_GALLERY_IMAGE);
 
             }
+
         });
 
 
@@ -159,13 +155,11 @@ public class PostActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
                     }
                 });
 
