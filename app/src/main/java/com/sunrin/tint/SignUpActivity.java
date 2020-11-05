@@ -1,9 +1,12 @@
 package com.sunrin.tint;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,8 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private FirebaseUser user;
     private static final String TAG = "SingUpActivity";
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,14 +33,14 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.button).setOnClickListener(onClickListener);
-        //FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -43,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.button:
-                    //SignUp();
+                    SignUp();
                     break;
             }
         }
@@ -56,8 +61,6 @@ public class SignUpActivity extends AppCompatActivity {
         String password = ((EditText)findViewById(R.id.editTextTextPassword)).getText().toString();
         String nickname = ((EditText)findViewById(R.id.editTextNickname)).getText().toString();
 
-       FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-       FirebaseFirestore db = FirebaseFirestore.getInstance();
 
        User_Info user_info = new User_Info(email,password,nickname);
        db.collection("users").document(user.getUid()).set(user_info);
@@ -69,14 +72,25 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
+                            updateUI(user);
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            //updateUI(null);
+                            updateUI(null);
                         }
                     }
+
                 });
 }
+
+    private void updateUI(FirebaseUser user){
+        if(user != null){
+            Toast.makeText(this,"회원가입 성공",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this,SignInActivity.class));
+
+        }else {
+            Toast.makeText(this,"회원가입 실패",Toast.LENGTH_LONG).show();
+        }
+    }
 
 
 

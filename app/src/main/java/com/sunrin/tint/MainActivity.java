@@ -120,4 +120,6 @@ public class MainActivity extends AppCompatActivity {
             return frag_list.size();
         }
     }
+
+
 }
