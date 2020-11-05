@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toast.makeText(this, TimeAgo.getTimeAgo("2019-06-08 10:30:23"), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, TimeAgo.getTimeAgo("2019-06-08 10:30:23"), Toast.LENGTH_SHORT).show();
 
 
         // 액션바 대신 툴바 사용
