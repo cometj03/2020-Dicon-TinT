@@ -16,4 +16,10 @@
     <string name="password">비밀번호</string>
     <string name="ID">아이디(이메일)</string>
     <string name="nick_name">닉네임</string>
+    <string name="title">제목</string>
+    <string name="subtitle">소제목</string>
+    <string name="post_content">여기에 내용을 입력하세요.</string>
+    <string name="sign_in">로그인</string>
+    <string name="sign_up">회원가입</string>
+    <string name="submit">등록</string>
 </resources>

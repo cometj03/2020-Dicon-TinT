@@ -55,6 +55,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Button post_btn = findViewById(R.id.post);
+        ImageView image_btn = findViewById(R.id.img_btn);
         post_btn.setOnClickListener(view -> Post());
 
         imageView = findViewById(R.id.imgBtn);

@@ -29,7 +29,6 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-
         <activity android:name=".GalleryActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />
