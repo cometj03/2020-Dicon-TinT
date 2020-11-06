@@ -28,7 +28,7 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/gradient_bottom_to_top" />
 
-        <Button
+        <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
