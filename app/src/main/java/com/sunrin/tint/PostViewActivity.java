@@ -20,6 +20,7 @@ public class PostViewActivity extends AppCompatActivity {
         idText = findViewById(R.id.idTextView);
 
         FeedItem data = (FeedItem) getIntent().getSerializableExtra("FeedItem");
+      
         idText.setText(data.getTitle());
     }
 }

@@ -115,23 +115,23 @@ public class PostActivity extends AppCompatActivity {
             }
         }
     }
+  
+    private void Post() { //등록 버튼
+        final String title = ((EditText)findViewById(R.id.title)).getText().toString();
+        final String contents = ((EditText)findViewById(R.id.content)).getText().toString();
+        //final ImageView imageView = findViewById(R.id.img_btn).get
 
-//    private void Post() { //등록 버튼
-//        final String title = ((EditText)findViewById(R.id.editText1)).getText().toString();
-//        final String contents = ((EditText)findViewById(R.id.editText2)).getText().toString();
-//        //final ImageView imageView = findViewById(R.id.img_btn).get
-//
-//        if(title.length() > 0 && contents.length() > 0){
-//            /*user = FirebaseAuth.getInstance().getCurrentUser();
-//            Post_content post_content = new Post_content(title,contents, user.getUid());
-//            register(post_content);*/
-//            firebaseFirestore
-//                    .collection("posts")
-//                    .document("test")
-//                    .set(new Post_content(title, contents, "test user"))
-//                    .addOnSuccessListener(command -> Toast.makeText(this, "올리기 성공", Toast.LENGTH_SHORT).show())
-//                    .addOnFailureListener(command -> Toast.makeText(this, "올리기 실패", Toast.LENGTH_SHORT).show());
-//        }
+        if(title.length() > 0 && contents.length() > 0){
+            /*user = FirebaseAuth.getInstance().getCurrentUser();
+            Post_content post_content = new Post_content(title,contents, user.getUid());
+            register(post_content);*/
+            firebaseFirestore
+                    .collection("posts")
+                    .document("test")
+                    .set(new Post_content(title, contents, "test user"))
+                    .addOnSuccessListener(command -> Toast.makeText(this, "올리기 성공", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(command -> Toast.makeText(this, "올리기 실패", Toast.LENGTH_SHORT).show());
+        }
 
        // imgRegister();
 
