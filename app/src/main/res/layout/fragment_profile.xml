@@ -16,7 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <View
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -25,25 +24,23 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/gradient_bottom_to_top" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/settingBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:src="@drawable/option"
-            android:scaleType="center"/>
-
+            android:src="@drawable/option"/>
 
     </FrameLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:orientation="vertical">
 
         <FrameLayout
@@ -59,8 +56,6 @@
                 android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/view2"
@@ -120,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:text="팔로잉"
+                        android:textColor="@color/gray_500"
                         app:layout_constraintStart_toStartOf="@+id/imageView8"
                         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
@@ -129,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:text="팔로워"
+                        android:textColor="@color/gray_500"
                         app:layout_constraintStart_toStartOf="@+id/imageView10"
                         app:layout_constraintTop_toBottomOf="@+id/imageView10" />
 
@@ -164,6 +161,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:text="게시물"
+                        android:textColor="@color/gray_500"
                         app:layout_constraintStart_toStartOf="@+id/textView10"
                         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -181,10 +179,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/nickNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="닉네임"
                     android:textSize="12pt"
+                    android:textColor="@color/gray_500"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView4" />

@@ -23,6 +23,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.SaveSharedPreference;
@@ -50,6 +52,8 @@ public class FeedFragment extends Fragment {
     RecyclerView recyclerView;
     FeedAdapter adapter;
 
+    private FirebaseFirestore firebaseFirestore ;
+
     // chip 클릭 리스너 생성
     private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
         int tag = (int) buttonView.getTag();
@@ -57,17 +61,15 @@ public class FeedFragment extends Fragment {
         SaveSharedPreference.setPrefFilterBool(mContext, chipsBooleans);
     };
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         init(view);
+        //getData();
 
         //***** Chip Toggle *****//
         filterToggle.setOnClickListener(v -> {
@@ -78,7 +80,7 @@ public class FeedFragment extends Fragment {
         });
 
         //***** RecyclerView *****//
-        feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, null, null, "Title example", "subTitle example", "6 hours ago", "userName", ""));
+        feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, "Title example", "subTitle example", "6 hours ago", "userName", ""));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);
@@ -101,8 +103,8 @@ public class FeedFragment extends Fragment {
 
                 if (lastVisible >= totalItemCount - 3) {
                     // 마지막 아이템을 보고있음 -> 아이템 추가
-                    feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, null, null, "Title example", "subTitle example", "6 hours ago", "userName", ""));
-                    adapter.notifyDataSetChanged();
+                    //feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, null, null, "Title example", "subTitle example", "6 hours ago", "userName", ""));
+                    //adapter.notifyDataSetChanged();
                     Log.d(TAG, "onScrolled: Item added");
                 }
             }
@@ -178,6 +180,24 @@ public class FeedFragment extends Fragment {
             chips.get(i).setChecked(chipsBooleans.get(i));
         }
     }
+
+    private void getData()
+    {
+        feedItemData.clear();
+        firebaseFirestore.collection("posts")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            FeedItem item = document.toObject(FeedItem.class);
+                            feedItemData.add(item);
+                        }
+                        if(adapter != null)
+                            adapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
 
     static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
 

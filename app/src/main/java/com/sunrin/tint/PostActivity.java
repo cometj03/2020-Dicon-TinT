@@ -74,15 +74,10 @@ public class PostActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "권한 허용이 필요합니다.", Toast.LENGTH_SHORT).show();
                 }
             } else {
-//                    Intent intent = new Intent(view.getContext(),GalleryActivity.class);
-//                    startActivity(intent);
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
-
             }
-
         });
 
 

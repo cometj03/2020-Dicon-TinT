@@ -41,10 +41,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         FeedItem item = mData.get(position);
 
-        if (item.getFeed_img() != null)
-            holder.feed_img.setImageDrawable(item.getFeed_img());
-        if (item.getUserProfile() != null)
-            holder.userProfile.setImageDrawable(item.getUserProfile());
+//        if (item.getFeed_img() != null)
+//            holder.feed_img.setImageDrawable(item.getFeed_img());
+//        if (item.getUserProfile() != null)
+//            holder.userProfile.setImageDrawable(item.getUserProfile());
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
         holder.timeInterval.setText(item.getDateFormat());

@@ -3,6 +3,8 @@ package com.sunrin.tint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sunrin.tint.Util.CheckString;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +25,7 @@ public class SignInActivity extends AppCompatActivity {
     private EditText emailTxt, pwTxt;
 
     private String input_email, input_pw;
+    private boolean isValidEmail, isValidPw;
 
     @Override
     protected void onStart() {
@@ -46,11 +50,51 @@ public class SignInActivity extends AppCompatActivity {
 
         signInBtn.setOnClickListener(view -> SignIn());
         signUpBtn.setOnClickListener(view -> startActivity(new Intent(this, SignUpActivity.class)));
+
+        emailTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                input_email = s.toString().trim();
+                isValidEmail = CheckString.isValidEmail(input_email) && input_email.length() > 0;
+
+                signInBtn.setEnabled(isValidEmail && isValidPw);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        pwTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                input_pw = s.toString().trim();
+                isValidPw = input_pw.length() >= 6;
+
+                signInBtn.setEnabled(isValidEmail && isValidPw);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void SignIn() {
-        input_email = emailTxt.getText().toString();
-        input_pw = pwTxt.getText().toString();
+        input_email = emailTxt.getText().toString().trim();
+        input_pw = pwTxt.getText().toString().trim();
 
         mAuth.signInWithEmailAndPassword(input_email, input_pw)
                 .addOnCompleteListener(this, task -> {
@@ -64,7 +108,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     //Change UI according to user data.
-    public void updateUI(FirebaseUser account){
+    private void updateUI(FirebaseUser account){
         if(account != null){
             Toast.makeText(this,"환영합니다 (id : " + account.getUid() + ")",Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));

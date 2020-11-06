@@ -29,6 +29,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:inputType="textEmailAddress"
+            android:textColor="@color/gray_500"
             android:textColorHint="@color/gray_200"
             android:background="@drawable/border_radius_stroke_black"
             android:hint="@string/ID"/>
@@ -42,6 +43,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:inputType="textPassword"
+            android:textColor="@color/gray_500"
             android:textColorHint="@color/gray_200"
             android:background="@drawable/border_radius_stroke_black"
             android:hint="@string/password"/>
@@ -72,6 +74,7 @@
                 android:textSize="18sp"
                 android:background="@drawable/border_radius_full_pink700"
                 android:textColor="@color/white"
+                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 style="?android:attr/borderlessButtonStyle" />
