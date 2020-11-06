@@ -2,6 +2,7 @@ package com.sunrin.tint.Feed;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.SaveSharedPreference;
 
 import java.util.ArrayList;
 
@@ -34,7 +39,7 @@ public class FeedFragment extends Fragment {
     private final int[] filterNames = {
             R.string.filter_name1, R.string.filter_name2, R.string.filter_name3, R.string.filter_name4, R.string.filter_name5 };
     private ArrayList<Chip> chips = new ArrayList<>();
-    private ArrayList<Boolean> chipsBooleans = new ArrayList<>();
+    private ArrayList<Boolean> chipsBooleans = new ArrayList<>(5);
 
     // RecyclerView Item Data
     ArrayList<FeedItem> feedItemData = new ArrayList<>();
@@ -47,10 +52,13 @@ public class FeedFragment extends Fragment {
     RecyclerView recyclerView;
     FeedAdapter adapter;
 
+    private FirebaseFirestore firebaseFirestore ;
+
     // chip 클릭 리스너 생성
     private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
         int tag = (int) buttonView.getTag();
         chipsBooleans.set(tag, isChecked);
+        SaveSharedPreference.setPrefFilterBool(mContext, chipsBooleans);
     };
 
     @Nullable
@@ -58,7 +66,10 @@ public class FeedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         init(view);
+        //getData();
 
         //***** Chip Toggle *****//
         filterToggle.setOnClickListener(v -> {
@@ -69,7 +80,7 @@ public class FeedFragment extends Fragment {
         });
 
         //***** RecyclerView *****//
-        feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
+        feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, "", "Title example", "subTitle example", "6 hours ago", "userName", ""));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);
@@ -92,8 +103,8 @@ public class FeedFragment extends Fragment {
 
                 if (lastVisible >= totalItemCount - 3) {
                     // 마지막 아이템을 보고있음 -> 아이템 추가
-                    feedItemData.add(new FeedItem(null, null, "Title example", "subTitle example", "6 hours ago", "userName"));
-                    adapter.notifyDataSetChanged();
+                    //feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, null, null, "Title example", "subTitle example", "6 hours ago", "userName", ""));
+                    //adapter.notifyDataSetChanged();
                     Log.d(TAG, "onScrolled: Item added");
                 }
             }
@@ -115,6 +126,13 @@ public class FeedFragment extends Fragment {
                     case R.id.feed_storageBox:
                         // 보관하기 버튼
                         Toast.makeText(mContext, "StorageBox", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.feed_img:
+                        // 이미지 클릭
+                        // 몀시적 인텐트에 FeedData 객체 담아서 보내기
+                        Intent intent = new Intent(mContext, PostViewActivity.class);
+                        intent.putExtra("FeedItem", feedItemData.get(position));
+                        startActivity(intent);
                         break;
                 }
             }
@@ -140,6 +158,11 @@ public class FeedFragment extends Fragment {
     }
 
     private void init(View view) {
+        chipsBooleans = SaveSharedPreference.getPrefFilterBool(mContext);
+        if (chipsBooleans.isEmpty())
+            for (int i = 0; i < 5; i++)
+                chipsBooleans.add(false);
+
         chipGroup = view.findViewById(R.id.chipGroup);
         scrollView = view.findViewById(R.id.scrollView);
         filterToggle = view.findViewById(R.id.filterToggle);
@@ -152,11 +175,29 @@ public class FeedFragment extends Fragment {
         chips.add(view.findViewById(R.id.chip4));
         chips.add(view.findViewById(R.id.chip5));
         for (int i = 0; i < 5; i++) {
-            chipsBooleans.add(false);
             chips.get(i).setTag(i);
             chips.get(i).setOnCheckedChangeListener(chipChangeListener);
+            chips.get(i).setChecked(chipsBooleans.get(i));
         }
     }
+
+    private void getData()
+    {
+        feedItemData.clear();
+        firebaseFirestore.collection("posts")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            FeedItem item = document.toObject(FeedItem.class);
+                            feedItemData.add(item);
+                        }
+                        if(adapter != null)
+                            adapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
 
     static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
 

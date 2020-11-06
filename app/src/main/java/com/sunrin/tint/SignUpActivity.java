@@ -1,85 +1,104 @@
 package com.sunrin.tint;
 
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sunrin.tint.Util.CheckString;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 public class SignUpActivity extends AppCompatActivity {
+
     private FirebaseAuth mAuth;
-    private FirebaseUser user;
-    private static final String TAG = "SingUpActivity";
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+    private Button createBtn, backBtn;
+    private EditText emailET, passwordET, nicknameET;
+
+    private String email, password, nickname;
+    private boolean isValidEmail, isValidPw;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         mAuth = FirebaseAuth.getInstance();
 
-        findViewById(R.id.button).setOnClickListener(onClickListener);
-        //FirebaseFirestore db = FirebaseFirestore.getInstance();
-    }
+        createBtn = findViewById(R.id.signUpBtn);
+        backBtn = findViewById(R.id.backBtn);
+        emailET = findViewById(R.id.emailTxt);
+        passwordET = findViewById(R.id.passwordTxt);
+        nicknameET = findViewById(R.id.nickNameTxt);
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
-    }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.button:
-                    SignUp();
-                    break;
+        createBtn.setOnClickListener(view -> SignUp());
+        backBtn.setOnClickListener(view -> finish());
+
+        emailET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                email = s.toString().trim();
+                isValidEmail = CheckString.isValidEmail(email) && email.length() > 0;
+                createBtn.setEnabled(isValidEmail && isValidPw);
             }
-        }
-    };
 
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
+        passwordET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-    private void SignUp(){
-        String email = ((EditText)findViewById(R.id.editTextTextEmailAddress)).getText().toString();
-        String password = ((EditText)findViewById(R.id.editTextTextPassword)).getText().toString();
-        String nickname = ((EditText)findViewById(R.id.nickname)).getText().toString();
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                password = s.toString().trim();
+                isValidPw = password.length() > 0;
+                createBtn.setEnabled(isValidEmail && isValidPw);
+            }
 
-       FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-       FirebaseFirestore db = FirebaseFirestore.getInstance();
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+    }
 
-       User_Info user_info = new User_Info(email,password,nickname);
-       db.collection("users").document(user.getUid()).set(user_info);
+    private void SignUp() {
+        email = emailET.getText().toString();
+        password = passwordET.getText().toString();
+        nickname = nicknameET.getText().toString();
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            //updateUI(null);
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        RegisterUser();
+                        finish();
+                    } else {
+                        Toast.makeText(this, "계정 생성 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
-}
+    }
 
+    private void RegisterUser() {
+        User_Info user_info = new User_Info(nickname);
 
-
+        firebaseFirestore
+                .collection("users")
+                .document(Objects.requireNonNull(mAuth.getUid()))
+                .set(user_info)
+                .addOnSuccessListener(command -> Toast.makeText(this, "계정 생성 성공", Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(command -> Toast.makeText(this, "warning: 닉네임이 정보되지 않았습니다.", Toast.LENGTH_SHORT).show());
+    }
 }

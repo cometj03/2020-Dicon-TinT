@@ -41,13 +41,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         FeedItem item = mData.get(position);
 
-        if (item.getFeed_img() != null)
-            holder.feed_img.setImageDrawable(item.getFeed_img());
-        if (item.getUserProfile() != null)
-            holder.userProfile.setImageDrawable(item.getUserProfile());
+//        if (item.getFeed_img() != null)
+//            holder.feed_img.setImageDrawable(item.getFeed_img());
+//        if (item.getUserProfile() != null)
+//            holder.userProfile.setImageDrawable(item.getUserProfile());
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
-        holder.timeInterval.setText(item.getTimeInterval());
+        holder.timeInterval.setText(item.getDateFormat());
         holder.userName.setText(item.getUserName());
     }
 
@@ -126,6 +126,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                     if (itemClickListener != null) {
                         itemClickListener.OnItemClick(v, pos);
                     }
+                }
+            });
+            feed_img.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+                    if (itemClickListener != null)
+                        itemClickListener.OnItemClick(v, pos);
                 }
             });
         }
