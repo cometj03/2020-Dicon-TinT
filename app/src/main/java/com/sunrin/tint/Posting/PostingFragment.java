@@ -78,7 +78,7 @@ public class PostingFragment extends Fragment {
         postBtn = view.findViewById(R.id.postBtn);
         titleText = view.findViewById(R.id.titleText);
         subtitleText = view.findViewById(R.id.subtitleText);
-        contentText = view.findViewById(R.id.contentText);
+        contentText = view.findViewById(R.id.content);
         imgBtn = view.findViewById(R.id.imgBtn);
 
         storageReference = storage.getReference();
