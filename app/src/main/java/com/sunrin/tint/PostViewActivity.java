@@ -21,5 +21,6 @@ public class PostViewActivity extends AppCompatActivity {
 
         FeedItem data = (FeedItem) getIntent().getSerializableExtra("FeedItem");
         idText.setText(data.getFilter().toString());
+
     }
 }
