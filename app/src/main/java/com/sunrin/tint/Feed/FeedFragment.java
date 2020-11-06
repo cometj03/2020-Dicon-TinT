@@ -80,7 +80,7 @@ public class FeedFragment extends Fragment {
         });
 
         //***** RecyclerView *****//
-        feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, "Title example", "subTitle example", "6 hours ago", "userName", ""));
+        feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, "", "Title example", "subTitle example", "6 hours ago", "userName", ""));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);

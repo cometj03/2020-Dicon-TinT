@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,10 @@ import com.sunrin.tint.Util.TimeAgo;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 public class PostingFragment extends Fragment {
+    private final int GET_GALLERY_IMAGE = 200;
 
     Context mContext;
     Activity mActivity;
@@ -56,7 +59,10 @@ public class PostingFragment extends Fragment {
 
     Uri selectedImageUri;
 
-    private final int GET_GALLERY_IMAGE = 200;
+    private FeedItem feedItem;
+    private String ImageID;
+
+
 
     @Nullable
     @Override
@@ -74,12 +80,15 @@ public class PostingFragment extends Fragment {
             String title = titleText.getText().toString();
             String content = contentText.getText().toString();
 
+            feedItem = new FeedItem(FeedItem.Filter.eMakeUp, ImageID, title, "", "", "userName", content);
+
+            Toast.makeText(mContext, "ImageID : " + ImageID, Toast.LENGTH_SHORT).show();
             if (title.length() > 0 && content.length() > 0) {
 
                 firebaseFirestore
                         .collection("posts")
-                        .document("test2")
-                        .set(new Post_content(title, content, TimeAgo.getTimeStamp(System.currentTimeMillis())))
+                        .document()
+                        .set(feedItem)
                         .addOnSuccessListener(command -> Toast.makeText(mContext, "올리기 성공", Toast.LENGTH_SHORT).show())
                         .addOnFailureListener(command -> Toast.makeText(mContext, "올리기 실패", Toast.LENGTH_SHORT).show());
             }
@@ -89,6 +98,10 @@ public class PostingFragment extends Fragment {
 
         //imgView 클릭 시 사진 권한 및 가져오기
         imgBtn.setOnClickListener(v -> {
+
+            ImageID = UUID.randomUUID().toString();
+            Toast.makeText(mContext, "ImageID : " + ImageID, Toast.LENGTH_SHORT).show();
+
             if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -117,10 +130,11 @@ public class PostingFragment extends Fragment {
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
             imgBtn.setImageURI(selectedImageUri);
-            Toast.makeText(mContext, "이미지 추가됨", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "이미지 추가됨", Toast.LENGTH_SHORT).show();
         }
     }
 
+    // Firebase Firestore으로 이미지 업로드
     private void UploadImage(Uri filePath) {
 
         if (filePath != null) {
@@ -128,12 +142,12 @@ public class PostingFragment extends Fragment {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            StorageReference ref = storageReference.child("images/" + ImageID);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(mContext, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(mContext, "Image Uploaded", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
                     })

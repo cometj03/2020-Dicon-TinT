@@ -10,6 +10,7 @@ public class FeedItem implements Serializable {
     private Filter filter;
 //    private Drawable feed_img;
 //    private Drawable userProfile;
+    private String ImageID;
     private String title, subTitle, dateFormat, userName, content;
 
 //    FeedItem(FeedItem.Filter filter, Drawable feed_img, Drawable userProfile, String title, String subTitle, String dateFormat, String userName, String content) {
@@ -23,9 +24,9 @@ public class FeedItem implements Serializable {
 //        setContent(content);
 //    }
 
-
-    public FeedItem(Filter filter, String title, String subTitle, String dateFormat, String userName, String content) {
+    public FeedItem(Filter filter, String ImageID, String title, String subTitle, String dateFormat, String userName, String content) {
         this.filter = filter;
+        this.ImageID = ImageID;
         this.title = title;
         this.subTitle = subTitle;
         this.dateFormat = dateFormat;
@@ -45,21 +46,13 @@ public class FeedItem implements Serializable {
         this.filter = filter;
     }
 
-//    public Drawable getFeed_img() {
-//        return feed_img;
-//    }
-//
-//    public void setFeed_img(Drawable feed_img) {
-//        this.feed_img = feed_img;
-//    }
-//
-//    public Drawable getUserProfile() {
-//        return userProfile;
-//    }
-//
-//    public void setUserProfile(Drawable userProfile) {
-//        this.userProfile = userProfile;
-//    }
+    public String getImageID() {
+        return ImageID;
+    }
+
+    public void setImageID(String imageID) {
+        ImageID = imageID;
+    }
 
     public String getTitle() {
         return title;
