@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,7 +41,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Button post_btn = findViewById(R.id.post);
-        Button image_btn = findViewById(R.id.img_btn);
+        ImageView image_btn = findViewById(R.id.img_btn);
 
         post_btn.setOnClickListener(new View.OnClickListener() {
             @Override

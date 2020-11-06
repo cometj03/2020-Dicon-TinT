@@ -28,13 +28,13 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/gradient_bottom_to_top" />
 
-        <ImageView
+        <Button
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:src="@drawable/option" />
+            android:background="@drawable/option" />
 
 
     </FrameLayout>
@@ -183,14 +183,15 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="20dp"
-                            android:adjustViewBounds="true"
                             android:layout_gravity="center_vertical"
+                            android:adjustViewBounds="true"
                             android:src="@drawable/icon_write" />
+
                         <androidx.recyclerview.widget.RecyclerView
 
                             android:id="@+id/recyclerViewLookBook"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -222,10 +223,10 @@
                                 android:id="@+id/largeView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
-                                android:adjustViewBounds="true"
-                                android:src="@drawable/icon_feed"
-
                                 android:layout_marginRight="5dp"
+                                android:adjustViewBounds="true"
+
+                                android:src="@drawable/icon_feed"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/smallView"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -234,9 +235,9 @@
                                 android:id="@+id/smallView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
+                                android:layout_marginRight="5dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/icon_feed"
-                                 android:layout_marginRight="5dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/spinner_filter"
                                 app:layout_constraintTop_toTopOf="parent" />
