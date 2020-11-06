@@ -11,6 +11,10 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:fontFamily">@font/thempgt</item>
+
+        <item name="searchViewStyle">@drawable/icon_search</item>
+
 
 
         <!-- Customize your theme here. -->
@@ -24,4 +28,5 @@
         <!--item name="android:textStyle">bold</item>
         <item name="fontFamily">asdf</item-->
     </style>
+
 </resources>
