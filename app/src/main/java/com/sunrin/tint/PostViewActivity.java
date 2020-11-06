@@ -19,7 +19,7 @@ import com.sunrin.tint.Feed.FeedItem;
 
 public class PostViewActivity extends AppCompatActivity {
 
-    TextView titleText;
+    TextView titleText, subtitleText, contentText;
     ImageView imageView;
 
     @Override
@@ -28,11 +28,15 @@ public class PostViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_view);
 
         titleText = findViewById(R.id.title);
+        subtitleText = findViewById(R.id.subtitle);
+        contentText = findViewById(R.id.content);
         imageView = findViewById(R.id.img);
 
         FeedItem data = (FeedItem) getIntent().getSerializableExtra("FeedItem");
 
         titleText.setText(data.getTitle());
+        subtitleText.setText(data.getSubTitle());
+        contentText.setText(data.getContent());
 
         if (data.getImageID().length() > 0) {
             // Storage 에 있는 이미지

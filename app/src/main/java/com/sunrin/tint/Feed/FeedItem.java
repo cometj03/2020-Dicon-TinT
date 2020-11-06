@@ -8,21 +8,8 @@ import java.io.Serializable;
 public class FeedItem implements Serializable {
 
     //private Filter filter;
-//    private Drawable feed_img;
-//    private Drawable userProfile;
     private String ImageID;
     private String title, subTitle, dateFormat, userName, content;
-
-//    FeedItem(FeedItem.Filter filter, Drawable feed_img, Drawable userProfile, String title, String subTitle, String dateFormat, String userName, String content) {
-//        setFilter(filter);
-//        setFeed_img(feed_img);
-//        setUserProfile(userProfile);
-//        setTitle(title);
-//        setSubTitle(subTitle);
-//        setDateFormat(dateFormat);
-//        setUserName(userName);
-//        setContent(content);
-//    }
 
     public FeedItem() {}
 
@@ -41,7 +28,7 @@ public class FeedItem implements Serializable {
     }
 //
 //    public Filter getFilter() {
-//        return filter;
+//        return filter;D
 //    }
 //
 //    public void setFilter(Filter filter) {

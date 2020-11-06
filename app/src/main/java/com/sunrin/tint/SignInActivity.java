@@ -1,5 +1,6 @@
 package com.sunrin.tint;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -26,6 +27,8 @@ public class SignInActivity extends AppCompatActivity {
 
     private String input_email, input_pw;
     private boolean isValidEmail, isValidPw;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onStart() {
@@ -99,9 +102,11 @@ public class SignInActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(input_email, input_pw)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        progressDialog.dismiss();
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -109,8 +114,8 @@ public class SignInActivity extends AppCompatActivity {
 
     //Change UI according to user data.
     private void updateUI(FirebaseUser account){
-        if(account != null){
-            Toast.makeText(this,"환영합니다 (id : " + account.getUid() + ")",Toast.LENGTH_LONG).show();
+        if(account != null) {
+            //Toast.makeText(this,"환영합니다 (id : " + account.getUid() + ")",Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }else {

@@ -116,10 +116,6 @@ public class FeedFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.feed_share:
                         // 공유버튼
-                        // 몀시적 인텐트에 FeedData 객체 담아서 보내기
-                        Intent intent = new Intent(mContext, PostViewActivity.class);
-                        intent.putExtra("FeedItem", feedItemData.get(position));
-                        startActivity(intent);
                         Toast.makeText(mContext, "Share", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.feed_comment:
@@ -132,6 +128,10 @@ public class FeedFragment extends Fragment {
                         break;
                     case R.id.feed_img:
                         // 이미지 클릭
+                        // 몀시적 인텐트에 FeedData 객체 담아서 보내기
+                        Intent intent = new Intent(mContext, PostViewActivity.class);
+                        intent.putExtra("FeedItem", feedItemData.get(position));
+                        startActivity(intent);
                         break;
                 }
             }
