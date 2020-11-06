@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.sunrin.tint.Util.TimeAgo;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private static Context mContext;
 
     // 프래그먼트 TabLayout Data
     private ArrayList<Fragment> frag_list = new ArrayList<>();
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MainActivity.mContext = getApplicationContext();
 
         // Toast.makeText(this, TimeAgo.getTimeAgo("2019-06-08 10:30:23"), Toast.LENGTH_SHORT).show();
 
@@ -125,5 +128,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    public static Context getContext() {
+        return mContext;
+    }
 }

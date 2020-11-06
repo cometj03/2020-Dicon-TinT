@@ -13,6 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.sunrin.tint.MainActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.CheckString;
 import com.sunrin.tint.Util.TimeAgo;
@@ -49,8 +53,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 //            holder.feed_img.setImageDrawable(item.getFeed_img());
 //        if (item.getUserProfile() != null)
 //            holder.userProfile.setImageDrawable(item.getUserProfile());
-//        if (item.getImageID().length() > 0)
-//
+
+        if (item.getImageID().length() > 0) {
+            // Storage 에 있는 이미지
+            // Reference to an image file in Cloud Storage
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+
+// Download directly from StorageReference using Glide
+// (See MyAppGlideModule for Loader registration)
+            Glide.with(MainActivity.getContext())
+                    .load(storageReference)
+                    .into(holder.feed_img);
+        }
+
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
         holder.timeInterval.setText(timeIntervalText);

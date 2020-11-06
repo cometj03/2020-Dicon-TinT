@@ -81,7 +81,6 @@
                 android:textColor="@color/pink_200"
                 android:textSize="18sp"
                 app:strokeColor="@color/pink_200"
-                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

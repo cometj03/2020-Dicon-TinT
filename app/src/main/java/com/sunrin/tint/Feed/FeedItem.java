@@ -7,7 +7,7 @@ import java.io.Serializable;
 // Intent 로 객체를 보내기 위해 Serializable 사용
 public class FeedItem implements Serializable {
 
-    private Filter filter;
+    //private Filter filter;
 //    private Drawable feed_img;
 //    private Drawable userProfile;
     private String ImageID;
@@ -24,8 +24,10 @@ public class FeedItem implements Serializable {
 //        setContent(content);
 //    }
 
-    public FeedItem(Filter filter, String ImageID, String title, String subTitle, String dateFormat, String userName, String content) {
-        this.filter = filter;
+    public FeedItem() {}
+
+    public FeedItem(String ImageID, String title, String subTitle, String dateFormat, String userName, String content) {
+        //this.filter = filter;
         this.ImageID = ImageID;
         this.title = title;
         this.subTitle = subTitle;
@@ -37,14 +39,14 @@ public class FeedItem implements Serializable {
     public enum Filter {
         eMakeUp, eHair, eFashion, eNail, eDiet
     }
-
-    public Filter getFilter() {
-        return filter;
-    }
-
-    public void setFilter(Filter filter) {
-        this.filter = filter;
-    }
+//
+//    public Filter getFilter() {
+//        return filter;
+//    }
+//
+//    public void setFilter(Filter filter) {
+//        this.filter = filter;
+//    }
 
     public String getImageID() {
         return ImageID;

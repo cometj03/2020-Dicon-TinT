@@ -80,7 +80,7 @@ public class FeedFragment extends Fragment {
         });
 
         //***** RecyclerView *****//
-        feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, "", "Title example", "subTitle example", "6 hours ago", "userName", ""));
+        feedItemData.add(new FeedItem("", "Title example", "subTitle example", "6 hours ago", "userName", ""));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);
@@ -142,7 +142,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onRefresh() {
                 // 새로 고침 코드 작성
-
+                getData();
                 // 새로 고침 완료
                 refreshLayout.setRefreshing(false);
             }

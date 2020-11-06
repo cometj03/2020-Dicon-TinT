@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +52,7 @@ public class PostingFragment extends Fragment {
     Activity mActivity;
 
     Button postBtn;
-    EditText titleText, contentText;
+    EditText titleText, subtitleText, contentText;
     ImageView imgBtn;
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -62,6 +64,8 @@ public class PostingFragment extends Fragment {
     private FeedItem feedItem;
     private String ImageID;
 
+    private String title, content;
+
 
 
     @Nullable
@@ -69,38 +73,43 @@ public class PostingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_posting, container, false);
 
+        ImageID = "";
+
         postBtn = view.findViewById(R.id.postBtn);
         titleText = view.findViewById(R.id.titleText);
+        subtitleText = view.findViewById(R.id.subtitleText);
         contentText = view.findViewById(R.id.contentText);
         imgBtn = view.findViewById(R.id.imgBtn);
 
         storageReference = storage.getReference();
 
+        // Post하기
         postBtn.setOnClickListener(v -> {
-            String title = titleText.getText().toString();
-            String content = contentText.getText().toString();
+            String subtitle = subtitleText.getText().toString();
 
-            feedItem = new FeedItem(FeedItem.Filter.eMakeUp, ImageID, title, "", "", "userName", content);
+            String dateFormat = TimeAgo.getTimeStamp(System.currentTimeMillis());
 
-            Toast.makeText(mContext, "ImageID : " + ImageID, Toast.LENGTH_SHORT).show();
-            if (title.length() > 0 && content.length() > 0) {
+            feedItem = new FeedItem(ImageID, title, subtitle, dateFormat, "userName", content);
 
-                firebaseFirestore
-                        .collection("posts")
-                        .document()
-                        .set(feedItem)
-                        .addOnSuccessListener(command -> Toast.makeText(mContext, "올리기 성공", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(command -> Toast.makeText(mContext, "올리기 실패", Toast.LENGTH_SHORT).show());
-            }
+            //Toast.makeText(mContext, "ImageID : " + ImageID, Toast.LENGTH_SHORT).show();
 
             UploadImage(selectedImageUri);
+
+            firebaseFirestore
+                    .collection("posts")
+                    .document()
+                    .set(feedItem)
+                    .addOnSuccessListener(command -> Toast.makeText(mContext, "올리기 성공", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(command -> Toast.makeText(mContext, "올리기 실패", Toast.LENGTH_SHORT).show());
+
+
         });
 
         //imgView 클릭 시 사진 권한 및 가져오기
         imgBtn.setOnClickListener(v -> {
 
             ImageID = UUID.randomUUID().toString();
-            Toast.makeText(mContext, "ImageID : " + ImageID, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "ImageID : " + ImageID, Toast.LENGTH_SHORT).show();
 
             if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -120,9 +129,29 @@ public class PostingFragment extends Fragment {
                 startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
+        titleText.addTextChangedListener(textWatcher);
+        contentText.addTextChangedListener(textWatcher);
 
         return view;
     }
+
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            title = titleText.getText().toString().trim();
+            content = contentText.getText().toString().trim();
+            if (title.length() > 0 && content.length() > 0 && ImageID.length() > 0)
+                postBtn.setEnabled(true);
+            else
+                postBtn.setEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {}
+    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
