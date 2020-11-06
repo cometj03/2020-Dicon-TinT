@@ -138,37 +138,37 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-    //}
-
-    private void register(Post_content post_content){ //제목 내용 등록
-        database = FirebaseFirestore.getInstance();
-        database.collection("posts").add(post_content)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-
-
     }
 
-    private void Get_post(){
-        items.clear();
-        database.collection("posts")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        for(QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                            Post_content item = documentSnapshot.toObject(Post_content.class);
-                        }
-                    }
-                });
-    }
+//    private void register(Post_content post_content){ //제목 내용 등록
+//        database = FirebaseFirestore.getInstance();
+//        database.collection("posts").add(post_content)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                    }
+//                });
+//
+//
+//    }
+//
+//    private void Get_post(){
+//        items.clear();
+//        database.collection("posts")
+//                .get()
+//                .addOnCompleteListener(task -> {
+//                    if(task.isSuccessful()){
+//                        for(QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+//                            Post_content item = documentSnapshot.toObject(Post_content.class);
+//                        }
+//                    }
+//                });
+//    }
 
 
 //    private void imgRegister(Bitmap bitmap) {

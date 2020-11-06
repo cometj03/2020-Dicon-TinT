@@ -39,6 +39,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         app:layout_constraintTop_toBottomOf="@id/appbar"
         app:layout_constraintRight_toRightOf="parent"
@@ -65,13 +66,13 @@
             android:text="subtitle example"
 
             android:textSize="8pt"
-            app:layout_constraintBottom_toTopOf="@+id/img_btn"
+            app:layout_constraintBottom_toTopOf="@+id/img"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
 
         <ImageView
-            android:id="@+id/img_btn"
+            android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -82,7 +83,7 @@
 
         <TextView
             android:id="@+id/content"
-            app:layout_constraintTop_toBottomOf="@id/img_btn"
+            app:layout_constraintTop_toBottomOf="@id/img"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

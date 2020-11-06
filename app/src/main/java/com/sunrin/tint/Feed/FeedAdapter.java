@@ -1,6 +1,7 @@
 package com.sunrin.tint.Feed;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sunrin.tint.MainActivity;
+import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.CheckString;
 import com.sunrin.tint.Util.TimeAgo;
@@ -29,8 +33,6 @@ import static android.content.ContentValues.TAG;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
 
     private ArrayList<FeedItem> mData = null;
-
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     FeedAdapter(ArrayList<FeedItem> list) {
         mData = list;
@@ -59,11 +61,21 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
         if (item.getImageID().length() > 0) {
             // Storage 에 있는 이미지
             // Reference to an image file in Cloud Storage
-            StorageReference storageReference = storage.getReferenceFromUrl("gs://tint-360b3.appspot.com/images/" + item.getImageID());
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference().child("images/" + item.getImageID());
 
-            Glide.with(MainActivity.getContext())
-                    .load(storageReference)
-                    .into(holder.feed_img);
+            storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Glide.with(MainActivity.getContext())
+                                .load(task.getResult())
+                                .into(holder.feed_img);
+                    } else {
+                        Toast.makeText(MainActivity.getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
         }
 
