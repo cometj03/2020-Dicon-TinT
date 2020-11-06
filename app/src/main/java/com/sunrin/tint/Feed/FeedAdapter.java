@@ -30,6 +30,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 
     private ArrayList<FeedItem> mData = null;
 
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+
     FeedAdapter(ArrayList<FeedItem> list) {
         mData = list;
     }
@@ -57,14 +59,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
         if (item.getImageID().length() > 0) {
             // Storage 에 있는 이미지
             // Reference to an image file in Cloud Storage
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+            StorageReference storageReference = storage.getReferenceFromUrl("gs://tint-360b3.appspot.com/images/" + item.getImageID());
 
-
-// Download directly from StorageReference using Glide
-// (See MyAppGlideModule for Loader registration)
             Glide.with(MainActivity.getContext())
                     .load(storageReference)
                     .into(holder.feed_img);
+
         }
 
         holder.title.setText(item.getTitle());

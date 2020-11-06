@@ -69,7 +69,6 @@ public class FeedFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         init(view);
-        //getData();
 
         //***** Chip Toggle *****//
         filterToggle.setOnClickListener(v -> {
@@ -80,10 +79,10 @@ public class FeedFragment extends Fragment {
         });
 
         //***** RecyclerView *****//
-        feedItemData.add(new FeedItem("", "Title example", "subTitle example", "6 hours ago", "userName", ""));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new FeedAdapter(feedItemData);
         recyclerView.setAdapter(adapter);
+        getData();
 
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
         //recyclerView.addItemDecoration(dividerItemDecoration);
