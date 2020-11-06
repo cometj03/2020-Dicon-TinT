@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,15 +17,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -55,8 +50,8 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Button post_btn = findViewById(R.id.post);
-        ImageView image_btn = findViewById(R.id.img_btn);
-        post_btn.setOnClickListener(view -> Post());
+        ImageView image_btn = findViewById(R.id.imgBtn);
+        //post_btn.setOnClickListener(view -> Post());
 
         imageView = findViewById(R.id.imgBtn);
 
@@ -121,29 +116,29 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-    private void Post() { //등록 버튼
-        final String title = ((EditText)findViewById(R.id.editText1)).getText().toString();
-        final String contents = ((EditText)findViewById(R.id.editText2)).getText().toString();
-        //final ImageView imageView = findViewById(R.id.img_btn).get
-
-        if(title.length() > 0 && contents.length() > 0){
-            /*user = FirebaseAuth.getInstance().getCurrentUser();
-            Post_content post_content = new Post_content(title,contents, user.getUid());
-            register(post_content);*/
-            firebaseFirestore
-                    .collection("posts")
-                    .document("test")
-                    .set(new Post_content(title, contents, "test user"))
-                    .addOnSuccessListener(command -> Toast.makeText(this, "올리기 성공", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(command -> Toast.makeText(this, "올리기 실패", Toast.LENGTH_SHORT).show());
-        }
+//    private void Post() { //등록 버튼
+//        final String title = ((EditText)findViewById(R.id.editText1)).getText().toString();
+//        final String contents = ((EditText)findViewById(R.id.editText2)).getText().toString();
+//        //final ImageView imageView = findViewById(R.id.img_btn).get
+//
+//        if(title.length() > 0 && contents.length() > 0){
+//            /*user = FirebaseAuth.getInstance().getCurrentUser();
+//            Post_content post_content = new Post_content(title,contents, user.getUid());
+//            register(post_content);*/
+//            firebaseFirestore
+//                    .collection("posts")
+//                    .document("test")
+//                    .set(new Post_content(title, contents, "test user"))
+//                    .addOnSuccessListener(command -> Toast.makeText(this, "올리기 성공", Toast.LENGTH_SHORT).show())
+//                    .addOnFailureListener(command -> Toast.makeText(this, "올리기 실패", Toast.LENGTH_SHORT).show());
+//        }
 
        // imgRegister();
 
 
 
 
-    }
+    //}
 
     private void register(Post_content post_content){ //제목 내용 등록
         database = FirebaseFirestore.getInstance();

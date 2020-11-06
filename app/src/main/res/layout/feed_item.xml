@@ -91,8 +91,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="6 hours age"
-                android:textColor="@color/gray"
-                android:textSize="12sp"
+                android:textColor="@color/gray_200"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toTopOf="@+id/feed_userName"
                 app:layout_constraintStart_toEndOf="@+id/feed_userProfile" />
 

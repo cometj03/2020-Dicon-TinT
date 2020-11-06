@@ -25,7 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText emailET, passwordET, nicknameET;
 
     private String email, password, nickname;
-    private boolean isValidEmail, isValidPw;
+    private boolean isValidEmail, isValidPw, isValidNickname;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(this, "유효한 이메일을 적어주세요", Toast.LENGTH_SHORT).show();
             else if (!isValidPw)
                 Toast.makeText(this, "비밀번호는 6자리 이상이어야합니다", Toast.LENGTH_SHORT).show();
+            else if (nicknameET.getText().toString().trim().length() <= 0)
+                Toast.makeText(this, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show();
             else
                 SignUp();
         });
@@ -59,7 +61,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 email = s.toString().trim();
                 isValidEmail = CheckString.isValidEmail(email) && email.length() > 0;
-                createBtn.setEnabled(isValidEmail && isValidPw);
             }
 
             @Override
@@ -74,7 +75,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 password = s.toString().trim();
                 isValidPw = password.length() > 0;
-                createBtn.setEnabled(isValidEmail && isValidPw);
             }
 
             @Override
