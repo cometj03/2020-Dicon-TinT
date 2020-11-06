@@ -41,7 +41,14 @@ public class SignUpActivity extends AppCompatActivity {
         nicknameET = findViewById(R.id.nickNameTxt);
 
 
-        createBtn.setOnClickListener(view -> SignUp());
+        createBtn.setOnClickListener(view -> {
+            if (!isValidEmail)
+                Toast.makeText(this, "유효한 이메일을 적어주세요", Toast.LENGTH_SHORT).show();
+            else if (!isValidPw)
+                Toast.makeText(this, "비밀번호는 6자리 이상이어야합니다", Toast.LENGTH_SHORT).show();
+            else
+                SignUp();
+        });
         backBtn.setOnClickListener(view -> finish());
 
         emailET.addTextChangedListener(new TextWatcher() {
