@@ -20,6 +20,7 @@ import com.sunrin.tint.Feed.FeedFragment;
 import com.sunrin.tint.Posting.PostingFragment;
 import com.sunrin.tint.Profile.ProfileFragment;
 import com.sunrin.tint.Search.SearchFragment;
+import com.sunrin.tint.Util.TimeAgo;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Toast.makeText(this, TimeAgo.getTimeAgo("2019-06-08 10:30:23"), Toast.LENGTH_SHORT).show();
+
 
         // 액션바 대신 툴바 사용
         setSupportActionBar(toolbar);
@@ -120,4 +124,6 @@ public class MainActivity extends AppCompatActivity {
             return frag_list.size();
         }
     }
+
+
 }

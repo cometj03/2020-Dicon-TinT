@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.CheckString;
+import com.sunrin.tint.Util.TimeAgo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +43,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         FeedItem item = mData.get(position);
 
-        if (item.getFeed_img() != null)
-            holder.feed_img.setImageDrawable(item.getFeed_img());
-        if (item.getUserProfile() != null)
-            holder.userProfile.setImageDrawable(item.getUserProfile());
+        String timeIntervalText = TimeAgo.getTimeAgo(item.getDateFormat());
+
+//        if (item.getFeed_img() != null)
+//            holder.feed_img.setImageDrawable(item.getFeed_img());
+//        if (item.getUserProfile() != null)
+//            holder.userProfile.setImageDrawable(item.getUserProfile());
+//        if (item.getImageID().length() > 0)
+//
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
-        holder.timeInterval.setText(item.getTimeInterval());
+        holder.timeInterval.setText(timeIntervalText);
         holder.userName.setText(item.getUserName());
     }
 
@@ -126,6 +132,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                     if (itemClickListener != null) {
                         itemClickListener.OnItemClick(v, pos);
                     }
+                }
+            });
+            feed_img.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+                    if (itemClickListener != null)
+                        itemClickListener.OnItemClick(v, pos);
                 }
             });
         }

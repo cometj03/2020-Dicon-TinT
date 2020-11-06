@@ -2,35 +2,56 @@ package com.sunrin.tint.Feed;
 
 import android.graphics.drawable.Drawable;
 
-public class FeedItem {
+import java.io.Serializable;
 
-    private Drawable feed_img;
-    private Drawable userProfile;
-    private String title, subTitle, timeInterval, userName;
+// Intent 로 객체를 보내기 위해 Serializable 사용
+public class FeedItem implements Serializable {
 
-    FeedItem(Drawable feed_img, Drawable userProfile, String title, String subTitle, String timeInterval, String userName) {
-        setFeed_img(feed_img);
-        setUserProfile(userProfile);
-        setTitle(title);
-        setSubTitle(subTitle);
-        setTimeInterval(timeInterval);
-        setUserName(userName);
+    private Filter filter;
+//    private Drawable feed_img;
+//    private Drawable userProfile;
+    private String ImageID;
+    private String title, subTitle, dateFormat, userName, content;
+
+//    FeedItem(FeedItem.Filter filter, Drawable feed_img, Drawable userProfile, String title, String subTitle, String dateFormat, String userName, String content) {
+//        setFilter(filter);
+//        setFeed_img(feed_img);
+//        setUserProfile(userProfile);
+//        setTitle(title);
+//        setSubTitle(subTitle);
+//        setDateFormat(dateFormat);
+//        setUserName(userName);
+//        setContent(content);
+//    }
+
+    public FeedItem(Filter filter, String ImageID, String title, String subTitle, String dateFormat, String userName, String content) {
+        this.filter = filter;
+        this.ImageID = ImageID;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.dateFormat = dateFormat;
+        this.userName = userName;
+        this.content = content;
     }
 
-    public Drawable getFeed_img() {
-        return feed_img;
+    public enum Filter {
+        eMakeUp, eHair, eFashion, eNail, eDiet
     }
 
-    public void setFeed_img(Drawable feed_img) {
-        this.feed_img = feed_img;
+    public Filter getFilter() {
+        return filter;
     }
 
-    public Drawable getUserProfile() {
-        return userProfile;
+    public void setFilter(Filter filter) {
+        this.filter = filter;
     }
 
-    public void setUserProfile(Drawable userProfile) {
-        this.userProfile = userProfile;
+    public String getImageID() {
+        return ImageID;
+    }
+
+    public void setImageID(String imageID) {
+        ImageID = imageID;
     }
 
     public String getTitle() {
@@ -49,12 +70,12 @@ public class FeedItem {
         this.subTitle = subTitle;
     }
 
-    public String getTimeInterval() {
-        return timeInterval;
+    public String getDateFormat() {
+        return dateFormat;
     }
 
-    public void setTimeInterval(String timeInterval) {
-        this.timeInterval = timeInterval;
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
     }
 
     public String getUserName() {
@@ -63,5 +84,13 @@ public class FeedItem {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
