@@ -35,10 +35,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar">
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -55,6 +57,7 @@
                 android:text="Title Example"
                 android:textSize="16pt"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -64,10 +67,9 @@
                 android:layout_marginTop="8dp"
                 android:ems="30"
                 android:text="subtitle example"
-
-                android:textSize="8pt"
-                app:layout_constraintBottom_toTopOf="@+id/img"
+                android:textSize="16sp"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title" />
 
 
@@ -79,6 +81,7 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/post_image_empty"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/subtitle" />
 
             <TextView
@@ -86,8 +89,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
                 android:text="content example"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img" />
 
 

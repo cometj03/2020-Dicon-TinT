@@ -78,7 +78,7 @@ public class PostingFragment extends Fragment {
         postBtn = view.findViewById(R.id.postBtn);
         titleText = view.findViewById(R.id.titleText);
         subtitleText = view.findViewById(R.id.subtitleText);
-        contentText = view.findViewById(R.id.content);
+        contentText = view.findViewById(R.id.contentText);
         imgBtn = view.findViewById(R.id.imgBtn);
 
         storageReference = storage.getReference();
@@ -99,7 +99,7 @@ public class PostingFragment extends Fragment {
                     .collection("posts")
                     .document()
                     .set(feedItem)
-                    .addOnSuccessListener(command -> Toast.makeText(mContext, "올리기 성공", Toast.LENGTH_SHORT).show())
+                    .addOnSuccessListener(command -> PostDone())
                     .addOnFailureListener(command -> Toast.makeText(mContext, "올리기 실패", Toast.LENGTH_SHORT).show());
 
 
@@ -135,6 +135,13 @@ public class PostingFragment extends Fragment {
         return view;
     }
 
+    private void PostDone() {
+        Toast.makeText(mContext, "올리기 성공", Toast.LENGTH_SHORT).show();
+        titleText.setText("");
+        subtitleText.setText("");
+        contentText.setText("");
+    }
+
     TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -159,6 +166,7 @@ public class PostingFragment extends Fragment {
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
             imgBtn.setImageURI(selectedImageUri);
+            postBtn.setEnabled(true);
             //Toast.makeText(mContext, "이미지 추가됨", Toast.LENGTH_SHORT).show();
         }
     }

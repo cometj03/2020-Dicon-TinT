@@ -28,8 +28,6 @@ public class SignInActivity extends AppCompatActivity {
     private String input_email, input_pw;
     private boolean isValidEmail, isValidPw;
 
-    private ProgressDialog progressDialog;
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -102,11 +100,9 @@ public class SignInActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(input_email, input_pw)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        progressDialog.dismiss();
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
                     } else {
-                        progressDialog.dismiss();
                         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
