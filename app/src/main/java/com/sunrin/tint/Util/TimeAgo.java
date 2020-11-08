@@ -3,6 +3,7 @@ package com.sunrin.tint.Util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class TimeAgo {
 
@@ -43,6 +44,10 @@ public class TimeAgo {
     }
 
     public static String getTimeAgo(String dateFormat) {
+        return getTimeAgo(getTime(dateFormat));
+    }
+
+    public static long getTime(String dateFormat) {
         // 2013-09-19T03:27:23+01:00
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -51,8 +56,8 @@ public class TimeAgo {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assert date != null;
-        return getTimeAgo(date.getTime());
+
+        return date.getTime();
     }
 
     public static String getTimeStamp(long timeinMillies) {

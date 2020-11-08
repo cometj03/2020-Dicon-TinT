@@ -2,10 +2,13 @@ package com.sunrin.tint.Feed;
 
 import android.graphics.drawable.Drawable;
 
+import com.sunrin.tint.Util.TimeAgo;
+
 import java.io.Serializable;
 
-// Intent 로 객체를 보내기 위해 Serializable 사용
-public class FeedItem implements Serializable {
+// Intent 로 객체를 보내기 위해 Serializable 상속
+// 피드 아이템을 최신순으로 정렬하기 위해 Comparable 상속
+public class FeedItem implements Serializable, Comparable<FeedItem> {
 
     //private Filter filter;
     private String ImageID;
@@ -21,6 +24,18 @@ public class FeedItem implements Serializable {
         this.dateFormat = dateFormat;
         this.userName = userName;
         this.content = content;
+    }
+
+    @Override
+    public int compareTo(FeedItem feedItem) {
+        long targetTime = TimeAgo.getTime(feedItem.getDateFormat());
+        long thisTime = TimeAgo.getTime(this.dateFormat);
+
+        if (thisTime > targetTime)
+            return 1;
+        else if (thisTime < targetTime)
+            return -1;
+        return 0;
     }
 
     public enum Filter {

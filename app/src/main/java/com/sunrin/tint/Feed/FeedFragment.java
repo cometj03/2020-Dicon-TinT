@@ -30,6 +30,7 @@ import com.sunrin.tint.R;
 import com.sunrin.tint.Util.SaveSharedPreference;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import static android.content.ContentValues.TAG;
 
@@ -190,6 +191,8 @@ public class FeedFragment extends Fragment {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             FeedItem item = document.toObject(FeedItem.class);
                             feedItemData.add(item);
+                            // 최신순으로 정렬
+                            feedItemData.sort(Comparator.reverseOrder());
                         }
                         if(adapter != null)
                             adapter.notifyDataSetChanged();
