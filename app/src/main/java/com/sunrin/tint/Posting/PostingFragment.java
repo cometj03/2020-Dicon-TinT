@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,15 +33,12 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sunrin.tint.Feed.FeedItem;
-import com.sunrin.tint.PostActivity;
-import com.sunrin.tint.Post_content;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.TimeAgo;
 
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
 
 public class PostingFragment extends Fragment {
     private final int GET_GALLERY_IMAGE = 200;
@@ -87,7 +82,7 @@ public class PostingFragment extends Fragment {
         postBtn.setOnClickListener(v -> {
             String subtitle = subtitleText.getText().toString();
 
-            String dateFormat = TimeAgo.getTimeStamp(System.currentTimeMillis());
+            String dateFormat = TimeAgo.getDateFormat(System.currentTimeMillis());
 
             feedItem = new FeedItem(ImageID, title, subtitle, dateFormat, "userName", content);
 
