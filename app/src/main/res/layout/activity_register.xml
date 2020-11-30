@@ -33,38 +33,38 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:background="@drawable/border_radius_full_pink200"
-            android:hint="@string/ID"/>
+            android:hint="@string/register_id_hint"/>
 
         <EditText
             android:id="@+id/passwordTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:inputType="textPassword"
-            android:textSize="8pt"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/border_radius_full_pink200"
             android:ems="10"
+            android:hint="@string/register_pw_hint"
+            android:inputType="textPassword"
+            android:padding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:background="@drawable/border_radius_full_pink200"
-            android:hint="@string/password"/>
+            android:textSize="8pt" />
 
         <EditText
             android:id="@+id/nickNameTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:textSize="8pt"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/border_radius_full_pink200"
             android:ems="10"
+            android:hint="@string/register_name_hint"
+            android:padding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:background="@drawable/border_radius_full_pink200"
-            android:hint="@string/nick_name"/>
+            android:textSize="8pt" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

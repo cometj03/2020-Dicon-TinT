@@ -34,6 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sunrin.tint.Feed.FeedItem;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.SharedPreferenceUtil;
 import com.sunrin.tint.Util.TimeAgo;
 
 import java.util.UUID;
@@ -56,19 +57,13 @@ public class PostingFragment extends Fragment {
 
     Uri selectedImageUri;
 
-    private FeedItem feedItem;
     private String ImageID;
-
     private String title, content;
-
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_posting, container, false);
-
-        ImageID = "";
 
         postBtn = view.findViewById(R.id.postBtn);
         titleText = view.findViewById(R.id.titleText);
@@ -78,15 +73,16 @@ public class PostingFragment extends Fragment {
 
         storageReference = storage.getReference();
 
+
+        // TODO: update(add) user info
         // Post하기
         postBtn.setOnClickListener(v -> {
             String subtitle = subtitleText.getText().toString();
 
             String dateFormat = TimeAgo.getDateFormat(System.currentTimeMillis());
+            String currentUserName = SharedPreferenceUtil.getPrefUsername(mContext);
 
-            feedItem = new FeedItem(ImageID, title, subtitle, dateFormat, "userName", content);
-
-            //Toast.makeText(mContext, "ImageID : " + ImageID, Toast.LENGTH_SHORT).show();
+            FeedItem feedItem = new FeedItem(ImageID, title, subtitle, dateFormat, currentUserName, content);
 
             UploadImage(selectedImageUri);
 

@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -24,11 +24,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.sunrin.tint.LogInActivity;
 import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.SaveSharedPreference;
+import com.sunrin.tint.Util.SharedPreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -60,7 +62,7 @@ public class FeedFragment extends Fragment {
     private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
         int tag = (int) buttonView.getTag();
         chipsBooleans.set(tag, isChecked);
-        SaveSharedPreference.setPrefFilterBool(mContext, chipsBooleans);
+        SharedPreferenceUtil.setPrefFilterBool(mContext, chipsBooleans);
     };
 
     @Nullable
@@ -71,6 +73,14 @@ public class FeedFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         init(view);
+
+        Button button = view.findViewById(R.id.logoutBtn);
+        button.setOnClickListener(view1 -> {
+            Toast.makeText(mContext, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(mContext, LogInActivity.class));
+            getActivity().finish();
+        });
 
         //***** Chip Toggle *****//
         filterToggle.setOnClickListener(v -> {
@@ -159,7 +169,7 @@ public class FeedFragment extends Fragment {
     }
 
     private void init(View view) {
-        chipsBooleans = SaveSharedPreference.getPrefFilterBool(mContext);
+        chipsBooleans = SharedPreferenceUtil.getPrefFilterBool(mContext);
         if (chipsBooleans.isEmpty())
             for (int i = 0; i < 5; i++)
                 chipsBooleans.add(false);

@@ -1,7 +1,5 @@
 package com.sunrin.tint.Feed;
 
-import android.graphics.drawable.Drawable;
-
 import com.sunrin.tint.Util.TimeAgo;
 
 import java.io.Serializable;

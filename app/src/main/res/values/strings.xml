@@ -11,11 +11,16 @@
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
     -->
-    <string name="hello_world">Hello Square World!</string>
-    <string name="login">Login</string>
-    <string name="password">비밀번호</string>
-    <string name="ID">아이디(이메일)</string>
-    <string name="nick_name">닉네임</string>
+
+    <string name="hello_world">Hello World!</string>
+
+    <string name="login_id_hint">아이디(이메일)</string>
+    <string name="login_pw_hint">비밀번호</string>
+
+    <string name="register_id_hint">아이디(이메일)</string>
+    <string name="register_pw_hint">비밀번호(6자리 이상)</string>
+    <string name="register_name_hint">이름</string>
+
     <string name="title">제목</string>
     <string name="subtitle">소제목</string>
     <string name="post_content">여기에 내용을 입력하세요.</string>
