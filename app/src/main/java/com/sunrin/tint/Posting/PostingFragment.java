@@ -57,7 +57,7 @@ public class PostingFragment extends Fragment {
 
     Uri selectedImageUri;
 
-    private String ImageID;
+    private String ImageID = "";
     private String title, content;
 
     @Nullable
@@ -139,8 +139,8 @@ public class PostingFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            title = titleText.getText().toString().trim();
-            content = contentText.getText().toString().trim();
+            title = titleText.getText().toString();
+            content = contentText.getText().toString();
             if (title.length() > 0 && content.length() > 0 && ImageID.length() > 0)
                 postBtn.setEnabled(true);
             else
