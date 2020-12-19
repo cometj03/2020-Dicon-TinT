@@ -32,10 +32,13 @@ import static android.content.ContentValues.TAG;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
 
+    Context mContext;
+
     private ArrayList<FeedItem> mData = null;
 
-    FeedAdapter(ArrayList<FeedItem> list) {
-        mData = list;
+    FeedAdapter(ArrayList<FeedItem> list, Context context) {
+        this.mData = list;
+        this.mContext = context;
     }
 
 
@@ -51,7 +54,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         FeedItem item = mData.get(position);
 
-        String timeIntervalText = TimeAgo.getTimeAgo(item.getDateFormat());
+        String timeIntervalText = TimeAgo.getTimeAgo(item.getDateFormat(), mContext.getResources());
 
 
 //        if (item.getFeed_img() != null)
@@ -69,7 +72,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        Glide.with(MainActivity.getContext())
+                        Glide.with(holder.feed_img)
                                 .load(task.getResult())
                                 .into(holder.feed_img);
                     } else {

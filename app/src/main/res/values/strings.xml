@@ -22,15 +22,4 @@
     <string name="sign_up">회원가입</string>
     <string name="submit">등록</string>
 
-    <string-array name="TimeAgo">
-        <item>방금 전</item>
-        <item>1분 전</item>
-        <item>분 전</item>
-        <item>1시간 전</item>
-        <item>시간 전</item>
-        <item>어제</item>
-        <item>일 전</item>
-        <item>1주 전</item>
-        <item>주 전</item>
-    </string-array>
 </resources>

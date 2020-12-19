@@ -82,6 +82,25 @@ public class FeedFragment extends Fragment {
             getActivity().finish();
         });
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 새로 고침 코드 작성
+                getData();
+                // 새로 고침 완료
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Log.d(TAG, "onActivityCreated: *******");
+
         //***** Chip Toggle *****//
         filterToggle.setOnClickListener(v -> {
             if (scrollView.getVisibility() == View.VISIBLE)
@@ -92,7 +111,7 @@ public class FeedFragment extends Fragment {
 
         //***** RecyclerView *****//
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        adapter = new FeedAdapter(feedItemData);
+        adapter = new FeedAdapter(feedItemData, mContext);
         recyclerView.setAdapter(adapter);
         getData();
 
@@ -116,7 +135,6 @@ public class FeedFragment extends Fragment {
                     // 마지막 아이템을 보고있음 -> 아이템 추가
                     //feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, null, null, "Title example", "subTitle example", "6 hours ago", "userName", ""));
                     //adapter.notifyDataSetChanged();
-                    Log.d(TAG, "onScrolled: Item added");
                 }
             }
         });
@@ -148,18 +166,30 @@ public class FeedFragment extends Fragment {
                 }
             }
         });
+    }
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // 새로 고침 코드 작성
-                getData();
-                // 새로 고침 완료
-                refreshLayout.setRefreshing(false);
-            }
-        });
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ********");
+    }
 
-        return view;
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ******");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: **********");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: *******");
     }
 
     @Override
@@ -195,7 +225,8 @@ public class FeedFragment extends Fragment {
     private void getData()
     {
         feedItemData.clear();
-        firebaseFirestore.collection("posts")
+        firebaseFirestore
+                .collection("posts")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -212,6 +243,7 @@ public class FeedFragment extends Fragment {
     }
 
 
+    // 아이템 끼리 간격 주기 위한 클래스
     static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
 
         private final int interval;

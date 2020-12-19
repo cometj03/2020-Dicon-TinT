@@ -1,8 +1,10 @@
 package com.sunrin.tint.Util;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
 
 import com.bumptech.glide.load.engine.Resource;
+import com.sunrin.tint.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +24,7 @@ public class TimeAgo {
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static String getTimeAgo(long millis) {
+    public static String getTimeAgo(long millis, Resources res) {
         // TODO: Refactor with Resource - StringArray
 
         // 밀리세컨드로 변환
@@ -36,32 +38,33 @@ public class TimeAgo {
         }
 
         final long diff = now - millis;
+        String[] timeLapse = res.getStringArray(R.array.TimeLapse);
 
         if (diff < MINUTE_MILLIS) {
-            return "just now";
+            return timeLapse[0];                        // 방금 전
         } else if (diff < 2 * MINUTE_MILLIS) {
-            return "a minute ago";
+            return timeLapse[1];                        // 1분 전
         } else if (diff < 50 * MINUTE_MILLIS) {
-            return diff / MINUTE_MILLIS + " minutes ago";
+            return diff / MINUTE_MILLIS + timeLapse[2]; // 분 전
         } else if (diff < 90 * MINUTE_MILLIS) {
-            return "an hour ago";
+            return timeLapse[3];                        // 1시간 전
         } else if (diff < 24 * HOUR_MILLIS) {
-            return diff / HOUR_MILLIS + " hours ago";
+            return diff / HOUR_MILLIS + timeLapse[4];   // 시간 전
         } else if (diff < 2 * DAY_MILLIS) {
-            return "yesterday";
+            return timeLapse[5];                        // 어제
         } else if (diff < 7 * DAY_MILLIS) {
-            return diff / DAY_MILLIS + " days ago";
+            return diff / DAY_MILLIS + timeLapse[6];    // 일 전
         } else if (diff < 2 * WEEK_MILLIS) {
-            return "a week ago";
+            return timeLapse[7];                        // 1주 전
         } else if (diff < 4 * WEEK_MILLIS) {
-            return diff / WEEK_MILLIS + " weeks ago";
+            return diff / WEEK_MILLIS + timeLapse[8];   // 주 전
         } else {
             return getSimpleDateFormat(millis);
         }
     }
 
-    public static String getTimeAgo(String dateFormat) {
-        return getTimeAgo(getTime(dateFormat));
+    public static String getTimeAgo(String dateFormat, Resources res) {
+        return getTimeAgo(getTime(dateFormat), res);
     }
 
     public static long getTime(String dateFormat) {
