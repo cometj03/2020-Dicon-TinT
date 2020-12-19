@@ -53,6 +53,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 
         String timeIntervalText = TimeAgo.getTimeAgo(item.getDateFormat());
 
+
 //        if (item.getFeed_img() != null)
 //            holder.feed_img.setImageDrawable(item.getFeed_img());
 //        if (item.getUserProfile() != null)

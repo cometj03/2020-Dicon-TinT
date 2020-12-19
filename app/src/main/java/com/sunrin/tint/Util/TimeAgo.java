@@ -1,9 +1,11 @@
 package com.sunrin.tint.Util;
 
-import java.text.ParseException;
+import android.annotation.SuppressLint;
+
+import com.bumptech.glide.load.engine.Resource;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class TimeAgo {
 
@@ -15,7 +17,14 @@ public class TimeAgo {
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
     private static final long WEEK_MILLIS = 7 * DAY_MILLIS;
 
+    @SuppressLint("SimpleDateFormat")
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    @SuppressLint("SimpleDateFormat")
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
     public static String getTimeAgo(long millis) {
+        // TODO: Refactor with Resource - StringArray
+
         // 밀리세컨드로 변환
 //        if (time < 1000000000000L) {
 //            time *= 1000;
@@ -57,26 +66,20 @@ public class TimeAgo {
 
     public static long getTime(String dateFormat) {
         // 2013-09-19 03:27:23+01:00
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         try {
-            date = format.parse(dateFormat);
+            date = DATE_FORMAT.parse(dateFormat);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return date.getTime();
     }
 
     public static String getDateFormat(long timeMillis) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        return formatter.format(new Date(timeMillis));
+        return DATE_FORMAT.format(new Date(timeMillis));
     }
 
     public static String getSimpleDateFormat(long millis) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-        return formatter.format(new Date(millis));
+        return SIMPLE_DATE_FORMAT.format(new Date(millis));
     }
 }
