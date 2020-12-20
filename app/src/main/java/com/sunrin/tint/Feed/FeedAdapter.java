@@ -76,7 +76,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                                 .load(task.getResult())
                                 .into(holder.feed_img);
                     } else {
-                        Toast.makeText(MainActivity.getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

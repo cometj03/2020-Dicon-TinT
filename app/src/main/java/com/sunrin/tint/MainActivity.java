@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,10 +25,9 @@ import com.sunrin.tint.Search.SearchFragment;
 import com.sunrin.tint.Util.TimeAgo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    private static Context mContext;
-
     // 프래그먼트 TabLayout Data
     private ArrayList<Fragment> frag_list = new ArrayList<>();
     private ArrayList<Integer> icon_list = new ArrayList<>();
@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainActivity.mContext = getApplicationContext();
 
+        Log.d("MainActivity", "onCreate: " + new Date().toString());
         // Toast.makeText(this, TimeAgo.getTimeAgo("2019-06-08 10:30:23"), Toast.LENGTH_SHORT).show();
 
 
@@ -126,9 +126,5 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return frag_list.size();
         }
-    }
-
-    public static Context getContext() {
-        return mContext;
     }
 }
