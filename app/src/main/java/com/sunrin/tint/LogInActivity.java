@@ -103,7 +103,7 @@ public class LogInActivity extends AppCompatActivity {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseFirestore
                 .collection("users")
-                .document(user.getUid())
+                .document(user.getEmail())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -111,6 +111,7 @@ public class LogInActivity extends AppCompatActivity {
                         if (document.exists()) {
                             String userName = (String) document.getData().get("userName");
                             SharedPreferenceUtil.setPrefUsername(LogInActivity.this, userName);
+                            SharedPreferenceUtil.setPrefUserEmail(LogInActivity.this, user.getEmail());
 
                             startActivity(new Intent(this, MainActivity.class));
                             finish();

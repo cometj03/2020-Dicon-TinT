@@ -36,9 +36,6 @@ public class FeedItem implements Serializable, Comparable<FeedItem> {
         return 0;
     }
 
-    public enum Filter {
-        eMakeUp, eHair, eFashion, eNail, eDiet
-    }
 //
 //    public Filter getFilter() {
 //        return filter;D

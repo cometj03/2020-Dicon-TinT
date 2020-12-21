@@ -34,11 +34,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 
     Context mContext;
 
-    private ArrayList<FeedItem> mData = null;
+    private ArrayList<FeedItem> mData;
 
-    FeedAdapter(ArrayList<FeedItem> list, Context context) {
-        this.mData = list;
+    FeedAdapter(Context context) {
+        this.mData = new ArrayList<>();
         this.mContext = context;
+    }
+
+    public void setList(ArrayList<FeedItem> list) {
+        this.mData = list;
     }
 
 

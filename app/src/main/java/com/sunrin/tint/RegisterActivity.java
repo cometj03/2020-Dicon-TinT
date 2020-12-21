@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         firebaseFirestore
                 .collection("users")
-                .document(firebaseUser.getUid())
+                .document(firebaseUser.getEmail())
                 .set(userInfo)
                 .addOnSuccessListener(command -> {
                     SharedPreferenceUtil.setPrefUsername(RegisterActivity.this, name);

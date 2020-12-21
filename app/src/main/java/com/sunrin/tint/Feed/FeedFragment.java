@@ -25,15 +25,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.sunrin.tint.LogInActivity;
 import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.FirebasePostManager;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import static android.content.ContentValues.TAG;
 
@@ -56,8 +54,6 @@ public class FeedFragment extends Fragment {
     RecyclerView recyclerView;
     FeedAdapter adapter;
 
-    private FirebaseFirestore firebaseFirestore ;
-
     // chip 클릭 리스너 생성
     private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
         int tag = (int) buttonView.getTag();
@@ -69,8 +65,6 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
 
         init(view);
 
@@ -111,7 +105,7 @@ public class FeedFragment extends Fragment {
 
         //***** RecyclerView *****//
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        adapter = new FeedAdapter(feedItemData, mContext);
+        adapter = new FeedAdapter(mContext);
         recyclerView.setAdapter(adapter);
         getData();
 
@@ -224,8 +218,8 @@ public class FeedFragment extends Fragment {
 
     private void getData()
     {
-        feedItemData.clear();
-        firebaseFirestore
+        FirebasePostManager.LoadFeedItems(adapter);
+        /*firebaseFirestore
                 .collection("posts")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -239,7 +233,7 @@ public class FeedFragment extends Fragment {
                         if(adapter != null)
                             adapter.notifyDataSetChanged();
                     }
-                });
+                });*/
     }
 
 

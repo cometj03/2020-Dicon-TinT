@@ -10,7 +10,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class SharedPreferenceUtil {
-    static final String PREF_USERNAME = "user_name";
+    static final String PREF_USER_NAME = "user_name";
+    static final String PREF_USER_EMAIL = "user_email";
     static final String PREF_FILTER = "filter";
 
     static SharedPreferences getSharedPreferences(Context context) {
@@ -20,8 +21,12 @@ public class SharedPreferenceUtil {
     //*** set ***//
     public static void setPrefUsername(Context context, String userName) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(PREF_USERNAME, userName);
-        editor.apply();
+        editor.putString(PREF_USER_NAME, userName).apply();
+    }
+
+    public static void setPrefUserEmail(Context context, String email) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(PREF_USER_EMAIL, email).apply();
     }
 
     public static void setPrefFilterBool(Context context, ArrayList<Boolean> booleans) {
@@ -39,7 +44,11 @@ public class SharedPreferenceUtil {
 
     //*** get ***//
     public static String getPrefUsername(Context context) {
-        return getSharedPreferences(context).getString(PREF_USERNAME, "");
+        return getSharedPreferences(context).getString(PREF_USER_NAME, "");
+    }
+
+    public static String getPrefUserEmail(Context context) {
+        return getSharedPreferences(context).getString(PREF_USER_EMAIL, "");
     }
 
     public static ArrayList<Boolean> getPrefFilterBool(Context context) {
