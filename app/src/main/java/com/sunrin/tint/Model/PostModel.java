@@ -1,10 +1,15 @@
 package com.sunrin.tint.Model;
 
-import com.sunrin.tint.Util.TimeUtil;
+import android.content.Context;
+
+import com.sunrin.tint.Feed.FeedItem;
+import com.sunrin.tint.Util.DateUtil;
 
 import java.util.List;
 
-public class PostModel {
+// 최신순으로 정렬하기 위해 Comparable 상속
+public class PostModel implements Comparable<PostModel> {
+    // Model for Firebase Firestore
 
     // string to enum : Enum.valueOf("eMakeUp");
     public enum Filter {
@@ -24,9 +29,27 @@ public class PostModel {
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
-        this.date = TimeUtil.getDateFormat();
+        this.date = DateUtil.getDateFormat();
         this.userName = "username";
         this.userEmail = "email@email.com";
+    }
+
+    public FeedItem convertIntoFeedItem(Context context) {
+        return new FeedItem(filters, title, subTitle, content,
+                DateUtil.getTimeAgo(date, context.getResources()), userName, userEmail);
+    }
+
+
+    @Override
+    public int compareTo(PostModel o) {
+        long targetTime = DateUtil.getTime(o.getDate());
+        long thisTime = DateUtil.getTime(this.getDate());
+
+        if (thisTime > targetTime)
+            return 1;
+        else if (thisTime < targetTime)
+            return -1;
+        return 0;
     }
 
     public List<Filter> getFilters() {

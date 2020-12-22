@@ -25,24 +25,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.sunrin.tint.Feed.FeedItem;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.FirebasePostManager;
-import com.sunrin.tint.Util.SharedPreferenceUtil;
-import com.sunrin.tint.Util.TimeUtil;
+import com.sunrin.tint.Util.DateUtil;
+import com.sunrin.tint.Util.FirebaseLoadPost;
+import com.sunrin.tint.Util.FirebaseUploadPost;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -147,23 +141,16 @@ public class PostingFragment extends Fragment {
 
         PostModel post = new PostModel(filters, imageIDs, title, subTitle, content);
 
-        FirebasePostManager
+        FirebaseUploadPost
                 .UploadPost(mContext, post,
                         command -> PostDone(),
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
-
-        /*firebaseFirestore
-                .collection("posts")
-                .document()
-                .set(feedItem)
-                .addOnSuccessListener(command -> PostDone())
-                .addOnFailureListener(command -> Toast.makeText(mContext, "올리기 실패", Toast.LENGTH_SHORT).show());*/
     }
 
     // Firebase Firestore으로 이미지 업로드
     private List<String> UploadImage(Uri file) {
         List<String> imageIDs = new ArrayList<>();
-        imageIDs.add(UUID.randomUUID().toString());
+        imageIDs.add(DateUtil.getFileNameWithDate() + "(1)");
 
         if (file != null) {
             ProgressDialog progressDialog = new ProgressDialog(mContext);

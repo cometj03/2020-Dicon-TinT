@@ -38,7 +38,7 @@ public class PostViewActivity extends AppCompatActivity {
         subtitleText.setText(data.getSubTitle());
         contentText.setText(data.getContent());
 
-        if (data.getImageID().length() > 0) {
+        /*if (data.getImageID().length() > 0) {
             // Storage 에 있는 이미지
             // Reference to an image file in Cloud Storage
             FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -58,6 +58,6 @@ public class PostViewActivity extends AppCompatActivity {
                 }
             });
 
-        }
+        }*/
     }
 }

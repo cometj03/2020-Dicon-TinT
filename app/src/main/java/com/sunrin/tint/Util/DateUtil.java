@@ -9,7 +9,7 @@ import com.sunrin.tint.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TimeUtil {
+public class DateUtil {
 
     // How to use : String timeAgo = TimeAgo.getTimeAgo(TIMESTAMP);
 
@@ -20,9 +20,12 @@ public class TimeUtil {
     private static final long WEEK_MILLIS = 7 * DAY_MILLIS;
 
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    @SuppressLint("SimpleDateFormat")
+    private static final SimpleDateFormat FILE_NAME_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
 
     public static String getTimeAgo(long millis, Resources res) {
         // TODO: Refactor with Resource - StringArray
@@ -88,5 +91,9 @@ public class TimeUtil {
 
     public static String getSimpleDateFormat(long millis) {
         return SIMPLE_DATE_FORMAT.format(new Date(millis));
+    }
+
+    public static String getFileNameWithDate() {
+        return "Post_" + FILE_NAME_FORMAT.format(new Date(System.currentTimeMillis()));
     }
 }

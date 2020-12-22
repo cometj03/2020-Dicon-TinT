@@ -1,56 +1,45 @@
 package com.sunrin.tint.Feed;
 
-import com.sunrin.tint.Util.TimeUtil;
+import android.net.Uri;
+
+import com.sunrin.tint.Model.PostModel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 // Intent 로 객체를 보내기 위해 Serializable 상속
-// 피드 아이템을 최신순으로 정렬하기 위해 Comparable 상속
-public class FeedItem implements Serializable, Comparable<FeedItem> {
+public class FeedItem implements Serializable {
 
-    //private Filter filter;
-    private String ImageID;
-    private String title, subTitle, dateFormat, userName, content;
+    private List<PostModel.Filter> filters;
+    private List<Uri> images;
+    private String title, subTitle, timeInterval, content, userName, userEmail;
 
-    public FeedItem() {}
-
-    public FeedItem(String ImageID, String title, String subTitle, String dateFormat, String userName, String content) {
-        //this.filter = filter;
-        this.ImageID = ImageID;
+    public FeedItem(List<PostModel.Filter> filters, String title, String subTitle, String content, String timeInterval, String userName, String userEmail) {
+        this.filters = filters;
+        this.images = new ArrayList<>();
         this.title = title;
         this.subTitle = subTitle;
-        this.dateFormat = dateFormat;
-        this.userName = userName;
+        this.timeInterval = timeInterval;
         this.content = content;
+        this.userName = userName;
+        this.userEmail = userEmail;
     }
 
-    @Override
-    public int compareTo(FeedItem feedItem) {
-        long targetTime = TimeUtil.getTime(feedItem.getDateFormat());
-        long thisTime = TimeUtil.getTime(this.dateFormat);
-
-        if (thisTime > targetTime)
-            return 1;
-        else if (thisTime < targetTime)
-            return -1;
-        return 0;
+    public List<PostModel.Filter> getFilters() {
+        return filters;
     }
 
-//
-//    public Filter getFilter() {
-//        return filter;D
-//    }
-//
-//    public void setFilter(Filter filter) {
-//        this.filter = filter;
-//    }
-
-    public String getImageID() {
-        return ImageID;
+    public void setFilters(List<PostModel.Filter> filters) {
+        this.filters = filters;
     }
 
-    public void setImageID(String imageID) {
-        ImageID = imageID;
+    public List<Uri> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Uri> images) {
+        this.images = images;
     }
 
     public String getTitle() {
@@ -69,12 +58,20 @@ public class FeedItem implements Serializable, Comparable<FeedItem> {
         this.subTitle = subTitle;
     }
 
-    public String getDateFormat() {
-        return dateFormat;
+    public String getContent() {
+        return content;
     }
 
-    public void setDateFormat(String dateFormat) {
-        this.dateFormat = dateFormat;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getTimeInterval() {
+        return timeInterval;
+    }
+
+    public void setTimeInterval(String timeInterval) {
+        this.timeInterval = timeInterval;
     }
 
     public String getUserName() {
@@ -83,13 +80,5 @@ public class FeedItem implements Serializable, Comparable<FeedItem> {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 }

@@ -1,25 +1,18 @@
 package com.sunrin.tint.Feed;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.TimeUtil;
+import com.sunrin.tint.Util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,38 +45,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         FeedItem item = mData.get(position);
 
-        String timeIntervalText = TimeUtil.getTimeAgo(item.getDateFormat(), mContext.getResources());
+        String timeIntervalText = DateUtil.getTimeAgo(item.getTimeInterval(), mContext.getResources());
 
 
-//        if (item.getFeed_img() != null)
-//            holder.feed_img.setImageDrawable(item.getFeed_img());
-//        if (item.getUserProfile() != null)
-//            holder.userProfile.setImageDrawable(item.getUserProfile());
-
-        if (item.getImageID().length() > 0) {
-            // Storage 에 있는 이미지
-            // Reference to an image file in Cloud Storage
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageReference = storage.getReference().child("images/" + item.getImageID());
-
-            storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Glide.with(holder.feed_img)
-                                .load(task.getResult())
-                                .into(holder.feed_img);
-                    } else {
-                        Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-        }
 
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
-        holder.timeInterval.setText(timeIntervalText);
+        holder.timeInterval.setText(item.getTimeInterval());
         holder.userName.setText(item.getUserName());
     }
 

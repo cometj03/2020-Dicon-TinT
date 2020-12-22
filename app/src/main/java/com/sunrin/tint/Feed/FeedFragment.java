@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.sunrin.tint.LogInActivity;
 import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.FirebasePostManager;
+import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
 
 import java.util.ArrayList;
@@ -218,22 +218,9 @@ public class FeedFragment extends Fragment {
 
     private void getData()
     {
-        FirebasePostManager.LoadFeedItems(adapter);
-        /*firebaseFirestore
-                .collection("posts")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            FeedItem item = document.toObject(FeedItem.class);
-                            feedItemData.add(item);
-                            // 최신순으로 정렬
-                            feedItemData.sort(Comparator.reverseOrder());
-                        }
-                        if(adapter != null)
-                            adapter.notifyDataSetChanged();
-                    }
-                });*/
+        FirebaseLoadPost
+                .LoadPosts(mContext, adapter,
+                        errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }
 
 
