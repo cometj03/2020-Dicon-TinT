@@ -1,6 +1,6 @@
 package com.sunrin.tint.Feed;
 
-import com.sunrin.tint.Util.TimeAgo;
+import com.sunrin.tint.Util.TimeUtil;
 
 import java.io.Serializable;
 
@@ -26,8 +26,8 @@ public class FeedItem implements Serializable, Comparable<FeedItem> {
 
     @Override
     public int compareTo(FeedItem feedItem) {
-        long targetTime = TimeAgo.getTime(feedItem.getDateFormat());
-        long thisTime = TimeAgo.getTime(this.dateFormat);
+        long targetTime = TimeUtil.getTime(feedItem.getDateFormat());
+        long thisTime = TimeUtil.getTime(this.dateFormat);
 
         if (thisTime > targetTime)
             return 1;

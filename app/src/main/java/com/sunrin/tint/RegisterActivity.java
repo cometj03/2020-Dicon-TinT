@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.Util.CheckString;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
 
@@ -84,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void RegisterUser() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        UserInfo userInfo = new UserInfo(name, email);
+        UserModel userInfo = new UserModel(name, email);
 
         firebaseFirestore
                 .collection("users")

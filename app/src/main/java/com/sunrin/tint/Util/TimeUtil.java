@@ -9,7 +9,7 @@ import com.sunrin.tint.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TimeAgo {
+public class TimeUtil {
 
     // How to use : String timeAgo = TimeAgo.getTimeAgo(TIMESTAMP);
 
@@ -80,6 +80,10 @@ public class TimeAgo {
 
     public static String getDateFormat(long timeMillis) {
         return DATE_FORMAT.format(new Date(timeMillis));
+    }
+
+    public static String getDateFormat() {
+        return getDateFormat(System.currentTimeMillis());
     }
 
     public static String getSimpleDateFormat(long millis) {

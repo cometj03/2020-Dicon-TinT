@@ -33,10 +33,15 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sunrin.tint.Feed.FeedItem;
+import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.FirebasePostManager;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
-import com.sunrin.tint.Util.TimeAgo;
+import com.sunrin.tint.Util.TimeUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
@@ -56,9 +61,7 @@ public class PostingFragment extends Fragment {
     private StorageReference storageReference;
 
     Uri selectedImageUri;
-
-    private String ImageID = "";
-    private String title, content;
+    private boolean isImageAvailable;
 
     @Nullable
     @Override
@@ -73,33 +76,10 @@ public class PostingFragment extends Fragment {
 
         storageReference = storage.getReference();
 
-
-        // TODO: update(add) user info
-        // Post하기
-        postBtn.setOnClickListener(v -> {
-            String subtitle = subtitleText.getText().toString();
-
-            String dateFormat = TimeAgo.getDateFormat(System.currentTimeMillis());
-            String currentUserName = SharedPreferenceUtil.getPrefUsername(mContext);
-
-            FeedItem feedItem = new FeedItem(ImageID, title, subtitle, dateFormat, currentUserName, content);
-
-            UploadImage(selectedImageUri);
-
-            firebaseFirestore
-                    .collection("posts")
-                    .document()
-                    .set(feedItem)
-                    .addOnSuccessListener(command -> PostDone())
-                    .addOnFailureListener(command -> Toast.makeText(mContext, "올리기 실패", Toast.LENGTH_SHORT).show());
-
-
-        });
+        postBtn.setOnClickListener(v -> UploadPost());
 
         //imgView 클릭 시 사진 권한 및 가져오기
         imgBtn.setOnClickListener(v -> {
-
-            ImageID = UUID.randomUUID().toString();
             //Toast.makeText(mContext, "ImageID : " + ImageID, Toast.LENGTH_SHORT).show();
 
             if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -126,12 +106,7 @@ public class PostingFragment extends Fragment {
         return view;
     }
 
-    private void PostDone() {
-        Toast.makeText(mContext, "올리기 성공", Toast.LENGTH_SHORT).show();
-        titleText.setText("");
-        subtitleText.setText("");
-        contentText.setText("");
-    }
+
 
     TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -139,9 +114,9 @@ public class PostingFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            title = titleText.getText().toString();
-            content = contentText.getText().toString();
-            if (title.length() > 0 && content.length() > 0 && ImageID.length() > 0)
+            String t = titleText.getText().toString();
+            String c = contentText.getText().toString();
+            if (t.length() > 0 && c.length() > 0 && isImageAvailable)
                 postBtn.setEnabled(true);
             else
                 postBtn.setEnabled(false);
@@ -158,42 +133,67 @@ public class PostingFragment extends Fragment {
             selectedImageUri = data.getData();
             imgBtn.setImageURI(selectedImageUri);
             postBtn.setEnabled(true);
-            //Toast.makeText(mContext, "이미지 추가됨", Toast.LENGTH_SHORT).show();
+            isImageAvailable = true;
         }
     }
 
-    // Firebase Firestore으로 이미지 업로드
-    private void UploadImage(Uri filePath) {
+    private void UploadPost() {
+        String title = titleText.getText().toString();
+        String subTitle = subtitleText.getText().toString();
+        String content = contentText.getText().toString();
 
-        if (filePath != null) {
+        List<PostModel.Filter> filters = Arrays.asList(PostModel.Filter.eFashion);
+        List<String> imageIDs = UploadImage(selectedImageUri);
+
+        PostModel post = new PostModel(filters, imageIDs, title, subTitle, content);
+
+        FirebasePostManager
+                .UploadPost(mContext, post,
+                        command -> PostDone(),
+                        errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
+
+        /*firebaseFirestore
+                .collection("posts")
+                .document()
+                .set(feedItem)
+                .addOnSuccessListener(command -> PostDone())
+                .addOnFailureListener(command -> Toast.makeText(mContext, "올리기 실패", Toast.LENGTH_SHORT).show());*/
+    }
+
+    // Firebase Firestore으로 이미지 업로드
+    private List<String> UploadImage(Uri file) {
+        List<String> imageIDs = new ArrayList<>();
+        imageIDs.add(UUID.randomUUID().toString());
+
+        if (file != null) {
             ProgressDialog progressDialog = new ProgressDialog(mContext);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/" + ImageID);
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //Toast.makeText(mContext, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                        }
+            StorageReference ref = storageReference.child("images/" + imageIDs.get(0));
+            ref.putFile(file)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        //Toast.makeText(mContext, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(mContext, "Failed", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                        }
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(mContext, "Failed", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                            double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                            progressDialog.setMessage("Uploaded " + (int)progress + "%");
-                        }
+                    .addOnProgressListener(snapshot -> {
+                        double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                        progressDialog.setMessage("Uploaded " + (int)progress + "%");
                     });
         }
+
+        return imageIDs;
+    }
+
+    private void PostDone() {
+        Toast.makeText(mContext, "올리기 성공", Toast.LENGTH_SHORT).show();
+        titleText.setText("");
+        subtitleText.setText("");
+        contentText.setText("");
     }
 
     @Override

@@ -8,12 +8,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -22,7 +19,6 @@ import com.sunrin.tint.Feed.FeedFragment;
 import com.sunrin.tint.Posting.PostingFragment;
 import com.sunrin.tint.Profile.ProfileFragment;
 import com.sunrin.tint.Search.SearchFragment;
-import com.sunrin.tint.Util.TimeAgo;
 
 import java.util.ArrayList;
 import java.util.Date;

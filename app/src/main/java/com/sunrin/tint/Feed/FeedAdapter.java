@@ -2,7 +2,6 @@ package com.sunrin.tint.Feed;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.sunrin.tint.MainActivity;
-import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.CheckString;
-import com.sunrin.tint.Util.TimeAgo;
+import com.sunrin.tint.Util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
 
@@ -58,7 +52,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         FeedItem item = mData.get(position);
 
-        String timeIntervalText = TimeAgo.getTimeAgo(item.getDateFormat(), mContext.getResources());
+        String timeIntervalText = TimeUtil.getTimeAgo(item.getDateFormat(), mContext.getResources());
 
 
 //        if (item.getFeed_img() != null)

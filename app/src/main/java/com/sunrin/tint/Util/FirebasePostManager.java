@@ -1,20 +1,22 @@
 package com.sunrin.tint.Util;
 
+import android.content.Context;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.sunrin.tint.Feed.FeedAdapter;
 import com.sunrin.tint.Feed.FeedItem;
-import com.sunrin.tint.Feed.PostModel;
+import com.sunrin.tint.Model.PostModel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class FirebasePostManager {
     // TODO: Complete Class
 
-    public interface OnGetPostSuccessListener {
-        void onSuccess();
+    public interface OnUploadFailureListener {
+        void onUploadFailed(String errorMsg);
     }
 
     // 데이터 불러온 후 adapter refresh
@@ -26,7 +28,7 @@ public class FirebasePostManager {
                 .collection("posts")
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                    if (task.isSuccessful() && task.getResult() != null) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             list.add(document.toObject(FeedItem.class));
                             list.sort(Comparator.reverseOrder());
@@ -37,8 +39,20 @@ public class FirebasePostManager {
                 });
     }
 
-    public static void UploadPost(List<PostModel.Filter> filters, String userEmail, String userName, String date, String title, String subTitle, String content, List<String> imgUris) {
-        // TODO: Use UerCache
+    public static void UploadPost(Context mContext, PostModel postModel, OnSuccessListener<Void> s, OnUploadFailureListener f) {
+        // TODO: Use UserCache
 
+        String username = SharedPreferenceUtil.getPrefUsername(mContext);
+        String userEmail = SharedPreferenceUtil.getPrefUserEmail(mContext);
+        postModel.setUserName(username);
+        postModel.setUserEmail(userEmail);
+
+        FirebaseFirestore
+                .getInstance()
+                .collection("posts")
+                .document()
+                .set(postModel)
+                .addOnSuccessListener(s)
+                .addOnFailureListener(e -> f.onUploadFailed(FirebaseErrorUtil.getErrorMessage(e, "업로드에 실패하였습니다.")));
     }
 }
