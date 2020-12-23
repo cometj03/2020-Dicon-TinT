@@ -12,22 +12,28 @@ import java.util.List;
 
 public class FirebaseUploadPost {
 
+    public interface OnUploadSuccessListener {
+        void onUploadSuccess(String id);
+    }
+
     public interface OnUploadFailureListener {
         void onUploadFailed(String errorMsg);
     }
 
-    public static void UploadPost(Context context, PostModel postModel, OnSuccessListener<Void> s, OnUploadFailureListener f) {
+    public static void UploadPost(Context context, PostModel postModel, OnUploadSuccessListener s, OnUploadFailureListener f) {
 
         UserModel userModel = UserCache.getUser(context);
         postModel.setUserName(userModel.getName());
         postModel.setUserEmail(userModel.getEmail());
 
+        String documentID = "Post_" + DateUtil.getFileNameWithDate();
+
         FirebaseFirestore
                 .getInstance()
                 .collection("posts")
-                .document()
+                .document(documentID)
                 .set(postModel)
-                .addOnSuccessListener(s)
+                .addOnSuccessListener(command -> s.onUploadSuccess(documentID))
                 .addOnFailureListener(e -> f.onUploadFailed(FirebaseErrorUtil.getErrorMessage(e, "업로드에 실패하였습니다.")));
     }
 

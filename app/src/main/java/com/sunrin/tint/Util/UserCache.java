@@ -20,13 +20,12 @@ public class UserCache {
     public static void setUser(Context context, UserModel userModel) {
         Gson gson = new Gson();
         String json = gson.toJson(userModel);
-        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("user_json", json).apply();
+        SharedPreferenceUtil.setString(context, "user_json", json);
     }
 
     public static UserModel getUser(Context context) {
         Gson gson = new Gson();
-        return gson.fromJson(getSharedPreferences(context).getString("user_json", ""), UserModel.class);
+        return gson.fromJson(SharedPreferenceUtil.getString(context, "user_json"), UserModel.class);
     }
 
     public static void updateUser(Context context, String value, int tmp) {
@@ -39,14 +38,14 @@ public class UserCache {
                 userModel.addStorageID(value);
                 break;
             default:
-                break;
+                return;
         }
+        FirebaseUpdateUser.updateIDs(userModel, context);
         setUser(context, userModel);
     }
 
     public static void logout(Context context) {
-        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("user_json", null).apply();
+        SharedPreferenceUtil.setString(context, "user_json", null);
         FirebaseAuth.getInstance().signOut();
     }
 }

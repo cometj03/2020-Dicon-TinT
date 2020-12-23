@@ -94,6 +94,6 @@ public class DateUtil {
     }
 
     public static String getFileNameWithDate() {
-        return "Post_" + FILE_NAME_FORMAT.format(new Date(System.currentTimeMillis()));
+        return FILE_NAME_FORMAT.format(new Date(System.currentTimeMillis()));
     }
 }

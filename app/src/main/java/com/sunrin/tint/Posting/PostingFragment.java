@@ -29,10 +29,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.DateUtil;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.FirebaseUploadPost;
+import com.sunrin.tint.Util.UserCache;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -143,7 +145,7 @@ public class PostingFragment extends Fragment {
 
         FirebaseUploadPost
                 .UploadPost(mContext, post,
-                        command -> PostDone(),
+                        id -> PostDone(id),
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }
 
@@ -176,11 +178,12 @@ public class PostingFragment extends Fragment {
         return imageIDs;
     }
 
-    private void PostDone() {
-        Toast.makeText(mContext, "올리기 성공", Toast.LENGTH_SHORT).show();
+    private void PostDone(String docId) {
+        UserCache.updateUser(mContext, docId, UserCache.UPDATE_POST);
         titleText.setText("");
         subtitleText.setText("");
         contentText.setText("");
+        imgBtn.setImageResource(R.drawable.post_image_empty);
     }
 
     @Override
