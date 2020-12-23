@@ -35,7 +35,7 @@ public class FirebaseLoadPost {
         LoadPostContents(s1 -> MakePostList(context, s1));
     }
 
-    public static void LoadPostContents(OnSuccessListener<QuerySnapshot> s) {
+    private static void LoadPostContents(OnSuccessListener<QuerySnapshot> s) {
         FirebaseFirestore
                 .getInstance()
                 .collection("posts")
@@ -45,7 +45,7 @@ public class FirebaseLoadPost {
                         FirebaseErrorUtil.getErrorMessage(e, "데이터를 불러오지 못했습니다.")));
     }
 
-    public static void MakePostList(Context context, QuerySnapshot snapshots) {
+    private static void MakePostList(Context context, QuerySnapshot snapshots) {
         List<PostModel> list = new ArrayList<>();
         List<FeedItem> feedItems = new ArrayList<>();
 

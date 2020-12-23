@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.Util.CheckString;
+import com.sunrin.tint.Util.FirebaseLogIn;
 import com.sunrin.tint.Util.UserCache;
 
 import androidx.annotation.Nullable;
@@ -25,20 +27,17 @@ import java.util.List;
 
 public class LogInActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-
     private Button signInBtn, signUpBtn;
     private EditText emailTxt, pwTxt;
 
     private String input_email, input_pw;
-    private boolean isValidEmail, isValidPw;
 
     @Override
     protected void onStart() {
         super.onStart();
         // 유저가 로그인 되어있는지 확인 후 UI 업데이트
-        // 스플래시 화면에 작성
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        // TODO: goto Splash Activity
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         updateUI(currentUser);
     }
 
@@ -48,7 +47,6 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         FirebaseApp.initializeApp(getApplicationContext());
-        mAuth = FirebaseAuth.getInstance();
 
         signInBtn = findViewById(R.id.sign_in_btn);
         signUpBtn = findViewById(R.id.sign_up_btn);
@@ -72,8 +70,9 @@ public class LogInActivity extends AppCompatActivity {
             input_email = emailTxt.getText().toString().trim();
             input_pw = pwTxt.getText().toString().trim();
 
-            isValidEmail = CheckString.isValidEmail(input_email) && input_email.length() > 0;
-            isValidPw = input_pw.length() >= 6;
+            // isValidEmail = CheckString.isValidEmail(input_email) && input_email.length() > 0;
+            boolean isValidEmail = Patterns.EMAIL_ADDRESS.matcher(input_email).matches();
+            boolean isValidPw = input_pw.length() >= 6;
 
             signInBtn.setEnabled(isValidEmail && isValidPw);
         }
@@ -87,39 +86,16 @@ public class LogInActivity extends AppCompatActivity {
         input_email = emailTxt.getText().toString().trim();
         input_pw = pwTxt.getText().toString().trim();
 
-        mAuth.signInWithEmailAndPassword(input_email, input_pw)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null)
-                            loadUser(user);
-                        else
-                            Toast.makeText(this, "user is not exist", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+        Toast.makeText(this, "로그인 시도중...", Toast.LENGTH_SHORT).show();
 
-    // 유저 이름 firestore에서 불러오기
-    private void loadUser(FirebaseUser user) {
-        FirebaseFirestore
-                .getInstance()
-                .collection("users")
-                .document(user.getEmail())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            UserModel userModel = document.toObject(UserModel.class);
-                            UserCache.setUser(LogInActivity.this, userModel);
-
+        FirebaseLogIn
+                .login(input_email, input_pw,
+                        userModel -> {
+                            UserCache.setUser(this, userModel);
                             startActivity(new Intent(this, MainActivity.class));
                             finish();
-                        }
-                    }
-                });
+                        },
+                        errorMsg -> Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show());
     }
 
     //Change UI according to user data.
@@ -128,8 +104,6 @@ public class LogInActivity extends AppCompatActivity {
             //Toast.makeText(this,"환영합니다 (id : " + account.getUid() + ")",Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, MainActivity.class));
             finish();
-        }else {
-            Toast.makeText(this, "로그인해주세요", Toast.LENGTH_SHORT).show();
         }
     }
 }
