@@ -32,6 +32,7 @@ import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -40,11 +41,11 @@ public class FeedFragment extends Fragment {
     Context mContext;
     private final int[] filterNames = {
             R.string.filter_name1, R.string.filter_name2, R.string.filter_name3, R.string.filter_name4, R.string.filter_name5 };
-    private ArrayList<Chip> chips = new ArrayList<>();
-    private ArrayList<Boolean> chipsBooleans = new ArrayList<>(5);
+    private List<Chip> chips = new ArrayList<>();
+    private List<Boolean> chipsBooleans = new ArrayList<>(5);
 
     // RecyclerView Item Data
-    ArrayList<FeedItem> feedItemData = new ArrayList<>();
+    List<FeedItem> feedItemData = new ArrayList<>();
 
     ChipGroup chipGroup;
     HorizontalScrollView scrollView;
@@ -103,7 +104,7 @@ public class FeedFragment extends Fragment {
 
         //***** RecyclerView *****//
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        adapter = new FeedAdapter(mContext);
+        adapter = new FeedAdapter();
         recyclerView.setAdapter(adapter);
         getData();
 

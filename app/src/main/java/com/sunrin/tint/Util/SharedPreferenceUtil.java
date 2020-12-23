@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SharedPreferenceUtil {
     static final String PREF_USER_NAME = "user_name";
@@ -29,7 +30,7 @@ public class SharedPreferenceUtil {
         editor.putString(PREF_USER_EMAIL, email).apply();
     }
 
-    public static void setPrefFilterBool(Context context, ArrayList<Boolean> booleans) {
+    public static void setPrefFilterBool(Context context, List<Boolean> booleans) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < booleans.size(); i++)
@@ -51,7 +52,7 @@ public class SharedPreferenceUtil {
         return getSharedPreferences(context).getString(PREF_USER_EMAIL, "");
     }
 
-    public static ArrayList<Boolean> getPrefFilterBool(Context context) {
+    public static List<Boolean> getPrefFilterBool(Context context) {
         String s = getSharedPreferences(context).getString(PREF_FILTER, "");
         ArrayList<Boolean> arrayList = new ArrayList<>();
         if (s != null) {

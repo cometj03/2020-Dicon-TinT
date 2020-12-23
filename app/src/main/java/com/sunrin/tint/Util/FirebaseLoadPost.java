@@ -25,7 +25,7 @@ public class FirebaseLoadPost {
     private static OnLoadFailureListener onLoadFailureListener;
 
     public interface OnLoadSuccessListener {
-        void onLoadSuccess(ArrayList<FeedItem> feedItems);
+        void onLoadSuccess(List<FeedItem> feedItems);
     }
 
     public interface OnLoadFailureListener {
@@ -50,8 +50,8 @@ public class FirebaseLoadPost {
     }
 
     public static void MakePostList(Context context, QuerySnapshot snapshots) {
-        ArrayList<PostModel> list = new ArrayList<>();
-        ArrayList<FeedItem> feedItems = new ArrayList<>();
+        List<PostModel> list = new ArrayList<>();
+        List<FeedItem> feedItems = new ArrayList<>();
 
         for (QueryDocumentSnapshot document : snapshots) {
             list.add(document.toObject(PostModel.class));

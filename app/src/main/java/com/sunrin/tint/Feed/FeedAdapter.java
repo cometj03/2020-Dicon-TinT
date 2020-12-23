@@ -25,15 +25,17 @@ import static android.content.ContentValues.TAG;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
 
     Context mContext;
+    private List<FeedItem> mData;
 
-    private ArrayList<FeedItem> mData;
-
-    FeedAdapter(Context context) {
+    FeedAdapter() {
         this.mData = new ArrayList<>();
-        this.mContext = context;
     }
 
-    public void setList(ArrayList<FeedItem> list) {
+    FeedAdapter(List<FeedItem> list) {
+        this.mData = list;
+    }
+
+    public void setList(List<FeedItem> list) {
         this.mData = list;
     }
 
@@ -41,6 +43,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.feed_item, parent, false);
         return new ItemViewHolder(view);
