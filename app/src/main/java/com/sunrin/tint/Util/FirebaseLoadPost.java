@@ -59,8 +59,6 @@ public class FirebaseLoadPost {
         onLoadSuccessListener.onLoadSuccess(feedItems);
     }
 
-
-
     public static void LoadImage(String imgID, OnSuccessListener<Uri> s) {
         if (imgID == null)
             return;

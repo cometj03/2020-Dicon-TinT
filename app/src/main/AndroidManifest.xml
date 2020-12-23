@@ -15,22 +15,23 @@
         android:theme="@style/Theme.TinT"
         android:usesCleartextTraffic="true">
       
-        <activity android:name=".LogInActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:host="google.com"
                     android:scheme="http" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".GalleryActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".LogInActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".PostViewActivity" />
 

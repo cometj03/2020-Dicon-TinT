@@ -11,12 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.sunrin.tint.Model.UserModel;
-import com.sunrin.tint.Util.CheckString;
 import com.sunrin.tint.Util.FirebaseLogIn;
 import com.sunrin.tint.Util.UserCache;
 
@@ -31,15 +25,6 @@ public class LogInActivity extends AppCompatActivity {
     private EditText emailTxt, pwTxt;
 
     private String input_email, input_pw;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // 유저가 로그인 되어있는지 확인 후 UI 업데이트
-        // TODO: goto Splash Activity
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        updateUI(currentUser);
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,14 +82,5 @@ public class LogInActivity extends AppCompatActivity {
                             finish();
                         },
                         errorMsg -> Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show());
-    }
-
-    //Change UI according to user data.
-    private void updateUI(FirebaseUser user){
-        if(user != null) {
-            //Toast.makeText(this,"환영합니다 (id : " + account.getUid() + ")",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
     }
 }
