@@ -1,7 +1,6 @@
-package com.sunrin.tint.Feed;
+package com.sunrin.tint.MainScreen.Feed;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.DateUtil;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
 

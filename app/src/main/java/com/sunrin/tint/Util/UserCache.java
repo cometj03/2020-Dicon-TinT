@@ -1,8 +1,6 @@
 package com.sunrin.tint.Util;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
@@ -12,10 +10,6 @@ public class UserCache {
 
     public static final int UPDATE_POST = 0;
     public static final int UPDATE_STORAGE = 1;
-
-    private static SharedPreferences getSharedPreferences(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context);
-    }
 
     public static void setUser(Context context, UserModel userModel) {
         Gson gson = new Gson();

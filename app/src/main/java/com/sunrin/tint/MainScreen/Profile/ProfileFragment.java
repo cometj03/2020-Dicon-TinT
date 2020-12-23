@@ -1,4 +1,4 @@
-package com.sunrin.tint.Profile;
+package com.sunrin.tint.MainScreen.Profile;
 
 import android.content.Context;
 import android.os.Bundle;

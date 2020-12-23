@@ -1,4 +1,4 @@
-package com.sunrin.tint.Feed;
+package com.sunrin.tint.MainScreen.Feed;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,8 +24,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.firebase.auth.FirebaseAuth;
-import com.sunrin.tint.LogInActivity;
 import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.sunrin.tint.Feed.FeedItem;
+import com.sunrin.tint.MainScreen.Feed.FeedItem;
 import com.sunrin.tint.Model.PostModel;
 
 public class PostViewActivity extends AppCompatActivity {

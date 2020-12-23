@@ -1,4 +1,4 @@
-package com.sunrin.tint.Posting;
+package com.sunrin.tint.MainScreen.Posting;
 
 import android.Manifest;
 import android.app.Activity;
@@ -29,10 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sunrin.tint.Model.PostModel;
-import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.DateUtil;
-import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.FirebaseUploadPost;
 import com.sunrin.tint.Util.UserCache;
 

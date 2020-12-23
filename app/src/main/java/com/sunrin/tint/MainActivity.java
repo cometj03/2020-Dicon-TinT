@@ -15,10 +15,10 @@ import android.util.Log;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.tabs.TabLayout;
-import com.sunrin.tint.Feed.FeedFragment;
-import com.sunrin.tint.Posting.PostingFragment;
-import com.sunrin.tint.Profile.ProfileFragment;
-import com.sunrin.tint.Search.SearchFragment;
+import com.sunrin.tint.MainScreen.Feed.FeedFragment;
+import com.sunrin.tint.MainScreen.Posting.PostingFragment;
+import com.sunrin.tint.MainScreen.Profile.ProfileFragment;
+import com.sunrin.tint.MainScreen.Search.SearchFragment;
 
 import java.util.ArrayList;
 import java.util.Date;

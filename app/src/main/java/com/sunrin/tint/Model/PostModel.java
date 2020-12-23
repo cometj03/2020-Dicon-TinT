@@ -2,10 +2,9 @@ package com.sunrin.tint.Model;
 
 import android.content.Context;
 
-import com.sunrin.tint.Feed.FeedItem;
+import com.sunrin.tint.MainScreen.Feed.FeedItem;
 import com.sunrin.tint.Util.DateUtil;
 
-import java.io.Serializable;
 import java.util.List;
 
 // 최신순으로 정렬하기 위해 Comparable 상속

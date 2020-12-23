@@ -1,4 +1,4 @@
-package com.sunrin.tint.Search;
+package com.sunrin.tint.MainScreen.Search;
 
 import android.content.Context;
 import android.os.Bundle;

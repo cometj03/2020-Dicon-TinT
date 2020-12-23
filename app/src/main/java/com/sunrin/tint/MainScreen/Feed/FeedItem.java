@@ -1,4 +1,4 @@
-package com.sunrin.tint.Feed;
+package com.sunrin.tint.MainScreen.Feed;
 
 import android.net.Uri;
 
