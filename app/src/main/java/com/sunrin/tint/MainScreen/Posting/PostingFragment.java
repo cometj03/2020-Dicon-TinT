@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.DateUtil;
@@ -136,7 +137,7 @@ public class PostingFragment extends Fragment {
         String subTitle = subtitleText.getText().toString();
         String content = contentText.getText().toString();
 
-        List<PostModel.Filter> filters = Arrays.asList(PostModel.Filter.eFashion);
+        List<Filter> filters = Arrays.asList(Filter.eFashion);
         List<String> imageIDs = UploadImage(selectedImageUri);
 
         PostModel post = new PostModel(filters, imageIDs, title, subTitle, content);

@@ -42,10 +42,10 @@ public class FirebaseLogIn {
                     if (signInMethods != null && !signInMethods.isEmpty())
                         s.onSuccess(result);
                     else
-                        onLoginFailureListener.onLoginFailed("유효하지 않은 계정입니다.");
+                        onLoginFailureListener.onLoginFailed("존재하지 않는 이메일입니다.");
                 })
                 .addOnFailureListener(e -> onLoginFailureListener.onLoginFailed(
-                        FirebaseErrorUtil.getErrorMessage(e, "유효한 이메일을 적어주세요.")));
+                        FirebaseErrorUtil.getErrorMessage(e, "존재하지 않는 이메일입니다.")));
     }
 
     private static void getUserData(String email, OnSuccessListener<DocumentSnapshot> s) {

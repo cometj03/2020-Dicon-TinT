@@ -39,7 +39,7 @@ public class PostViewActivity extends AppCompatActivity {
                     .into(imageView);
         }
 
-        if (data.getFilters().get(0) == PostModel.Filter.eFashion) {
+        if (data.getFilters().get(0) == Filter.eFashion) {
             Toast.makeText(this, data.getFilters().get(0).toString(), Toast.LENGTH_SHORT).show();
         }
 

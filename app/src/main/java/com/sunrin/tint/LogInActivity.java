@@ -92,6 +92,7 @@ public class LogInActivity extends AppCompatActivity {
                 .login(input_email, input_pw,
                         userModel -> {
                             UserCache.setUser(this, userModel);
+                            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(this, MainActivity.class));
                             finish();
                         },

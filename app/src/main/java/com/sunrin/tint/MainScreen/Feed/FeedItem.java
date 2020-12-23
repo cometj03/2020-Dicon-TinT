@@ -2,6 +2,7 @@ package com.sunrin.tint.MainScreen.Feed;
 
 import android.net.Uri;
 
+import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
 
 import java.io.Serializable;
@@ -11,12 +12,12 @@ import java.util.List;
 // Intent 로 객체를 보내기 위해 Serializable 상속
 public class FeedItem implements Serializable {
 
-    private List<PostModel.Filter> filters;
+    private List<Filter> filters;
     private transient List<Uri> images; // transient : Except Serialize
     private List<String> imgIDs;
     private String title, subTitle, timeInterval, content, userName, userEmail;
 
-    public FeedItem(List<PostModel.Filter> filters, List<String> imgIDs, String title, String subTitle, String content, String timeInterval, String userName, String userEmail) {
+    public FeedItem(List<Filter> filters, List<String> imgIDs, String title, String subTitle, String content, String timeInterval, String userName, String userEmail) {
         this.filters = filters;
         this.imgIDs = imgIDs;
         this.images = new ArrayList<>();
@@ -32,11 +33,11 @@ public class FeedItem implements Serializable {
         this.images.add(uri);
     }
 
-    public List<PostModel.Filter> getFilters() {
+    public List<Filter> getFilters() {
         return filters;
     }
 
-    public void setFilters(List<PostModel.Filter> filters) {
+    public void setFilters(List<Filter> filters) {
         this.filters = filters;
     }
 
