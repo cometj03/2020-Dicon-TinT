@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SharedPreferenceUtil {
-    static final String PREF_USER_NAME = "user_name";
-    static final String PREF_USER_EMAIL = "user_email";
     static final String PREF_FILTER = "filter";
 
     static SharedPreferences getSharedPreferences(Context context) {
@@ -20,14 +18,9 @@ public class SharedPreferenceUtil {
     }
 
     //*** set ***//
-    public static void setPrefUsername(Context context, String userName) {
+    public static void setString(Context context, String key, String value) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(PREF_USER_NAME, userName).apply();
-    }
-
-    public static void setPrefUserEmail(Context context, String email) {
-        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(PREF_USER_EMAIL, email).apply();
+        editor.putString(key, value).apply();
     }
 
     public static void setPrefFilterBool(Context context, List<Boolean> booleans) {
@@ -44,12 +37,8 @@ public class SharedPreferenceUtil {
     }
 
     //*** get ***//
-    public static String getPrefUsername(Context context) {
-        return getSharedPreferences(context).getString(PREF_USER_NAME, "");
-    }
-
-    public static String getPrefUserEmail(Context context) {
-        return getSharedPreferences(context).getString(PREF_USER_EMAIL, "");
+    public static String getString(Context context, String key) {
+        return getSharedPreferences(context).getString(key, "");
     }
 
     public static List<Boolean> getPrefFilterBool(Context context) {

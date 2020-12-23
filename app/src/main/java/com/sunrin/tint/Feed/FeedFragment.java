@@ -30,6 +30,7 @@ import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
+import com.sunrin.tint.Util.UserCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +72,8 @@ public class FeedFragment extends Fragment {
 
         Button button = view.findViewById(R.id.logoutBtn);
         button.setOnClickListener(view1 -> {
+            UserCache.logout(mContext);
             Toast.makeText(mContext, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(mContext, LogInActivity.class));
             getActivity().finish();
         });
 
@@ -149,13 +149,13 @@ public class FeedFragment extends Fragment {
                         // 보관하기 버튼
                         Toast.makeText(mContext, "StorageBox", Toast.LENGTH_SHORT).show();
                         break;
-                    /*case R.id.feed_img:
+                    case R.id.feed_img:
                         // 이미지 클릭
                         // 몀시적 인텐트에 FeedData 객체 담아서 보내기
                         Intent intent = new Intent(mContext, PostViewActivity.class);
                         intent.putExtra("FeedItem", feedItemData.get(position));
                         startActivity(intent);
-                        break;*/
+                        break;
                 }
             }
         });

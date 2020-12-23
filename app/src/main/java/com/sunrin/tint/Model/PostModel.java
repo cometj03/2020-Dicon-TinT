@@ -9,11 +9,11 @@ import java.io.Serializable;
 import java.util.List;
 
 // 최신순으로 정렬하기 위해 Comparable 상속
-public class PostModel implements Comparable<PostModel>, Serializable {
+public class PostModel implements Comparable<PostModel> {
     // Model for Firebase Firestore
 
     // string to enum : Enum.valueOf("eMakeUp");
-    public enum Filter implements Serializable {
+    public enum Filter {
         eMakeUp, eHair, eFashion, eNail, eDiet
     }
 

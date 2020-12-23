@@ -14,11 +14,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.Util.CheckString;
-import com.sunrin.tint.Util.SharedPreferenceUtil;
+import com.sunrin.tint.Util.UserCache;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -89,7 +92,7 @@ public class LogInActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null)
-                            getUserName(user);
+                            loadUser(user);
                         else
                             Toast.makeText(this, "user is not exist", Toast.LENGTH_SHORT).show();
                     } else {
@@ -99,9 +102,9 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     // 유저 이름 firestore에서 불러오기
-    private void getUserName(FirebaseUser user) {
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseFirestore
+    private void loadUser(FirebaseUser user) {
+        FirebaseFirestore
+                .getInstance()
                 .collection("users")
                 .document(user.getEmail())
                 .get()
@@ -109,9 +112,8 @@ public class LogInActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            String userName = (String) document.getData().get("userName");
-                            SharedPreferenceUtil.setPrefUsername(LogInActivity.this, userName);
-                            SharedPreferenceUtil.setPrefUserEmail(LogInActivity.this, user.getEmail());
+                            UserModel userModel = document.toObject(UserModel.class);
+                            UserCache.setUser(LogInActivity.this, userModel);
 
                             startActivity(new Intent(this, MainActivity.class));
                             finish();

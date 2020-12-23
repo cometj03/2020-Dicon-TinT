@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.Util.CheckString;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
+import com.sunrin.tint.Util.UserCache;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -85,14 +86,14 @@ public class RegisterActivity extends AppCompatActivity {
     private void RegisterUser() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        UserModel userInfo = new UserModel(name, email);
+        UserModel userModel = new UserModel(name, email);
 
         firebaseFirestore
                 .collection("users")
                 .document(firebaseUser.getEmail())
-                .set(userInfo)
+                .set(userModel)
                 .addOnSuccessListener(command -> {
-                    SharedPreferenceUtil.setPrefUsername(RegisterActivity.this, name);
+                    UserCache.setUser(RegisterActivity.this, userModel);
                     finish();
                 })
                 .addOnFailureListener(command -> Toast.makeText(this, "정보가 저장되지 않았습니다.", Toast.LENGTH_SHORT).show());

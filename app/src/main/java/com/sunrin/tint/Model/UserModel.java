@@ -17,6 +17,21 @@ public class UserModel {
         storageID = new ArrayList<>();
     }
 
+    public UserModel(String name, String email, List<String> postID, List<String> storageID) {
+        this.name = name;
+        this.email = email;
+        this.postID = postID;
+        this.storageID = storageID;
+    }
+
+    public void addPostID(String id) {
+        this.postID.add(id);
+    }
+
+    public void addStorageID(String id) {
+        this.storageID.add(id);
+    }
+
     public String getName() {
         return name;
     }

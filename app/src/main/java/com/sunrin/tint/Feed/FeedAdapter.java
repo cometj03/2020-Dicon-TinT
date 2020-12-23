@@ -51,6 +51,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+
+        // Bind Data Here
+        // TODO: apply animation to views here
+        // https://youtu.be/rJ-7KgMAJUo
+
         FeedItem item = mData.get(position);
 
         if (item.getImgIDs() != null && item.getImgIDs().size() > 0) {

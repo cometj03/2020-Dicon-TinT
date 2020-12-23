@@ -12,7 +12,7 @@ import java.util.List;
 public class FeedItem implements Serializable {
 
     private List<PostModel.Filter> filters;
-    private List<Uri> images;
+    private transient List<Uri> images; // transient : Except Serialize
     private List<String> imgIDs;
     private String title, subTitle, timeInterval, content, userName, userEmail;
 

@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.Model.UserModel;
 
 import java.util.List;
 
@@ -15,13 +16,11 @@ public class FirebaseUploadPost {
         void onUploadFailed(String errorMsg);
     }
 
-    public static void UploadPost(Context mContext, PostModel postModel, OnSuccessListener<Void> s, OnUploadFailureListener f) {
-        // TODO: Use UserCache
+    public static void UploadPost(Context context, PostModel postModel, OnSuccessListener<Void> s, OnUploadFailureListener f) {
 
-        String username = SharedPreferenceUtil.getPrefUsername(mContext);
-        String userEmail = SharedPreferenceUtil.getPrefUserEmail(mContext);
-        postModel.setUserName(username);
-        postModel.setUserEmail(userEmail);
+        UserModel userModel = UserCache.getUser(context);
+        postModel.setUserName(userModel.getName());
+        postModel.setUserEmail(userModel.getEmail());
 
         FirebaseFirestore
                 .getInstance()

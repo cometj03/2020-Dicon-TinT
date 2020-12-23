@@ -3,12 +3,14 @@ package com.sunrin.tint;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.sunrin.tint.Feed.FeedItem;
+import com.sunrin.tint.Model.PostModel;
 
 public class PostViewActivity extends AppCompatActivity {
 
@@ -31,8 +33,16 @@ public class PostViewActivity extends AppCompatActivity {
         subtitleText.setText(data.getSubTitle());
         contentText.setText(data.getContent());
 
-        Glide.with(this)
-                .load(data.getImages().get(0))
-                .into(imageView);
+        if (data.getImages() != null) {
+            Glide.with(this)
+                    .load(data.getImages().get(0))
+                    .into(imageView);
+        }
+
+        if (data.getFilters().get(0) == PostModel.Filter.eFashion) {
+            Toast.makeText(this, data.getFilters().get(0).toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        // TODO: Get Uris
     }
 }
