@@ -81,8 +81,6 @@ public class FeedFragment extends Fragment {
             public void onRefresh() {
                 // 새로 고침 코드 작성
                 getData();
-                // 새로 고침 완료
-                refreshLayout.setRefreshing(false);
             }
         });
 
@@ -150,13 +148,13 @@ public class FeedFragment extends Fragment {
                         // 보관하기 버튼
                         Toast.makeText(mContext, "StorageBox", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.feed_img:
+                    /*case R.id.feed_img:
                         // 이미지 클릭
                         // 몀시적 인텐트에 FeedData 객체 담아서 보내기
                         Intent intent = new Intent(mContext, PostViewActivity.class);
                         intent.putExtra("FeedItem", feedItemData.get(position));
                         startActivity(intent);
-                        break;
+                        break;*/
                 }
             }
         });
@@ -219,7 +217,16 @@ public class FeedFragment extends Fragment {
     private void getData()
     {
         FirebaseLoadPost
-                .LoadPosts(mContext, adapter,
+                .LoadPosts(mContext,
+                        feedItems -> {
+                            if (adapter != null) {
+                                feedItemData = feedItems;
+                                adapter.setList(feedItems);
+                                adapter.notifyDataSetChanged();
+                            }
+                            // 새로 고침 완료
+                            refreshLayout.setRefreshing(false);
+                            },
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }
 

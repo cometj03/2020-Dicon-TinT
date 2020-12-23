@@ -13,10 +13,12 @@ public class FeedItem implements Serializable {
 
     private List<PostModel.Filter> filters;
     private List<Uri> images;
+    private List<String> imgIDs;
     private String title, subTitle, timeInterval, content, userName, userEmail;
 
-    public FeedItem(List<PostModel.Filter> filters, String title, String subTitle, String content, String timeInterval, String userName, String userEmail) {
+    public FeedItem(List<PostModel.Filter> filters, List<String> imgIDs, String title, String subTitle, String content, String timeInterval, String userName, String userEmail) {
         this.filters = filters;
+        this.imgIDs = imgIDs;
         this.images = new ArrayList<>();
         this.title = title;
         this.subTitle = subTitle;
@@ -24,6 +26,10 @@ public class FeedItem implements Serializable {
         this.content = content;
         this.userName = userName;
         this.userEmail = userEmail;
+    }
+
+    public void addImage(Uri uri) {
+        this.images.add(uri);
     }
 
     public List<PostModel.Filter> getFilters() {
@@ -40,6 +46,14 @@ public class FeedItem implements Serializable {
 
     public void setImages(List<Uri> images) {
         this.images = images;
+    }
+
+    public List<String> getImgIDs() {
+        return imgIDs;
+    }
+
+    public void setImgIDs(List<String> imgIDs) {
+        this.imgIDs = imgIDs;
     }
 
     public String getTitle() {
@@ -80,5 +94,13 @@ public class FeedItem implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

@@ -1,6 +1,7 @@
 package com.sunrin.tint.Feed;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.DateUtil;
+import com.sunrin.tint.Util.FirebaseLoadPost;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
 
@@ -45,30 +50,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         FeedItem item = mData.get(position);
 
-        String timeIntervalText = DateUtil.getTimeAgo(item.getTimeInterval(), mContext.getResources());
-
-
-
+        if (item.getImgIDs() != null && item.getImgIDs().size() > 0) {
+            FirebaseLoadPost
+                    .LoadImage(item.getImgIDs().get(0),
+                            uri -> {
+                                item.addImage(uri);
+                                Glide.with(holder.feed_img)
+                                        .load(item.getImages().get(0))
+                                        .into(holder.feed_img);
+                            });
+        }
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
         holder.timeInterval.setText(item.getTimeInterval());
         holder.userName.setText(item.getUserName());
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
-        /*if (payloads.isEmpty()) {
-            // Perform a full update
-            onBindViewHolder(holder, position);
-        } else {
-            // Perform a partial update
-            for (Object payload : payloads) {
-                if (payload instanceof TimeFormatPayload) {
-                    holder.bindTimePayload((TimeFormatPayload) payload);
-                }
-            }
-        }*/
     }
 
     @Override

@@ -5,14 +5,15 @@ import android.content.Context;
 import com.sunrin.tint.Feed.FeedItem;
 import com.sunrin.tint.Util.DateUtil;
 
+import java.io.Serializable;
 import java.util.List;
 
 // 최신순으로 정렬하기 위해 Comparable 상속
-public class PostModel implements Comparable<PostModel> {
+public class PostModel implements Comparable<PostModel>, Serializable {
     // Model for Firebase Firestore
 
     // string to enum : Enum.valueOf("eMakeUp");
-    public enum Filter {
+    public enum Filter implements Serializable {
         eMakeUp, eHair, eFashion, eNail, eDiet
     }
 
@@ -35,7 +36,7 @@ public class PostModel implements Comparable<PostModel> {
     }
 
     public FeedItem convertIntoFeedItem(Context context) {
-        return new FeedItem(filters, title, subTitle, content,
+        return new FeedItem(filters, imgIDs, title, subTitle, content,
                 DateUtil.getTimeAgo(date, context.getResources()), userName, userEmail);
     }
 
