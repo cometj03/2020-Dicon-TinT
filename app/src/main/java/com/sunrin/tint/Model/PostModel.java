@@ -15,12 +15,14 @@ public class PostModel implements Comparable<PostModel>, Serializable {
 
     private List<Filter> filters;
     private transient List<Uri> images; // transient : Except Serialize
+    private String id;
     private String userName, userEmail;
     private String title, subTitle, content, date;
 
     public PostModel() {}
 
-    public PostModel(List<Filter> filters, List<Uri> images, String title, String subTitle, String content) {
+    public PostModel(String id, List<Filter> filters, List<Uri> images, String title, String subTitle, String content) {
+        this.id = id;
         this.filters = filters;
         this.images = images;
         this.title = title;
@@ -43,9 +45,12 @@ public class PostModel implements Comparable<PostModel>, Serializable {
         return 0;
     }
 
+    public String getId() {
+        return id;
+    }
 
-    public void addImage(Uri uri) {
-        this.images.add(uri);
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<Filter> getFilters() {

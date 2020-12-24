@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -20,12 +22,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.MainActivity;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.DateUtil;
 import com.sunrin.tint.Util.FirebaseUploadPost;
 import com.sunrin.tint.Util.UserCache;
 
@@ -46,6 +50,8 @@ public class PostingFragment extends Fragment {
     private List<Uri> selectedImages;
     private boolean isImageSelected;
 
+    private ViewGroup selectedImageContainer;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class PostingFragment extends Fragment {
         subtitleText = view.findViewById(R.id.subtitleText);
         contentText = view.findViewById(R.id.contentText);
         imgBtn = view.findViewById(R.id.imgBtn);
+        selectedImageContainer = view.findViewById(R.id.selected_image_container);
 
         postBtn.setOnClickListener(v -> UploadPost());
         imgBtn.setOnClickListener(v -> GetImages());
@@ -87,12 +94,11 @@ public class PostingFragment extends Fragment {
 
         // TODO: get filters and apply
         List<Filter> filters = Arrays.asList(Filter.eFashion);
-
-        PostModel post = new PostModel(filters, selectedImages, title, subTitle, content);
+        String documentID = "Post_" + DateUtil.getFileNameWithDate();
 
         FirebaseUploadPost
-                .UploadPost(mContext, post,
-                        id -> PostDone(id),
+                .UploadPost(mContext, new PostModel(documentID, filters, selectedImages, title, subTitle, content),
+                        () -> PostDone(documentID),
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }
 
@@ -108,16 +114,8 @@ public class PostingFragment extends Fragment {
                         .setSelectedUriList(selectedImages)
                         .showMultiImage(uriList -> {
                             selectedImages = uriList;
-                            // TODO: create function to show selected images
-                            if (uriList.isEmpty()) {
-                                isImageSelected = false;
-                                imgBtn.setImageResource(R.drawable.post_image_empty);
-                            } else {
-                                isImageSelected = true;
-                                Glide.with(mContext)
-                                        .load(uriList.get(0))
-                                        .into(imgBtn);
-                            }
+                            isImageSelected = !uriList.isEmpty();
+                            showUriList(uriList);
                         });
             }
 
@@ -137,6 +135,34 @@ public class PostingFragment extends Fragment {
                 .setDeniedMessage("권한을 거부하시면 서비스를 이용하실 수 없습니다.\n\n[설정] > [권한]에서 권한 사용을 설정할 수 있습니다.")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .check();
+    }
+
+    private void showUriList(List<Uri> uriList) {
+        // Remove all views before
+        // adding the new ones.
+        selectedImageContainer.removeAllViews();
+
+        selectedImageContainer.setVisibility(View.VISIBLE);
+
+        int widthPixel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+        int heightPixel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+
+
+        for (Uri uri : uriList) {
+
+            View imageHolder = LayoutInflater.from(mContext).inflate(R.layout.post_image_item, null);
+            ImageView thumbnail = imageHolder.findViewById(R.id.media_image);
+
+            Glide.with(thumbnail)
+                    .load(uri.toString())
+                    .apply(new RequestOptions().fitCenter())
+                    .into(thumbnail);
+
+            selectedImageContainer.addView(imageHolder);
+
+            thumbnail.setLayoutParams(new FrameLayout.LayoutParams(widthPixel, heightPixel));
+
+        }
     }
 
     private void CheckIfCanUpload() {
@@ -179,7 +205,6 @@ public class PostingFragment extends Fragment {
         titleText.setText("");
         subtitleText.setText("");
         contentText.setText("");
-        imgBtn.setImageResource(R.drawable.post_image_empty);
     }
 
     @Override

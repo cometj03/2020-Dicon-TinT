@@ -39,8 +39,6 @@ import static android.content.ContentValues.TAG;
 public class FeedFragment extends Fragment {
 
     Context mContext;
-    private final int[] filterNames = {
-            R.string.filter_name1, R.string.filter_name2, R.string.filter_name3, R.string.filter_name4, R.string.filter_name5 };
     private List<Chip> chips = new ArrayList<>();
     private List<Boolean> chipsBooleans = new ArrayList<>(5);
 
@@ -59,7 +57,6 @@ public class FeedFragment extends Fragment {
     private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
         int tag = (int) buttonView.getTag();
         chipsBooleans.set(tag, isChecked);
-        SharedPreferenceUtil.setPrefFilterBool(mContext, chipsBooleans);
     };
 
     @Nullable
@@ -191,27 +188,11 @@ public class FeedFragment extends Fragment {
     }
 
     private void init(View view) {
-        chipsBooleans = SharedPreferenceUtil.getPrefFilterBool(mContext);
-        if (chipsBooleans.isEmpty())
-            for (int i = 0; i < 5; i++)
-                chipsBooleans.add(false);
-
         chipGroup = view.findViewById(R.id.chipGroup);
         scrollView = view.findViewById(R.id.scrollView);
         filterToggle = view.findViewById(R.id.filterToggle);
         refreshLayout = view.findViewById(R.id.swipeLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
-
-        chips.add(view.findViewById(R.id.chip1));
-        chips.add(view.findViewById(R.id.chip2));
-        chips.add(view.findViewById(R.id.chip3));
-        chips.add(view.findViewById(R.id.chip4));
-        chips.add(view.findViewById(R.id.chip5));
-        for (int i = 0; i < 5; i++) {
-            chips.get(i).setTag(i);
-            chips.get(i).setOnCheckedChangeListener(chipChangeListener);
-            chips.get(i).setChecked(chipsBooleans.get(i));
-        }
     }
 
     private void getData()
