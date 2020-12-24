@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Lifecycle;
 import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.PorterDuff;
@@ -13,8 +15,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.sunrin.tint.MainScreen.Feed.FeedFragment;
 import com.sunrin.tint.MainScreen.Posting.PostingFragment;
 import com.sunrin.tint.MainScreen.Profile.ProfileFragment;
@@ -22,14 +27,16 @@ import com.sunrin.tint.MainScreen.Search.SearchFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     // 프래그먼트 TabLayout Data
-    private ArrayList<Fragment> frag_list = new ArrayList<>();
-    private ArrayList<Integer> icon_list = new ArrayList<>();
+    private List<Fragment> frag_list = new ArrayList<>();
+    private List<Integer> icon_list = new ArrayList<>();
 
     Toolbar toolbar;
     TabLayout tabLayout;
+    ViewPager2 viewPager2;
     ViewPager pager;
 
     @Override
@@ -37,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("MainActivity", "onCreate: " + new Date().toString());
         // Toast.makeText(this, TimeAgo.getTimeAgo("2019-06-08 10:30:23"), Toast.LENGTH_SHORT).show();
 
 
@@ -55,11 +61,13 @@ public class MainActivity extends AppCompatActivity {
         frag_list.add(new ProfileFragment());   // 네번째 프래그먼트
         addIconsToList();   // 아이콘 담기
 
-        // 뷰페이저 설정
-        FragmentManager manager = getSupportFragmentManager();
-        PagerAdapter adapter = new PagerAdapter(manager);
-        pager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(pager);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPager2.setAdapter(viewPagerAdapter);
+
+        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
+            tab.setIcon(icon_list.get(position));
+        }).attach();
+
         // TabLayout 아이콘 적용
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(icon_list.get(i));
@@ -97,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabs);
-        pager = findViewById(R.id.pager);
+        viewPager2 = findViewById(R.id.viewPager2_container);
+        // pager = findViewById(R.id.pager);
     }
 
     private void addIconsToList() {
@@ -108,18 +117,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 뷰페이저 구성을 위해 어댑터 생성
-    class PagerAdapter extends FragmentPagerAdapter {
+    class ViewPagerAdapter extends FragmentStateAdapter {
 
-        public PagerAdapter(FragmentManager fm) { super(fm); }
+
+        public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
+        }
 
         @NonNull
         @Override
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             return frag_list.get(position);
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return frag_list.size();
         }
     }

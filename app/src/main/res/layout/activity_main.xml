@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/backgroundColorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
+        <!-- elevation : 객체의 z값을 설정해준다 -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorOnPrimary"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:background="@color/backgroundColorPrimary"
+            android:elevation="1dp"
+            app:layout_scrollFlags="noScroll">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="11dp"
-                android:layout_marginVertical="5dp"
                 android:layout_gravity="center"
-                android:src="@drawable/logo_small"/>
+                android:layout_marginVertical="5dp"
+                android:padding="11dp"
+                android:src="@drawable/logo_small" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -31,14 +39,25 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="1dp"
             app:tabBackground="@color/backgroundColorPrimary"
+            app:tabGravity="fill"
             app:tabIndicatorColor="?attr/colorPrimary"
-            app:tabRippleColor="@android:color/transparent"
-            app:tabMode="fixed" />
+            app:tabMode="fixed"
+            app:tabRippleColor="@android:color/transparent" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
+    <!--<androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -56,6 +75,6 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>-->
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

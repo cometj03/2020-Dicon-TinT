@@ -13,12 +13,17 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 <!--        <item name="android:fontFamily">@font/font</item>-->
 
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="searchViewStyle">@drawable/icon_search</item>
 
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
+    </style>
+
+    <style name="TextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
     <style name="ChipTextStyle" parent="TextAppearance.MaterialComponents.Chip">

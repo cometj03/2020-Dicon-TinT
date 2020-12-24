@@ -27,13 +27,13 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        settingBtn = view.findViewById(R.id.settingBtn);
-        nickNameTextView = view.findViewById(R.id.nickNameTextView);
-
-        settingBtn.setOnClickListener(v -> {
-            //FirebaseAuth.getInstance().signOut();
-            Toast.makeText(mContext, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
-        });
+//        settingBtn = view.findViewById(R.id.settingBtn);
+//        nickNameTextView = view.findViewById(R.id.nickNameTextView);
+//
+//        settingBtn.setOnClickListener(v -> {
+//            //FirebaseAuth.getInstance().signOut();
+//            Toast.makeText(mContext, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
+//        });
 
         return view;
     }
