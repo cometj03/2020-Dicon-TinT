@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sunrin.tint.Util.SharedPreferenceUtil;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,10 +21,13 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                startActivity(new Intent(this, MainActivity.class));
-            } else {
+
+            String tmp = SharedPreferenceUtil.getString(this, "is_first_app");
+            if (user == null || tmp.isEmpty()) {
                 startActivity(new Intent(this, LogInActivity.class));
+                SharedPreferenceUtil.setString(this, "is_first_app", "false");
+            } else {
+                startActivity(new Intent(this, MainActivity.class));
             }
             finish();
         }, 2000);

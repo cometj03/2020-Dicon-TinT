@@ -24,6 +24,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;
@@ -44,7 +45,7 @@ public class FeedFragment extends Fragment {
     private List<Boolean> chipsBooleans = new ArrayList<>(5);
 
     // RecyclerView Item Data
-    List<FeedItem> feedItemData = new ArrayList<>();
+    List<PostModel> postModelList = new ArrayList<>();
 
     ChipGroup chipGroup;
     HorizontalScrollView scrollView;
@@ -151,7 +152,7 @@ public class FeedFragment extends Fragment {
                         // 이미지 클릭
                         // 몀시적 인텐트에 FeedData 객체 담아서 보내기
                         Intent intent = new Intent(mContext, PostViewActivity.class);
-                        intent.putExtra("FeedItem", feedItemData.get(position));
+                        intent.putExtra("item", postModelList.get(position));
                         startActivity(intent);
                         break;
                 }
@@ -216,11 +217,11 @@ public class FeedFragment extends Fragment {
     private void getData()
     {
         FirebaseLoadPost
-                .LoadPosts(mContext,
-                        feedItems -> {
+                .LoadPosts(
+                        postModels -> {
                             if (adapter != null) {
-                                feedItemData = feedItems;
-                                adapter.setList(feedItems);
+                                postModelList = postModels;
+                                adapter.setList(postModelList);
                                 adapter.notifyDataSetChanged();
                             }
                             // 새로 고침 완료

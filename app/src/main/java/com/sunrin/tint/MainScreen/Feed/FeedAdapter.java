@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 
@@ -21,17 +22,17 @@ import java.util.List;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
 
     Context mContext;
-    private List<FeedItem> mData;
+    private List<PostModel> mData;
 
     FeedAdapter() {
         this.mData = new ArrayList<>();
     }
 
-    FeedAdapter(List<FeedItem> list) {
+    FeedAdapter(List<PostModel> list) {
         this.mData = list;
     }
 
-    public void setList(List<FeedItem> list) {
+    public void setList(List<PostModel> list) {
         this.mData = list;
     }
 
@@ -52,9 +53,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
         // TODO: apply animation to views here
         // https://youtu.be/rJ-7KgMAJUo
 
-        FeedItem item = mData.get(position);
+        PostModel item = mData.get(position);
 
-        if (item.getImgIDs() != null && item.getImgIDs().size() > 0) {
+        /*if (item.getImgIDs() != null && item.getImgIDs().size() > 0) {
             FirebaseLoadPost
                     .LoadImage(item.getImgIDs().get(0),
                             uri -> {
@@ -63,10 +64,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                                         .load(item.getImages().get(0))
                                         .into(holder.feed_img);
                             });
-        }
+        }*/
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
-        holder.timeInterval.setText(item.getTimeInterval());
+        holder.timeInterval.setText(item.getDate());
         holder.userName.setText(item.getUserName());
     }
 

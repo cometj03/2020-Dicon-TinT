@@ -1,27 +1,28 @@
 package com.sunrin.tint.Model;
 
-import android.content.Context;
+import android.net.Uri;
 
 import com.sunrin.tint.Filter;
-import com.sunrin.tint.MainScreen.Feed.FeedItem;
 import com.sunrin.tint.Util.DateUtil;
 
+import java.io.Serializable;
 import java.util.List;
 
+// Intent 로 객체를 보내기 위해 Serializable 상속
 // 최신순으로 정렬하기 위해 Comparable 상속
-public class PostModel implements Comparable<PostModel> {
+public class PostModel implements Comparable<PostModel>, Serializable {
     // Model for Firebase Firestore
 
     private List<Filter> filters;
-    private List<String> imgIDs;
+    private transient List<Uri> images; // transient : Except Serialize
     private String userName, userEmail;
     private String title, subTitle, content, date;
 
     public PostModel() {}
 
-    public PostModel(List<Filter> filters, List<String> imgIDs, String title, String subTitle, String content) {
+    public PostModel(List<Filter> filters, List<Uri> images, String title, String subTitle, String content) {
         this.filters = filters;
-        this.imgIDs = imgIDs;
+        this.images = images;
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
@@ -29,12 +30,6 @@ public class PostModel implements Comparable<PostModel> {
         this.userName = "username";
         this.userEmail = "email@email.com";
     }
-
-    public FeedItem convertIntoFeedItem(Context context) {
-        return new FeedItem(filters, imgIDs, title, subTitle, content,
-                DateUtil.getTimeAgo(date, context.getResources()), userName, userEmail);
-    }
-
 
     @Override
     public int compareTo(PostModel o) {
@@ -48,6 +43,11 @@ public class PostModel implements Comparable<PostModel> {
         return 0;
     }
 
+
+    public void addImage(Uri uri) {
+        this.images.add(uri);
+    }
+
     public List<Filter> getFilters() {
         return filters;
     }
@@ -56,12 +56,12 @@ public class PostModel implements Comparable<PostModel> {
         this.filters = filters;
     }
 
-    public List<String> getImgIDs() {
-        return imgIDs;
+    public List<Uri> getImages() {
+        return images;
     }
 
-    public void setImgIDs(List<String> imgIDs) {
-        this.imgIDs = imgIDs;
+    public void setImages(List<Uri> images) {
+        this.images = images;
     }
 
     public String getUserName() {

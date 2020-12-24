@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.sunrin.tint.MainScreen.Feed.FeedItem;
 import com.sunrin.tint.Model.PostModel;
 
 public class PostViewActivity extends AppCompatActivity {
@@ -27,7 +26,7 @@ public class PostViewActivity extends AppCompatActivity {
         contentText = findViewById(R.id.content);
         imageView = findViewById(R.id.img);
 
-        FeedItem data = (FeedItem) getIntent().getSerializableExtra("FeedItem");
+        PostModel data = (PostModel) getIntent().getSerializableExtra("item");
 
         titleText.setText(data.getTitle());
         subtitleText.setText(data.getSubTitle());
