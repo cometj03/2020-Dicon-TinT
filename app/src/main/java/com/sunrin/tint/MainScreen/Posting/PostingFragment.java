@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -26,18 +25,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sunrin.tint.Filter;
-import com.sunrin.tint.MainActivity;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.DateUtil;
 import com.sunrin.tint.Util.FirebaseUploadPost;
 import com.sunrin.tint.Util.UserCache;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import gun0912.tedbottompicker.TedBottomPicker;
-import gun0912.tedbottompicker.TedBottomSheetDialogFragment;
 
 public class PostingFragment extends Fragment {
 
@@ -80,7 +78,7 @@ public class PostingFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            CheckIfCanUpload();
+            checkIfCanUpload();
         }
 
         @Override
@@ -95,9 +93,15 @@ public class PostingFragment extends Fragment {
         // TODO: get filters and apply
         List<Filter> filters = Arrays.asList(Filter.eFashion);
         String documentID = "Post_" + DateUtil.getFileNameWithDate();
+        List<String> imageToString = new ArrayList<String>() {
+            {
+                for (Uri uri : selectedImages)
+                    add(uri.toString());
+            }
+        };
 
         FirebaseUploadPost
-                .UploadPost(mContext, new PostModel(documentID, filters, selectedImages, title, subTitle, content),
+                .UploadPost(mContext, new PostModel(documentID, filters, imageToString, title, subTitle, content),
                         () -> PostDone(documentID),
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }
@@ -116,6 +120,7 @@ public class PostingFragment extends Fragment {
                             selectedImages = uriList;
                             isImageSelected = !uriList.isEmpty();
                             showUriList(uriList);
+                            checkIfCanUpload();
                         });
             }
 
@@ -144,8 +149,8 @@ public class PostingFragment extends Fragment {
 
         selectedImageContainer.setVisibility(View.VISIBLE);
 
-        int widthPixel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
-        int heightPixel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+        int widthPixel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
+        int heightPixel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
 
 
         for (Uri uri : uriList) {
@@ -165,7 +170,7 @@ public class PostingFragment extends Fragment {
         }
     }
 
-    private void CheckIfCanUpload() {
+    private void checkIfCanUpload() {
         boolean t = titleText.getText().toString().isEmpty();
         boolean s = subtitleText.getText().toString().isEmpty();
         postBtn.setEnabled(isImageSelected && !t && !s);

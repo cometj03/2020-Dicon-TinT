@@ -51,7 +51,7 @@ public class FirebaseLoadPost {
                         FirebaseErrorUtil.getErrorMessage(e, "데이터를 불러오지 못했습니다.")));
     }
 
-    public static void LoadImage(String imgID, OnSuccessListener<Uri> s) {
+    /*public static void LoadImage(String imgID, OnSuccessListener<Uri> s) {
         if (imgID == null)
             return;
         FirebaseStorage
@@ -62,5 +62,5 @@ public class FirebaseLoadPost {
                 .addOnSuccessListener(s)
                 .addOnFailureListener(e -> onLoadFailureListener.onLoadFailed(
                         FirebaseErrorUtil.getErrorMessage(e, "이미지를 불러오지 못했습니다.")));
-    }
+    }*/
 }

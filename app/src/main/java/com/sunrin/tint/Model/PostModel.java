@@ -14,14 +14,14 @@ public class PostModel implements Comparable<PostModel>, Serializable {
     // Model for Firebase Firestore
 
     private List<Filter> filters;
-    private transient List<Uri> images; // transient : Except Serialize
+    private List<String> images;
     private String id;
     private String userName, userEmail;
     private String title, subTitle, content, date;
 
     public PostModel() {}
 
-    public PostModel(String id, List<Filter> filters, List<Uri> images, String title, String subTitle, String content) {
+    public PostModel(String id, List<Filter> filters, List<String> images, String title, String subTitle, String content) {
         this.id = id;
         this.filters = filters;
         this.images = images;
@@ -61,11 +61,11 @@ public class PostModel implements Comparable<PostModel>, Serializable {
         this.filters = filters;
     }
 
-    public List<Uri> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(List<Uri> images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 

@@ -107,8 +107,8 @@ public class FeedFragment extends Fragment {
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
         //recyclerView.addItemDecoration(dividerItemDecoration);
         // 아이템 간 간격 조정
-        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
-        recyclerView.addItemDecoration(itemDecoration);
+//        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
+//        recyclerView.addItemDecoration(itemDecoration);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -213,7 +213,7 @@ public class FeedFragment extends Fragment {
 
 
     // 아이템 끼리 간격 주기 위한 클래스
-    static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
+    /*static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
 
         private final int interval;
 
@@ -227,7 +227,7 @@ public class FeedFragment extends Fragment {
             if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1)
                 outRect.bottom = interval;
         }
-    }
+    }*/
 //    private void spawnFilterChip() {
 //        for (int i = 0; i < 5; i++) {
 //            Chip chip = new Chip(mContext);

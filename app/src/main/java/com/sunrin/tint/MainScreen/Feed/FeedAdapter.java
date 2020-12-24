@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.DateUtil;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 
 import java.util.ArrayList;
@@ -55,19 +56,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 
         PostModel item = mData.get(position);
 
-        /*if (item.getImgIDs() != null && item.getImgIDs().size() > 0) {
-            FirebaseLoadPost
-                    .LoadImage(item.getImgIDs().get(0),
-                            uri -> {
-                                item.addImage(uri);
-                                Glide.with(holder.feed_img)
-                                        .load(item.getImages().get(0))
-                                        .into(holder.feed_img);
-                            });
-        }*/
+        if (!item.getId().isEmpty()) {
+            Glide.with(holder.feed_img)
+                    .load(item.getImages().get(0))
+                    .into(holder.feed_img);
+        }
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
-        holder.timeInterval.setText(item.getDate());
+        holder.timeInterval.setText(DateUtil.getTimeAgo(item.getDate(), mContext.getResources()));
         holder.userName.setText(item.getUserName());
     }
 

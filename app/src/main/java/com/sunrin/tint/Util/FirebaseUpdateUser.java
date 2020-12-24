@@ -12,7 +12,7 @@ public class FirebaseUpdateUser {
                 .getInstance()
                 .collection("users")
                 .document(userModel.getEmail())
-                .update("postID", userModel.getPostID(), "storageID", userModel.getStorageID())
+                .update("postID", userModel.getPostID(), "storageID", userModel.getStorageID(), "userFilters", userModel.getUserFilters())
                 .addOnFailureListener(e -> Toast.makeText(context,
                         FirebaseErrorUtil.getErrorMessage(e, "사용자 업데이트가 실패했습니다."), Toast.LENGTH_SHORT).show());
     }

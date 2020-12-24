@@ -34,8 +34,4 @@ public class FirebaseUploadPost {
                 .addOnSuccessListener(command -> s.onUploadSuccess())
                 .addOnFailureListener(e -> f.onUploadFailed(FirebaseErrorUtil.getErrorMessage(e, "업로드에 실패하였습니다.")));
     }
-
-    public static void UploadImages(List<Uri> images) {
-
-    }
 }
