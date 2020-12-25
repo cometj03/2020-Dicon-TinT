@@ -24,6 +24,7 @@
 
     <style name="TextViewStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="fontFamily">@font/thempgt</item>
     </style>
 
     <style name="ChipTextStyle" parent="TextAppearance.MaterialComponents.Chip">

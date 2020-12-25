@@ -4,4 +4,6 @@
 
     <color name="textColorPrimary">#D9D9D9</color>
     <color name="backgroundColorPrimary">#232323</color>
+
+    <color name="demo_dark_transparent">#24C1C1C1</color>
 </resources>

@@ -4,118 +4,66 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:background="@drawable/demo_round_box" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/demo_round" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="78dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginBottom="3dp"
-                android:alpha="0.1"
-                android:background="@android:color/background_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:alpha="0.1"
-                android:background="@android:color/background_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:alpha="0.1"
-                android:background="@android:color/background_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:alpha="0.1"
-                android:background="@android:color/background_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:alpha="0.1"
-                android:background="@android:color/background_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:alpha="0.1"
-                android:background="@android:color/background_dark" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="6dp"
                 android:layout_marginTop="3dp"
-                android:alpha="0.1"
-                android:background="@android:color/background_dark" />
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/demo_dark_transparent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/demo_dark_transparent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/demo_dark_transparent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/demo_dark_transparent" />
 
         </LinearLayout>
-
-        <View
-            android:layout_width="78dp"
-            android:layout_height="78dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:alpha="0.1"
-            android:background="@android:color/background_dark" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:orientation="vertical">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="6dp"
-            android:alpha="0.1"
-            android:background="@android:color/background_dark" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:alpha="0.1"
-            android:background="@android:color/background_dark" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:alpha="0.1"
-            android:background="@android:color/background_dark" />
-
     </LinearLayout>
 </LinearLayout>

@@ -16,4 +16,6 @@
     <color name="gray_500">#474747</color>
     <color name="pink_200">#D98484</color>
     <color name="pink_700">#D9435F</color>
+
+    <color name="demo_dark_transparent">#24000000</color>
 </resources>
