@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.sunrin.tint.Filter;
@@ -44,6 +45,7 @@ public class PostingFragment extends Fragment {
     Button postBtn;
     EditText titleText, subtitleText, contentText;
     ImageView imgBtn;
+    List<CheckableChipView> chipViews = new ArrayList<>();
 
     private List<Uri> selectedImages;
     private boolean isImageSelected;
@@ -62,10 +64,16 @@ public class PostingFragment extends Fragment {
         contentText = view.findViewById(R.id.contentText);
         imgBtn = view.findViewById(R.id.imgBtn);
         selectedImageContainer = view.findViewById(R.id.selected_image_container);
+        chipViews.add(view.findViewById(R.id.chip1));
+        chipViews.add(view.findViewById(R.id.chip2));
+        chipViews.add(view.findViewById(R.id.chip3));
+        chipViews.add(view.findViewById(R.id.chip4));
+        chipViews.add(view.findViewById(R.id.chip5));
 
         postBtn.setOnClickListener(v -> UploadPost());
         imgBtn.setOnClickListener(v -> GetImages());
         titleText.addTextChangedListener(textWatcher);
+        subtitleText.addTextChangedListener(textWatcher);
         contentText.addTextChangedListener(textWatcher);
 
         return view;
@@ -90,8 +98,7 @@ public class PostingFragment extends Fragment {
         String subTitle = subtitleText.getText().toString();
         String content = contentText.getText().toString();
 
-        // TODO: get filters and apply
-        List<Filter> filters = Arrays.asList(Filter.eFashion);
+        List<Filter> filters = getFilters();
         List<String> imageToString = new ArrayList<String>() {
             {
                 for (Uri uri : selectedImages)
@@ -181,34 +188,16 @@ public class PostingFragment extends Fragment {
         postBtn.setEnabled(isImageSelected && !t && !s);
     }
 
-    // Firebase Firestore으로 이미지 업로드
-    /*private List<String> UploadImage(Uri file) {
-        List<String> imageIDs = new ArrayList<>();
-        imageIDs.add(DateUtil.getFileNameWithDate() + "(1)");
-
-        if (file != null) {
-            ProgressDialog progressDialog = new ProgressDialog(mContext);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            StorageReference ref = storageReference.child("images/" + imageIDs.get(0));
-            ref.putFile(file)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        //Toast.makeText(mContext, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(mContext, "Failed", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    })
-                    .addOnProgressListener(snapshot -> {
-                        double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                        progressDialog.setMessage("Uploaded " + (int)progress + "%");
-                    });
-        }
-
-        return imageIDs;
-    }*/
+    private List<Filter> getFilters() {
+        List<Filter> filterList = new ArrayList<Filter>() {
+            {
+                for (int i = 0; i < chipViews.size(); i++)
+                    if (chipViews.get(i).isChecked())
+                        add(Filter.values()[i]);
+            }
+        };
+        return filterList;
+    }
 
     private void PostDone(String docId) {
         UserCache.updateUser(mContext, docId, UserCache.UPDATE_POST);

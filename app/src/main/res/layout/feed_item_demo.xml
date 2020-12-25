@@ -6,7 +6,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="340dp"
         android:layout_gravity="center"
         android:layout_margin="16dp"
         android:background="@drawable/demo_round_box" />
@@ -20,7 +20,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
             android:background="@drawable/demo_round" />
 
         <LinearLayout
@@ -30,7 +30,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="6dp"
+                android:layout_height="10dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="16dp"
@@ -39,7 +39,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="6dp"
+                android:layout_height="10dp"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -48,16 +48,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="3dp"
-                android:background="@color/demo_dark_transparent" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
+                android:layout_height="10dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"

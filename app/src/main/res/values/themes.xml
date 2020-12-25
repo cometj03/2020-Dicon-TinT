@@ -27,10 +27,13 @@
         <item name="fontFamily">@font/thempgt</item>
     </style>
 
-    <style name="ChipTextStyle" parent="TextAppearance.MaterialComponents.Chip">
-        <item name="android:textSize">16sp</item>
-        <!--item name="android:textStyle">bold</item>
-        <item name="fontFamily">asdf</item-->
+    <style name="ChipStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:padding">6dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
     </style>
 
 </resources>

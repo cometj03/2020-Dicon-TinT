@@ -47,6 +47,12 @@ public class FirebaseUploadPost {
             return;
         }
 
+        // 필터 체크
+        if (postModel.getFilters().isEmpty()) {
+            onUploadFailureListener.onUploadFailed("필터는 적어도 하나 이상 체크 되어야 해요.");
+            return;
+        }
+
         // uri : 다운로드 링크
         uploadImages(postModel.getImages(), filename,
                 uri -> uploadPost(uri.toString(), postModel,

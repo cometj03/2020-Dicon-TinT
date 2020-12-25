@@ -22,7 +22,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.github.okdroid.checkablechipview.CheckableChipView;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.PostViewActivity;
@@ -32,6 +31,7 @@ import com.sunrin.tint.Util.UserCache;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.content.ContentValues.TAG;
 
@@ -39,6 +39,8 @@ public class FeedFragment extends Fragment {
 
     Context mContext;
     private List<CheckableChipView> chips = new ArrayList<>();
+    private static int firstVisible;
+    private boolean timeout, allLoaded;
 
     // RecyclerView Item Data
     List<PostModel> postModelList = new ArrayList<>();
@@ -107,6 +109,8 @@ public class FeedFragment extends Fragment {
         shimmerRecyclerView.setAdapter(adapter);
         getData();
 
+        firstVisible = ((LinearLayoutManager) shimmerRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
         //recyclerView.addItemDecoration(dividerItemDecoration);
         // 아이템 간 간격 조정
@@ -121,13 +125,17 @@ public class FeedFragment extends Fragment {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 assert layoutManager != null;   // null 이라면 강제종료
 
-                if (dy > 0) {
+                int currentFirstVisible = layoutManager.findFirstVisibleItemPosition();
+
+                if (currentFirstVisible > firstVisible) {
                     // Scrolling up
                     chipContainer.setVisibility(View.INVISIBLE);
                 } else {
                     // Scrolling Down
                     chipContainer.setVisibility(View.VISIBLE);
                 }
+
+                firstVisible = currentFirstVisible;
 
                 /*int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
@@ -207,15 +215,25 @@ public class FeedFragment extends Fragment {
 
     private void getData()
     {
+        timeout = allLoaded = false;
+
         // recyclerView loading start
         shimmerRecyclerView.showShimmerAdapter();
+        shimmerRecyclerView.postDelayed(() -> {
+            timeout = true;
+            if (allLoaded)
+                shimmerRecyclerView.hideShimmerAdapter();   // recyclerView loading stop
+        }, 2300);
+
         FirebaseLoadPost
                 .LoadPosts(
                         postModels -> {
                             if (adapter != null) {
+                                allLoaded = true;
+                                if (timeout)
+                                    shimmerRecyclerView.hideShimmerAdapter();
+
                                 postModelList = postModels;
-                                // recyclerView loading stop
-                                shimmerRecyclerView.hideShimmerAdapter();
                                 adapter.setList(postModelList);
                                 adapter.notifyDataSetChanged();
                             }
