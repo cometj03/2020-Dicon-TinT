@@ -36,20 +36,24 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
-        Glide.with(holder.itemView)
-                .load(arrayList.get(position).getImages())
-                .into(holder.iv_image);
+
+        for(String s : arrayList.get(position).getImages()) {
+            Glide.with(holder.itemView)
+                    .load(s)
+                    .into(holder.iv_image);
+        }
+
         holder.tv_title.setText(arrayList.get(position).getTitle());
         holder.tv_subTitle.setText(arrayList.get(position).getSubTitle());
         holder.tv_content.setText(arrayList.get(position).getContent());
+
     }
 
     @Override
-    public int getItemCount() {
-        return (null != arrayList ? arrayList.size() : 0);
-    }
+    public int getItemCount() { return (null != arrayList ? arrayList.size() : 0); }
 
     public class SearchViewHolder extends RecyclerView.ViewHolder {
+
         ImageView iv_image;
         TextView tv_title;
         TextView tv_subTitle;
