@@ -27,7 +27,6 @@ import com.gun0912.tedpermission.TedPermission;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.DateUtil;
 import com.sunrin.tint.Util.FirebaseUploadPost;
 import com.sunrin.tint.Util.UserCache;
 
@@ -92,7 +91,6 @@ public class PostingFragment extends Fragment {
 
         // TODO: get filters and apply
         List<Filter> filters = Arrays.asList(Filter.eFashion);
-        String documentID = "Post_" + DateUtil.getFileNameWithDate();
         List<String> imageToString = new ArrayList<String>() {
             {
                 for (Uri uri : selectedImages)
@@ -100,9 +98,14 @@ public class PostingFragment extends Fragment {
             }
         };
 
+        // TODO: create loading dialog
+        Toast.makeText(mContext, "포스트 업로드 중...", Toast.LENGTH_SHORT).show();
         FirebaseUploadPost
-                .UploadPost(mContext, new PostModel(documentID, filters, imageToString, title, subTitle, content),
-                        () -> PostDone(documentID),
+                .Upload(mContext, new PostModel(filters, imageToString, title, subTitle, content),
+                        (documentID) -> {
+                            PostDone(documentID);
+                            Toast.makeText(mContext, "업로드 완료", Toast.LENGTH_SHORT).show();
+                        },
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }
 
@@ -207,6 +210,7 @@ public class PostingFragment extends Fragment {
 
     private void PostDone(String docId) {
         UserCache.updateUser(mContext, docId, UserCache.UPDATE_POST);
+        postBtn.setEnabled(false);
         titleText.setText("");
         subtitleText.setText("");
         contentText.setText("");

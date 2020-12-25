@@ -1,12 +1,9 @@
 package com.sunrin.tint.Util;
 
-import android.net.Uri;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
 import com.sunrin.tint.Model.PostModel;
 
 import java.util.ArrayList;

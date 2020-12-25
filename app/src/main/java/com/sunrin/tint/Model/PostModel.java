@@ -1,7 +1,5 @@
 package com.sunrin.tint.Model;
 
-import android.net.Uri;
-
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Util.DateUtil;
 
@@ -21,8 +19,7 @@ public class PostModel implements Comparable<PostModel>, Serializable {
 
     public PostModel() {}
 
-    public PostModel(String id, List<Filter> filters, List<String> images, String title, String subTitle, String content) {
-        this.id = id;
+    public PostModel(List<Filter> filters, List<String> images, String title, String subTitle, String content) {
         this.filters = filters;
         this.images = images;
         this.title = title;
