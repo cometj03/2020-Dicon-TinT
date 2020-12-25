@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.sunrin.tint.Util.FirebaseRegister;
 import com.sunrin.tint.Util.UserCache;
+import com.sunrin.tint.View.LoadingDialog;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,15 +36,16 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordET.getText().toString();
         String name = nicknameET.getText().toString();
 
-        Toast.makeText(this, "계정 생성 시도중...", Toast.LENGTH_SHORT).show();
+        LoadingDialog dialog = new LoadingDialog(this);
+        dialog.setMessage("계정 생성 중...").show();
 
         FirebaseRegister
                 .register(email, password, name,
                         userModel -> {
-                            Toast.makeText(this, "계정 생성 성공", Toast.LENGTH_SHORT).show();
+                            dialog.setMessage("계정 생성 성공!").finish(true);
                             UserCache.setUser(this, userModel);
                             finish();
                         },
-                        errorMsg -> Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show());
+                        errorMsg -> dialog.setMessage(errorMsg).finish(false));
     }
 }

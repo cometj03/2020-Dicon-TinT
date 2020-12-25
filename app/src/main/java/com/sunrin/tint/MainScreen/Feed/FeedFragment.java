@@ -76,15 +76,19 @@ public class FeedFragment extends Fragment {
 
 
         // 새로 고침 코드 작성
-        refreshLayout.setOnRefreshListener(this::getData);
+        refreshLayout.setOnRefreshListener(() -> {
+            getData();
+            // 새로 고침 완료
+            refreshLayout.setRefreshing(false);
+        });
         // 한 바퀴 돌 때마다 색 바뀜
         refreshLayout.setColorSchemeResources(
-                R.color.pink_700,
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light,
-                R.color.pink_200
+                R.color.pink_700
+//                android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light,
+//                R.color.pink_200
         );
 
         return view;
@@ -215,8 +219,6 @@ public class FeedFragment extends Fragment {
                                 adapter.setList(postModelList);
                                 adapter.notifyDataSetChanged();
                             }
-                            // 새로 고침 완료
-                            refreshLayout.setRefreshing(false);
                             },
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }

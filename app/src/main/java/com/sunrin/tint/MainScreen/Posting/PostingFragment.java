@@ -29,6 +29,7 @@ import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseUploadPost;
 import com.sunrin.tint.Util.UserCache;
+import com.sunrin.tint.View.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,15 +99,16 @@ public class PostingFragment extends Fragment {
             }
         };
 
-        // TODO: create loading dialog
-        Toast.makeText(mContext, "포스트 업로드 중...", Toast.LENGTH_SHORT).show();
+        LoadingDialog dialog = new LoadingDialog(mContext);
+        dialog.setMessage("포스트 업로드 중...").show();
+
         FirebaseUploadPost
                 .Upload(mContext, new PostModel(filters, imageToString, title, subTitle, content),
                         (documentID) -> {
                             PostDone(documentID);
-                            Toast.makeText(mContext, "업로드 완료", Toast.LENGTH_SHORT).show();
+                            dialog.setMessage("업로드 완료").finish(true);
                         },
-                        errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
+                        errorMsg -> dialog.setMessage(errorMsg).finish(false));
     }
 
     private void GetImages() {

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.sunrin.tint.Util.FirebaseLogIn;
 import com.sunrin.tint.Util.UserCache;
+import com.sunrin.tint.View.LoadingDialog;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,16 +72,16 @@ public class LogInActivity extends AppCompatActivity {
         input_email = emailTxt.getText().toString().trim();
         input_pw = pwTxt.getText().toString().trim();
 
-        Toast.makeText(this, "로그인 시도중...", Toast.LENGTH_SHORT).show();
-
+        LoadingDialog dialog = new LoadingDialog(this);
+        dialog.setMessage("로그인 시도 중...").show();
         FirebaseLogIn
                 .login(input_email, input_pw,
                         userModel -> {
                             UserCache.setUser(this, userModel);
-                            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                            dialog.setMessage("로그인 성공!").finish(true);
                             startActivity(new Intent(this, MainActivity.class));
                             finish();
                         },
-                        errorMsg -> Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show());
+                        errorMsg -> dialog.setMessage(errorMsg).finish(false));
     }
 }
