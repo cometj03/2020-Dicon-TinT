@@ -2,7 +2,8 @@ package com.sunrin.tint.Util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 
 public class SharedPreferenceUtil {
     static SharedPreferences getSharedPreferences(Context context) {

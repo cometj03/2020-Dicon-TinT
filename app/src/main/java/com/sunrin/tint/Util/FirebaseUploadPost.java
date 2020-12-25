@@ -17,9 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FirebaseUploadPost {
-    private static List<String> urlList;
 
-    private static OnUploadSuccessListener onUploadSuccessListener;
+    private static List<String> urlList;
     private static OnUploadFailureListener onUploadFailureListener;
 
     public interface OnUploadSuccessListener {
@@ -31,7 +30,6 @@ public class FirebaseUploadPost {
     }
 
     public static void Upload(Context context, PostModel postModel, OnUploadSuccessListener s, OnUploadFailureListener f) {
-        onUploadSuccessListener = s;
         onUploadFailureListener = f;
 
         urlList = new ArrayList<>();
@@ -49,9 +47,10 @@ public class FirebaseUploadPost {
             return;
         }
 
+        // uri : 다운로드 링크
         uploadImages(postModel.getImages(), filename,
                 uri -> uploadPost(uri.toString(), postModel,
-                        aVoid -> onUploadSuccessListener.onUploadSuccess(postModel.getId())));
+                        aVoid -> s.onUploadSuccess(postModel.getId())));
     }
 
     private static void uploadImages(List<String> imageList, String filename, OnSuccessListener<Uri> s) {
@@ -63,6 +62,7 @@ public class FirebaseUploadPost {
             Uri uri = Uri.parse(imageList.get(i));
             UploadTask uploadTask = reference.putFile(uri);
 
+            // 업로드 후 다운로드 링크 가져옴
             uploadTask.continueWithTask(task -> {
                 if (task.isSuccessful())
                     return reference.getDownloadUrl();

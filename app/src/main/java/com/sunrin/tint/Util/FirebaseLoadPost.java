@@ -12,7 +12,6 @@ import java.util.List;
 
 public class FirebaseLoadPost {
 
-    private static OnLoadSuccessListener onLoadSuccessListener;
     private static OnLoadFailureListener onLoadFailureListener;
 
     public interface OnLoadSuccessListener {
@@ -24,7 +23,6 @@ public class FirebaseLoadPost {
     }
 
     public static void LoadPosts(OnLoadSuccessListener s, OnLoadFailureListener f) {
-        onLoadSuccessListener = s;
         onLoadFailureListener = f;
 
         List<PostModel> list = new ArrayList<>();
@@ -34,7 +32,7 @@ public class FirebaseLoadPost {
                 list.add(document.toObject(PostModel.class));
                 list.sort(Comparator.reverseOrder());
             }
-            onLoadSuccessListener.onLoadSuccess(list);
+            s.onLoadSuccess(list);
         });
     }
 

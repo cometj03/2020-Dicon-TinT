@@ -22,13 +22,25 @@
         tools:layout_editor_absoluteX="-136dp"
         tools:layout_editor_absoluteY="-16dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <!-- To Show loading recyclerview -->
+        <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+            android:id="@+id/shimmerRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingTop="70dp"
-            tools:listitem="@layout/feed_item" />
+            app:shimmer_demo_child_count="2"
+            app:shimmer_demo_layout="@layout/feed_item_demo"
+            app:shimmer_demo_angle="20"
+            tools:listitem="@layout/feed_item"/>
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recyclerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:clipToPadding="false"-->
+<!--            android:paddingTop="70dp"-->
+<!--            tools:listitem="@layout/feed_item" />-->
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

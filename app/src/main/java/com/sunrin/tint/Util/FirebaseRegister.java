@@ -13,7 +13,6 @@ import java.util.List;
 
 public class FirebaseRegister {
 
-    private static OnRegisterSuccessListener onRegisterSuccessListener;
     private static OnRegisterFailureListener onRegisterFailureListener;
 
     public interface OnRegisterSuccessListener {
@@ -25,7 +24,6 @@ public class FirebaseRegister {
     }
 
     public static void register(String email, String password, String name, OnRegisterSuccessListener s, OnRegisterFailureListener f) {
-        onRegisterSuccessListener = s;
         onRegisterFailureListener = f;
 
         if (email == null || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -44,7 +42,7 @@ public class FirebaseRegister {
         checkEmailAlreadyExists(email,
                 result -> createUserData(email, name,
                         aVoid -> registerUser(email, password,
-                                authResult -> onRegisterSuccessListener.onRegisterSuccess(new UserModel(name, email)))));
+                                authResult -> s.onRegisterSuccess(new UserModel(name, email)))));
     }
 
     private static void checkEmailAlreadyExists(String email, OnSuccessListener<SignInMethodQueryResult> s) {

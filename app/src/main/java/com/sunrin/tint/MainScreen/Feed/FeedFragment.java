@@ -1,6 +1,5 @@
 package com.sunrin.tint.MainScreen.Feed;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -22,13 +20,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
+import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;
-import com.sunrin.tint.Util.SharedPreferenceUtil;
 import com.sunrin.tint.Util.UserCache;
 
 import java.util.ArrayList;
@@ -39,25 +38,19 @@ import static android.content.ContentValues.TAG;
 public class FeedFragment extends Fragment {
 
     Context mContext;
-    private List<Chip> chips = new ArrayList<>();
-    private List<Boolean> chipsBooleans = new ArrayList<>(5);
+    private List<CheckableChipView> chips = new ArrayList<>();
 
     // RecyclerView Item Data
     List<PostModel> postModelList = new ArrayList<>();
 
     ChipGroup chipGroup;
-    HorizontalScrollView scrollView;
+    HorizontalScrollView chipContainer;
     ImageButton filterToggle;
 
     SwipeRefreshLayout refreshLayout;
+    ShimmerRecyclerView shimmerRecyclerView;
     RecyclerView recyclerView;
     FeedAdapter adapter;
-
-    // chip 클릭 리스너 생성
-    private CompoundButton.OnCheckedChangeListener chipChangeListener = (CompoundButton buttonView, boolean isChecked) -> {
-        int tag = (int) buttonView.getTag();
-        chipsBooleans.set(tag, isChecked);
-    };
 
     @Nullable
     @Override
@@ -73,13 +66,26 @@ public class FeedFragment extends Fragment {
             getActivity().finish();
         });
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // 새로 고침 코드 작성
-                getData();
-            }
+        //***** Chip Toggle *****//
+        filterToggle.setOnClickListener(v -> {
+            if (chipContainer.getVisibility() == View.VISIBLE)
+                chipContainer.setVisibility(View.INVISIBLE);
+            else
+                chipContainer.setVisibility(View.VISIBLE);
         });
+
+
+        // 새로 고침 코드 작성
+        refreshLayout.setOnRefreshListener(this::getData);
+        // 한 바퀴 돌 때마다 색 바뀜
+        refreshLayout.setColorSchemeResources(
+                R.color.pink_700,
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light,
+                R.color.pink_200
+        );
 
         return view;
     }
@@ -90,69 +96,68 @@ public class FeedFragment extends Fragment {
 
         Log.d(TAG, "onActivityCreated: *******");
 
-        //***** Chip Toggle *****//
-        filterToggle.setOnClickListener(v -> {
-            if (scrollView.getVisibility() == View.VISIBLE)
-                scrollView.setVisibility(View.INVISIBLE);
-            else
-                scrollView.setVisibility(View.VISIBLE);
-        });
 
         //***** RecyclerView *****//
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        shimmerRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new FeedAdapter();
-        recyclerView.setAdapter(adapter);
+        shimmerRecyclerView.setAdapter(adapter);
         getData();
 
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
         //recyclerView.addItemDecoration(dividerItemDecoration);
         // 아이템 간 간격 조정
-//        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
-//        recyclerView.addItemDecoration(itemDecoration);
+        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
+        shimmerRecyclerView.addItemDecoration(itemDecoration);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        shimmerRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 assert layoutManager != null;   // null 이라면 강제종료
-                int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                if (dy > 0) {
+                    // Scrolling up
+                    chipContainer.setVisibility(View.INVISIBLE);
+                } else {
+                    // Scrolling Down
+                    chipContainer.setVisibility(View.VISIBLE);
+                }
+
+                /*int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
 
                 if (lastVisible >= totalItemCount - 3) {
                     // 마지막 아이템을 보고있음 -> 아이템 추가
                     //feedItemData.add(new FeedItem(FeedItem.Filter.eMakeUp, null, null, "Title example", "subTitle example", "6 hours ago", "userName", ""));
                     //adapter.notifyDataSetChanged();
-                }
+                }*/
             }
         });
+
         // 피드 아이템 클릭 리스너 구현
-        adapter.setOnItemClickListener(new FeedAdapter.OnItemClickListener() {
-            @SuppressLint("NonConstantResourceId")  // 밑에 사용할 아이디가 유효한지 검사해줌
-            @Override
-            public void OnItemClick(View v, int position) {
-                switch (v.getId()) {
-                    case R.id.feed_share:
-                        // 공유버튼
-                        Toast.makeText(mContext, "Share", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.feed_comment:
-                        // 댓글버튼
-                        Toast.makeText(mContext, "Comment", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.feed_storageBox:
-                        // 보관하기 버튼
-                        Toast.makeText(mContext, "StorageBox", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.feed_img:
-                        // 이미지 클릭
-                        // 몀시적 인텐트에 FeedData 객체 담아서 보내기
-                        Intent intent = new Intent(mContext, PostViewActivity.class);
-                        intent.putExtra("item", postModelList.get(position));
-                        startActivity(intent);
-                        break;
-                }
+        adapter.setOnItemClickListener((v, position) -> {
+            switch (v.getId()) {
+                case R.id.feed_share:
+                    // 공유버튼
+                    Toast.makeText(mContext, "Share", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.feed_comment:
+                    // 댓글버튼
+                    Toast.makeText(mContext, "Comment", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.feed_storageBox:
+                    // 보관하기 버튼
+                    Toast.makeText(mContext, "StorageBox", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.feed_img:
+                    // 이미지 클릭
+                    // 몀시적 인텐트에 FeedData 객체 담아서 보내기
+                    Intent intent = new Intent(mContext, PostViewActivity.class);
+                    intent.putExtra("item", postModelList.get(position));
+                    startActivity(intent);
+                    break;
             }
         });
     }
@@ -189,19 +194,24 @@ public class FeedFragment extends Fragment {
 
     private void init(View view) {
         chipGroup = view.findViewById(R.id.chipGroup);
-        scrollView = view.findViewById(R.id.scrollView);
+        chipContainer = view.findViewById(R.id.scrollView);
         filterToggle = view.findViewById(R.id.filterToggle);
         refreshLayout = view.findViewById(R.id.swipeLayout);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        // recyclerView = view.findViewById(R.id.recyclerView);
+        shimmerRecyclerView = view.findViewById(R.id.shimmerRecyclerView);
     }
 
     private void getData()
     {
+        // recyclerView loading start
+        shimmerRecyclerView.showShimmerAdapter();
         FirebaseLoadPost
                 .LoadPosts(
                         postModels -> {
                             if (adapter != null) {
                                 postModelList = postModels;
+                                // recyclerView loading stop
+                                shimmerRecyclerView.hideShimmerAdapter();
                                 adapter.setList(postModelList);
                                 adapter.notifyDataSetChanged();
                             }
@@ -213,7 +223,7 @@ public class FeedFragment extends Fragment {
 
 
     // 아이템 끼리 간격 주기 위한 클래스
-    /*static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
+    static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
 
         private final int interval;
 
@@ -227,7 +237,7 @@ public class FeedFragment extends Fragment {
             if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1)
                 outRect.bottom = interval;
         }
-    }*/
+    }
 //    private void spawnFilterChip() {
 //        for (int i = 0; i < 5; i++) {
 //            Chip chip = new Chip(mContext);

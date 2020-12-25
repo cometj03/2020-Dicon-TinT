@@ -7,7 +7,6 @@
     android:background="?attr/colorOnPrimary"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:layout_marginBottom="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -38,7 +37,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="false"
-                    android:scaleType="centerInside"
                     android:src="@drawable/sample_img"
                     tools:ignore="MissingConstraints" />
 

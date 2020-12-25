@@ -12,7 +12,6 @@ import java.util.List;
 
 public class FirebaseLogIn {
 
-    private static OnLoginSuccessListener onLoginSuccessListener;
     private static OnLoginFailureListener onLoginFailureListener;
 
     public interface OnLoginSuccessListener {
@@ -24,13 +23,12 @@ public class FirebaseLogIn {
     }
 
     public static void login(String email, String password, OnLoginSuccessListener s, OnLoginFailureListener f) {
-        onLoginSuccessListener = s;
         onLoginFailureListener = f;
 
         checkEmailValid(email,
                 result -> getUserData(email,
                         document -> signIn(email, password,
-                                authResult -> onLoginSuccessListener.onLoginSuccess(document.toObject(UserModel.class)))));
+                                authResult -> s.onLoginSuccess(document.toObject(UserModel.class)))));
     }
 
     private static void checkEmailValid(String email, OnSuccessListener<SignInMethodQueryResult> s) {
