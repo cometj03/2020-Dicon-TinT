@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +42,6 @@ public class FeedFragment extends Fragment {
 
     Context mContext;
     private List<CheckableChipView> chipViews = new ArrayList<>();
-    private static int firstVisible;
     private boolean timeout, allLoaded;
 
     // RecyclerView Item Data
@@ -106,17 +106,18 @@ public class FeedFragment extends Fragment {
 
 
         //***** RecyclerView *****//
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
+        layoutManager.setStackFromEnd(true);
         shimmerRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new FeedAdapter();
         shimmerRecyclerView.setAdapter(adapter);
         getData();
 
-        firstVisible = ((LinearLayoutManager) shimmerRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
         //recyclerView.addItemDecoration(dividerItemDecoration);
         // 아이템 간 간격 조정
-        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(-20);
+        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(10);
         shimmerRecyclerView.addItemDecoration(itemDecoration);
 
         shimmerRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -127,7 +128,7 @@ public class FeedFragment extends Fragment {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 assert layoutManager != null;   // null 이라면 강제종료
 
-                int currentFirstVisible = layoutManager.findFirstVisibleItemPosition();
+                /*int currentFirstVisible = layoutManager.findFirstVisibleItemPosition();
 
                 if (currentFirstVisible > firstVisible) {
                     // Scrolling up
@@ -137,7 +138,7 @@ public class FeedFragment extends Fragment {
                     chipContainer.setVisibility(View.VISIBLE);
                 }
 
-                firstVisible = currentFirstVisible;
+                firstVisible = currentFirstVisible;*/
 
                 /*int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
@@ -188,6 +189,13 @@ public class FeedFragment extends Fragment {
         chipViews.add(view.findViewById(R.id.chip3));
         chipViews.add(view.findViewById(R.id.chip4));
         chipViews.add(view.findViewById(R.id.chip5));
+
+        for (CheckableChipView chip : chipViews)
+            chip.setOnCheckedChangeListener((chipView, aBoolean) -> {
+                chip.setCheckedColor(ContextCompat.getColor(mContext,
+                        aBoolean ? R.color.pink_700 : R.color.gray));
+                return null;
+            });
     }
 
     private void onClickStorage(PostModel postModel) {
@@ -282,8 +290,10 @@ public class FeedFragment extends Fragment {
         @Override
         public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
-            if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1)
-                outRect.bottom = interval;
+            if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1) {
+                // outRect.bottom = interval;
+                outRect.set(0, interval, 0, 0);
+            }
         }
     }
 }

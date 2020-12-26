@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/backgroundColorPrimary">
+    android:background="@color/backgroundColorPrimary"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <Button
         android:id="@+id/logoutBtn"
@@ -43,6 +43,8 @@
 <!--            android:layout_height="match_parent"-->
 <!--            android:clipToPadding="false"-->
 <!--            android:paddingTop="70dp"-->
+<!--            app:stackFromEnd="true"-->
+<!--            app:reverseLayout="true"-->
 <!--            tools:listitem="@layout/feed_item" />-->
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -84,56 +86,61 @@
                 android:id="@+id/chip1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:color="@color/pink_700"
+                android:color="@color/gray"
                 android:text="@string/filter_name1"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="16sp"
+                android:background="@color/backgroundColorPrimary"
                 app:ccv_checkedTextColor="@color/white"
-                app:ccv_outlineColor="@color/pink_700" />
+                app:ccv_outlineColor="@color/gray" />
 
             <com.github.okdroid.checkablechipview.CheckableChipView
                 android:id="@+id/chip2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:color="@color/pink_700"
+                android:color="@color/gray"
                 android:text="@string/filter_name2"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="16sp"
+                android:background="@color/backgroundColorPrimary"
                 app:ccv_checkedTextColor="@color/white"
-                app:ccv_outlineColor="@color/pink_700" />
+                app:ccv_outlineColor="@color/gray" />
 
             <com.github.okdroid.checkablechipview.CheckableChipView
                 android:id="@+id/chip3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:color="@color/pink_700"
+                android:color="@color/gray"
                 android:text="@string/filter_name3"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="16sp"
+                android:background="@color/backgroundColorPrimary"
                 app:ccv_checkedTextColor="@color/white"
-                app:ccv_outlineColor="@color/pink_700" />
+                app:ccv_outlineColor="@color/gray" />
 
             <com.github.okdroid.checkablechipview.CheckableChipView
                 android:id="@+id/chip4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:color="@color/pink_700"
+                android:color="@color/gray"
                 android:text="@string/filter_name4"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="16sp"
+                android:background="@color/backgroundColorPrimary"
                 app:ccv_checkedTextColor="@color/white"
-                app:ccv_outlineColor="@color/pink_700" />
+                app:ccv_outlineColor="@color/gray" />
 
             <com.github.okdroid.checkablechipview.CheckableChipView
                 android:id="@+id/chip5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:color="@color/pink_700"
+                android:color="@color/gray"
                 android:text="@string/filter_name5"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="16sp"
+                android:background="@color/backgroundColorPrimary"
                 app:ccv_checkedTextColor="@color/white"
-                app:ccv_outlineColor="@color/pink_700" />
+                app:ccv_outlineColor="@color/gray" />
 
         </com.google.android.material.chip.ChipGroup>
 
