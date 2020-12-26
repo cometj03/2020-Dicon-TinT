@@ -25,8 +25,8 @@ public class ProfileFragment extends Fragment {
     Context mContext;
 
     TextView tv_username;
-    ImageButton btn_addLookBook, btn_addPost;
-    Button btn_filterMenu, btn_storage, btn_logout;
+    ImageButton btn_addLookBook, btn_addPost, btn_storage, btn_logout;
+    Button btn_filterMenu;
 
     UserModel userModel;
 

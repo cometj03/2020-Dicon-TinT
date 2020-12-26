@@ -60,13 +60,6 @@ public class FeedFragment extends Fragment {
 
         init(view);
 
-        Button button = view.findViewById(R.id.logoutBtn);
-        button.setOnClickListener(view1 -> {
-            UserCache.logout(mContext);
-            Toast.makeText(mContext, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
-            getActivity().finish();
-        });
-
         //***** Chip Toggle *****//
         filterToggle.setOnClickListener(v -> {
             if (chipContainer.getVisibility() == View.VISIBLE)
