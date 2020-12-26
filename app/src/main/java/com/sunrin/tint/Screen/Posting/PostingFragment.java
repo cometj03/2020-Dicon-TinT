@@ -199,6 +199,7 @@ public class PostingFragment extends Fragment {
     }
 
     private void PostDone(String docId) {
+        // 포스팅 한 후 유저 정보 업데이트
         UserCache.updateUser(mContext, docId, null, UserCache.UPDATE_POST,
                 aVoid -> {},
                 errMsg -> Toast.makeText(mContext, errMsg, Toast.LENGTH_SHORT).show());
@@ -206,6 +207,8 @@ public class PostingFragment extends Fragment {
         titleText.setText("");
         subtitleText.setText("");
         contentText.setText("");
+        showUriList(new ArrayList<>()); // 사진 초기화
+        isImageSelected = false;
     }
 
     @Override
