@@ -20,9 +20,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-136dp"
-        tools:layout_editor_absoluteY="-16dp">
+        android:layout_height="match_parent">
 
         <!-- To Show loading recyclerview -->
         <com.cooltechworks.views.shimmer.ShimmerRecyclerView

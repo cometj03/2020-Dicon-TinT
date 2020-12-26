@@ -104,8 +104,8 @@ public class FeedFragment extends Fragment {
 
         //***** RecyclerView *****//
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
-        layoutManager.setStackFromEnd(true);
+//        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
+//        layoutManager.setStackFromEnd(true);
         shimmerRecyclerView.setLayoutManager(layoutManager);
         adapter = new FeedAdapter();
         shimmerRecyclerView.setAdapter(adapter);
@@ -114,7 +114,7 @@ public class FeedFragment extends Fragment {
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
         //recyclerView.addItemDecoration(dividerItemDecoration);
         // 아이템 간 간격 조정
-        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(-70);
+        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
         shimmerRecyclerView.addItemDecoration(itemDecoration);
 
         shimmerRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

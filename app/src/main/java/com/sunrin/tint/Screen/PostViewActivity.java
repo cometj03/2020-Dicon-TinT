@@ -134,7 +134,7 @@ public class PostViewActivity extends AppCompatActivity {
 
     private void onClickModify() {
         // TODO: 수정 기능 추가
-        Toast.makeText(this, "Modify", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "수정 기능은 개발중에 있습니다 조금만 기다려주세요!", Toast.LENGTH_SHORT).show();
     }
 
     // Toolbar에 메뉴를 인플레이트 함

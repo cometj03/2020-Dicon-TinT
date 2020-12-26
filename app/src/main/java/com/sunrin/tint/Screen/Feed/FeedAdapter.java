@@ -102,8 +102,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
             protected FilterResults performFiltering(CharSequence constraint) {
                 // keys : 필터들을 차례로 담은 문자열 -> Filter로 변환
                 String[] keys = constraint.toString().split(":");
-                for (String s : keys)
-                    Log.d(TAG, "performFiltering: ************" + s);
 
                 if (constraint.toString().length() <= 0) {
                     mDataFiltered = mData;
@@ -124,7 +122,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                         }
                     };
                 }
-                Log.d(TAG, "performFiltering: ********* size : " + mDataFiltered.size());
 
                 // results에 결과 담고 return
                 FilterResults results = new FilterResults();
