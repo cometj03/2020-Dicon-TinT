@@ -40,6 +40,11 @@ public class UserModel {
         this.storageID.add(id);
     }
 
+    // delete IDs
+    public void deletePostID(String id) {
+        this.postID.remove(id);
+    }
+
     public String getName() {
         return name;
     }

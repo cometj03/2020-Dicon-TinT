@@ -1,211 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        android:background="@color/backgroundColorPrimary">
+
+        <FrameLayout
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/background_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/background" />
+
+            <View
+                android:id="@+id/background_profile_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_bottom_to_top"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/btn_setting"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:padding="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/option"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_storage"
+            android:layout_width="44dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            android:padding="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_profile_storage"
+            app:layout_constraintEnd_toStartOf="@+id/btn_setting"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_imageview"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/profile_empty_feed"
+            app:layout_constraintBottom_toBottomOf="@+id/background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/background" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@+id/profile_imageview"
+            app:layout_constraintStart_toStartOf="@+id/profile_imageview"
+            app:layout_constraintTop_toBottomOf="@+id/profile_imageview" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lookbook"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username">
 
-            <FrameLayout
-                android:id="@+id/background"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/background_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/background" />
-
-                <View
-                    android:id="@+id/background_profile_shadow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/gradient_bottom_to_top"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </FrameLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="룩북"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                android:layout_marginStart="298dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="104dp"
-                app:layout_constraintBottom_toBottomOf="@+id/background"
-                app:layout_constraintEnd_toEndOf="@+id/background"
-                app:layout_constraintStart_toStartOf="@+id/background"
-                app:layout_constraintTop_toTopOf="@id/background">
+            <ImageButton
+                android:id="@+id/add_lookbook_btn"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:background="@android:color/transparent"
+                android:paddingStart="2dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="1dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_profile_plus"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="@+id/textView" />
 
-                <ImageView
-                    android:id="@+id/storage_box"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/profile_storage"/>
-
-                <ImageView
-                    android:id="@+id/option"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/option" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/profile"
-                android:layout_width="wrap_content"
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                android:id="@+id/lookbook_recycler"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                app:layout_constraintTop_toTopOf="@id/background"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:src="@drawable/icon_profile"
-                    android:background="@drawable/profile_circle"/>
-
-                <TextView
-                    android:id="@+id/nickname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:text="닉네임"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:id="@+id/status_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:textSize="16sp"
-                    android:text="상태메세지"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lookbook"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/profile"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:padding="20dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:text="룩북"/>
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/profile_write" />
-                </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/posts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/lookbook"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:padding="20dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:text="게시글"/>
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/profile_write" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right">
-                    <TextView
-                        android:id="@+id/posts_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:textSize="14sp"
-                        android:text="00개"/>
-                    <ImageView
-                        android:id="@+id/feed_feed"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/profile_grid"/>
-
-                    <ImageView
-                        android:id="@+id/feed_grid"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/profile_feed"/>
-
-                    <Button
-                        android:id="@+id/popupmenu_btn"
-                        android:onClick="popupOnClick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="필터▼"/>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
-
-
-
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:clipToPadding="false"
+                android:paddingTop="70dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_lookbook_btn"
+                app:shimmer_demo_angle="20"
+                app:shimmer_demo_child_count="2"
+                app:shimmer_demo_layout="@layout/feed_item_demo"
+                app:shimmer_demo_shimmer_color="#80ffffff" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/posts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lookbook"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="게시물"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/popupmenu_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/popupmenu_btn" />
 
+            <ImageButton
+                android:id="@+id/add_post_btn"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:paddingStart="2dp"
+                android:paddingEnd="1dp"
+                android:paddingTop="3dp"
+                android:src="@drawable/ic_profile_plus"
+                android:scaleType="centerInside"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/posts_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="00개"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/feed_post_linear"
+                app:layout_constraintEnd_toStartOf="@+id/feed_post_linear"
+                app:layout_constraintTop_toTopOf="@+id/feed_post_linear" />
+
+            <ImageButton
+                android:id="@+id/feed_post_linear"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginEnd="4dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_profile_grid"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                app:layout_constraintBottom_toBottomOf="@+id/feed_post_grid"
+                app:layout_constraintEnd_toStartOf="@+id/feed_post_grid"
+                app:layout_constraintTop_toTopOf="@+id/feed_post_grid" />
+
+            <ImageButton
+                android:id="@+id/feed_post_grid"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:padding="2dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_profile_linear"
+                app:layout_constraintBottom_toBottomOf="@+id/popupmenu_btn"
+                app:layout_constraintEnd_toStartOf="@+id/popupmenu_btn"
+                app:layout_constraintTop_toTopOf="@+id/popupmenu_btn" />
+
+            <Button
+                android:id="@+id/popupmenu_btn"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@android:color/transparent"
+                android:text="필터 ▼"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                android:id="@+id/post_recycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:clipToPadding="false"
+                android:paddingTop="70dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popupmenu_btn"
+                app:shimmer_demo_angle="20"
+                app:shimmer_demo_child_count="2"
+                app:shimmer_demo_layout="@layout/feed_item_demo"
+                app:shimmer_demo_shimmer_color="#80ffffff" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

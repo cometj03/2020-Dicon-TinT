@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -55,19 +56,8 @@ public class PostingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_posting, container, false);
-        isImageSelected = false;
 
-        postBtn = view.findViewById(R.id.postBtn);
-        titleText = view.findViewById(R.id.titleText);
-        subtitleText = view.findViewById(R.id.subtitleText);
-        contentText = view.findViewById(R.id.contentText);
-        imgBtn = view.findViewById(R.id.imgBtn);
-        selectedImageContainer = view.findViewById(R.id.selected_image_container);
-        chipViews.add(view.findViewById(R.id.chip1));
-        chipViews.add(view.findViewById(R.id.chip2));
-        chipViews.add(view.findViewById(R.id.chip3));
-        chipViews.add(view.findViewById(R.id.chip4));
-        chipViews.add(view.findViewById(R.id.chip5));
+        init(view);
 
         postBtn.setOnClickListener(v -> UploadPost());
         imgBtn.setOnClickListener(v -> GetImages());
@@ -92,6 +82,28 @@ public class PostingFragment extends Fragment {
         public void afterTextChanged(Editable s) {}
     };
 
+    private void init(View view) {
+        isImageSelected = false;
+
+        postBtn = view.findViewById(R.id.postBtn);
+        titleText = view.findViewById(R.id.titleText);
+        subtitleText = view.findViewById(R.id.subtitleText);
+        contentText = view.findViewById(R.id.contentText);
+        imgBtn = view.findViewById(R.id.imgBtn);
+        selectedImageContainer = view.findViewById(R.id.selected_image_container);
+        chipViews.add(view.findViewById(R.id.chip1));
+        chipViews.add(view.findViewById(R.id.chip2));
+        chipViews.add(view.findViewById(R.id.chip3));
+        chipViews.add(view.findViewById(R.id.chip4));
+        chipViews.add(view.findViewById(R.id.chip5));
+        for (CheckableChipView chip : chipViews)
+            chip.setOnCheckedChangeListener((chipView, aBoolean) -> {
+                chip.setCheckedColor(ContextCompat.getColor(mContext,
+                        aBoolean ? R.color.pink_700 : R.color.gray));
+                return null;
+            });
+    }
+
     private void UploadPost() {
         String title = titleText.getText().toString();
         String subTitle = subtitleText.getText().toString();
@@ -111,8 +123,9 @@ public class PostingFragment extends Fragment {
         FirebaseUploadPost
                 .Upload(mContext, new PostModel(filters, imageToString, title, subTitle, content),
                         (documentID) -> {
-                            PostDone(documentID);
-                            dialog.setMessage("업로드 완료").finish(true);
+                            dialog.setMessage("업로드 완료")
+                                    .setFinishListener(() -> PostDone(documentID))
+                                    .finish(true);
                         },
                         errorMsg -> dialog.setMessage(errorMsg).finish(false));
     }
@@ -198,6 +211,7 @@ public class PostingFragment extends Fragment {
     }
 
     private void PostDone(String docId) {
+        // 포스팅 한 후 유저 정보 업데이트
         UserCache.updateUser(mContext, docId, null, UserCache.UPDATE_POST,
                 aVoid -> {},
                 errMsg -> Toast.makeText(mContext, errMsg, Toast.LENGTH_SHORT).show());
@@ -205,6 +219,8 @@ public class PostingFragment extends Fragment {
         titleText.setText("");
         subtitleText.setText("");
         contentText.setText("");
+        showUriList(new ArrayList<>()); // 사진 초기화
+        isImageSelected = false;
     }
 
     @Override

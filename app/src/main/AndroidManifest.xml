@@ -31,7 +31,6 @@
                     android:scheme="http" />
             </intent-filter>-->
         </activity>
-        <activity android:name=".GalleryActivity" />
         <activity android:name=".Screen.MainActivity" />
         <activity android:name=".Screen.Login.LogInActivity" />
         <activity android:name=".Screen.Register.RegisterActivity" />

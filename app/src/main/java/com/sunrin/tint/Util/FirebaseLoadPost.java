@@ -31,6 +31,7 @@ public class FirebaseLoadPost {
             for (QueryDocumentSnapshot document : s1) {
                 list.add(document.toObject(PostModel.class));
                 list.sort(Comparator.reverseOrder());
+                // list.sort(Comparator.naturalOrder());   // recycler view의 아이템을 반대로 추가되게 해놨기 때문
             }
             s.onLoadSuccess(list);
         });
