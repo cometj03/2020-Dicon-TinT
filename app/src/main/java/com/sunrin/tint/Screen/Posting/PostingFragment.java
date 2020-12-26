@@ -111,8 +111,9 @@ public class PostingFragment extends Fragment {
         FirebaseUploadPost
                 .Upload(mContext, new PostModel(filters, imageToString, title, subTitle, content),
                         (documentID) -> {
-                            PostDone(documentID);
-                            dialog.setMessage("업로드 완료").finish(true);
+                            dialog.setMessage("업로드 완료")
+                                    .setFinishListener(() -> PostDone(documentID))
+                                    .finish(true);
                         },
                         errorMsg -> dialog.setMessage(errorMsg).finish(false));
     }

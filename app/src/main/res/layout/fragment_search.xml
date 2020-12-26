@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="25dp">
+    android:padding="25dp"
+    android:background="@color/backgroundColorPrimary">
 
     <SearchView
         android:id="@+id/searchView"

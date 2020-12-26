@@ -116,7 +116,7 @@ public class FeedFragment extends Fragment {
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
         //recyclerView.addItemDecoration(dividerItemDecoration);
         // 아이템 간 간격 조정
-        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
+        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(-20);
         shimmerRecyclerView.addItemDecoration(itemDecoration);
 
         shimmerRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

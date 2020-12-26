@@ -17,6 +17,12 @@ import com.sunrin.tint.R;
 
 public class LoadingDialog extends Dialog {
 
+    public interface OnDialogFinishListener {
+        void onFinish();
+    }
+
+    private OnDialogFinishListener onDialogFinishListener;
+
     private Context context;
     private LottieAnimationView animView;
     private TextView loadingText;
@@ -46,17 +52,26 @@ public class LoadingDialog extends Dialog {
         return this;
     }
 
+    public LoadingDialog setFinishListener(OnDialogFinishListener o) {
+        onDialogFinishListener = o;
+        return this;
+    }
+
     public void finish(boolean isSuccess) {
         if (animView != null) {
             animView.pauseAnimation();
             animView.setVisibility(View.GONE);
         }
 
-        if (isSuccess)
-            new Handler(Looper.getMainLooper()).postDelayed(this::cancel, 1500);
-        else
+        if (!isSuccess) {
             loadingText.setTextColor(ContextCompat.getColor(context, R.color.pink_200));
+            setCancelable(true);
+            return;
+        }
 
-        setCancelable(true);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            cancel();
+            onDialogFinishListener.onFinish();
+        }, 1500);
     }
 }

@@ -77,9 +77,11 @@ public class LogInActivity extends AppCompatActivity {
                 .login(input_email, input_pw,
                         userModel -> {
                             UserCache.setUser(this, userModel);
-                            dialog.setMessage("로그인 성공!").finish(true);
-                            startActivity(new Intent(this, MainActivity.class));
-                            finish();
+                            dialog.setMessage("로그인 성공!")
+                                    .setFinishListener(() -> {
+                                        startActivity(new Intent(this, MainActivity.class));
+                                        finish();
+                                    }).finish(true);
                         },
                         errorMsg -> dialog.setMessage(errorMsg).finish(false));
     }
