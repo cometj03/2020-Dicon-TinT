@@ -2,14 +2,23 @@ package com.sunrin.tint.Util;
 
 import android.content.Context;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
+import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.UserModel;
+
+import java.util.List;
 
 public class UserCache {
 
+    public interface onUpdateFailureListener {
+        void onUpdateFailed(String errMsg);
+    }
+
     public static final int UPDATE_POST = 0;
     public static final int UPDATE_STORAGE = 1;
+    public static final int UPDATE_FILTERS = 2;
 
     public static void setUser(Context context, UserModel userModel) {
         Gson gson = new Gson();
@@ -22,7 +31,8 @@ public class UserCache {
         return gson.fromJson(SharedPreferenceUtil.getString(context, "user_json"), UserModel.class);
     }
 
-    public static void updateUser(Context context, String value, int tmp) {
+    public static void updateUser(Context context, String value, List<Filter> filterList, int tmp,
+                                  OnSuccessListener<Void> s, onUpdateFailureListener f) {
         UserModel userModel = getUser(context);
         switch (tmp) {
             case UPDATE_POST:
@@ -31,10 +41,13 @@ public class UserCache {
             case UPDATE_STORAGE:
                 userModel.addStorageID(value);
                 break;
+            case UPDATE_FILTERS:
+                userModel.setUserFilters(filterList);
+                break;
             default:
                 return;
         }
-        FirebaseUpdateUser.updateIDs(userModel, context);
+        FirebaseUpdateUser.updateUser(userModel, s, f);
         setUser(context, userModel);
     }
 

@@ -1,19 +1,19 @@
 package com.sunrin.tint.Util;
 
-import android.content.Context;
-import android.widget.Toast;
-
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sunrin.tint.Model.UserModel;
 
 public class FirebaseUpdateUser {
-    public static void updateIDs(UserModel userModel, Context context) {
+
+    public static void updateUser(UserModel userModel, OnSuccessListener<Void> s, UserCache.onUpdateFailureListener f) {
         FirebaseFirestore
                 .getInstance()
                 .collection("users")
                 .document(userModel.getEmail())
                 .update("postID", userModel.getPostID(), "storageID", userModel.getStorageID(), "userFilters", userModel.getUserFilters())
-                .addOnFailureListener(e -> Toast.makeText(context,
-                        FirebaseErrorUtil.getErrorMessage(e, "사용자 업데이트가 실패했습니다."), Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(s)
+                .addOnFailureListener(e -> f.onUpdateFailed(
+                        FirebaseErrorUtil.getErrorMessage(e, "사용자 업데이트에 실패했습니다.")));
     }
 }

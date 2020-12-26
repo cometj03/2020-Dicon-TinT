@@ -132,43 +132,46 @@
                 app:layout_constraintStart_toEndOf="@+id/feed_userProfile" />
 
             <ImageButton
-                android:id="@+id/feed_comment"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/comment"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/feed_share"
-                app:layout_constraintTop_toBottomOf="@+id/feed_thumbnail" />
-
-            <ImageButton
                 android:id="@+id/feed_share"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="32dp"
+                android:layout_height="38dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
+                android:padding="3dp"
                 android:background="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/share"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_share"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/feed_thumbnail" />
 
             <ImageButton
-                android:id="@+id/feed_storageBox"
-                android:layout_width="30dp"
+                android:id="@+id/feed_comment"
+                android:layout_width="35dp"
                 android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="8dp"
+                android:padding="4dp"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_comment"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/feed_share"
+                app:layout_constraintTop_toBottomOf="@+id/feed_thumbnail" />
+
+            <ImageButton
+                android:id="@+id/feed_storageBox"
+                android:layout_width="35dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
+                android:padding="4dp"
                 android:background="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/storage_box_feed"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_storage"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/feed_comment"
                 app:layout_constraintTop_toBottomOf="@+id/feed_thumbnail" />

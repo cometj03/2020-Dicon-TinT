@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,11 +24,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.google.android.material.chip.ChipGroup;
+import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.Screen.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.UserCache;
+import com.sunrin.tint.View.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +40,7 @@ import static android.content.ContentValues.TAG;
 public class FeedFragment extends Fragment {
 
     Context mContext;
-    private List<CheckableChipView> chips = new ArrayList<>();
+    private List<CheckableChipView> chipViews = new ArrayList<>();
     private static int firstVisible;
     private boolean timeout, allLoaded;
 
@@ -160,7 +163,7 @@ public class FeedFragment extends Fragment {
                     break;
                 case R.id.feed_storageBox:
                     // 보관하기 버튼
-                    Toast.makeText(mContext, "StorageBox", Toast.LENGTH_SHORT).show();
+                    onClickStorage(postModelList.get(position));
                     break;
                 case R.id.feed_img:
                     // 이미지 클릭
@@ -173,36 +176,6 @@ public class FeedFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ********");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ******");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: **********");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: *******");
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mContext = context;
-    }
-
     private void init(View view) {
         chipGroup = view.findViewById(R.id.chipGroup);
         chipContainer = view.findViewById(R.id.scrollView);
@@ -210,6 +183,40 @@ public class FeedFragment extends Fragment {
         refreshLayout = view.findViewById(R.id.swipeLayout);
         // recyclerView = view.findViewById(R.id.recyclerView);
         shimmerRecyclerView = view.findViewById(R.id.shimmerRecyclerView);
+        chipViews.add(view.findViewById(R.id.chip1));
+        chipViews.add(view.findViewById(R.id.chip2));
+        chipViews.add(view.findViewById(R.id.chip3));
+        chipViews.add(view.findViewById(R.id.chip4));
+        chipViews.add(view.findViewById(R.id.chip5));
+    }
+
+    private void onClickStorage(PostModel postModel) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("보관함").setMessage("'" + postModel.getTitle() + "' 을(를) 보관함에 추가하시겠습니까?");
+
+        builder.setPositiveButton("확인", (dialog, which) -> {
+            LoadingDialog loadingDialog = new LoadingDialog(mContext);
+            loadingDialog.setMessage("사용자 정보 업데이트 중...").show();
+
+            UserCache.updateUser(mContext, postModel.getId(), null, UserCache.UPDATE_STORAGE,
+                    aVoid -> loadingDialog.setMessage("업데이트 성공!").finish(true),
+                    errMsg -> loadingDialog.setMessage(errMsg).finish(false));
+        });
+
+        builder.setNegativeButton("취소", (dialog, which) -> {});
+
+        builder.setCancelable(true).show();
+    }
+
+    private List<Filter> getFilters() {
+        return new ArrayList<Filter>() {
+            {
+                for (int i = 0; i < chipViews.size(); i++)
+                    if (chipViews.get(i).isChecked())
+                        add(Filter.values()[i]);
+            }
+        };
     }
 
     private void getData()
@@ -241,6 +248,28 @@ public class FeedFragment extends Fragment {
     }
 
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // onPause 에 주어진 시간이 짧아서 데이터 저장에 용이하지 않음
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // onStop 에서 데이터 변경사항 저장
+        UserCache.updateUser(mContext, null, getFilters(), UserCache.UPDATE_FILTERS,
+                aVoid -> {},
+                errMsg -> Toast.makeText(mContext, errMsg, Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+
     // 아이템 끼리 간격 주기 위한 클래스
     static class VerticalSpaceDecoration extends RecyclerView.ItemDecoration {
 
@@ -257,14 +286,4 @@ public class FeedFragment extends Fragment {
                 outRect.bottom = interval;
         }
     }
-//    private void spawnFilterChip() {
-//        for (int i = 0; i < 5; i++) {
-//            Chip chip = new Chip(mContext);
-//            chip.setText(getString(filterNames[i]));
-//            chip.setCheckable(true);
-//
-//            // chip.setCheckedIconVisible(false);
-//            chipGroup.addView(chip);
-//        }
-//    }
 }

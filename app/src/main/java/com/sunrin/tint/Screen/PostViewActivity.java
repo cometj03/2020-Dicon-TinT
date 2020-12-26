@@ -41,12 +41,7 @@ public class PostViewActivity extends AppCompatActivity {
         titleText.setText(data.getTitle());
         subtitleText.setText(data.getSubTitle());
         contentText.setText(data.getContent());
-
         showImageList(data.getImages());
-
-        if (data.getFilters().get(0) == Filter.eFashion) {
-            Toast.makeText(this, data.getFilters().get(0).toString(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void showImageList(List<String> list) {

@@ -188,18 +188,19 @@ public class PostingFragment extends Fragment {
     }
 
     private List<Filter> getFilters() {
-        List<Filter> filterList = new ArrayList<Filter>() {
+        return new ArrayList<Filter>() {
             {
                 for (int i = 0; i < chipViews.size(); i++)
                     if (chipViews.get(i).isChecked())
                         add(Filter.values()[i]);
             }
         };
-        return filterList;
     }
 
     private void PostDone(String docId) {
-        UserCache.updateUser(mContext, docId, UserCache.UPDATE_POST);
+        UserCache.updateUser(mContext, docId, null, UserCache.UPDATE_POST,
+                aVoid -> {},
+                errMsg -> Toast.makeText(mContext, errMsg, Toast.LENGTH_SHORT).show());
         postBtn.setEnabled(false);
         titleText.setText("");
         subtitleText.setText("");

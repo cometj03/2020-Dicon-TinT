@@ -47,13 +47,16 @@ public class LoadingDialog extends Dialog {
     }
 
     public void finish(boolean isSuccess) {
-        if (loadingText != null && !isSuccess)
-            loadingText.setTextColor(ContextCompat.getColor(context, R.color.pink_200));
-
         if (animView != null) {
             animView.pauseAnimation();
             animView.setVisibility(View.GONE);
         }
+
+        if (isSuccess)
+            new Handler(Looper.getMainLooper()).postDelayed(this::cancel, 1500);
+        else
+            loadingText.setTextColor(ContextCompat.getColor(context, R.color.pink_200));
+
         setCancelable(true);
     }
 }
