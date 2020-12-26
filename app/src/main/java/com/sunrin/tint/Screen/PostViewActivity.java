@@ -119,7 +119,7 @@ public class PostViewActivity extends AppCompatActivity {
                                 UserCache.updateUser(this, data.getId(), null, UserCache.DELETE_POST,
                                         a1 -> {
                                             // Finish Dialog and Activity
-                                            loadingDialog.setMessage("삭제 성공").setFinishListener(this::finish).finish(true);
+                                            loadingDialog.setMessage("성공적으로 삭제되었습니다.").setFinishListener(this::finish).finish(true);
                                         },
                                         errMsg -> loadingDialog.setMessage(errMsg).finish(false));
 

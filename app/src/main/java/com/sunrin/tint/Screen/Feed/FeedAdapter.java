@@ -1,9 +1,11 @@
 package com.sunrin.tint.Screen.Feed;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,23 +23,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> {
+import static android.content.ContentValues.TAG;
+
+public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> implements Filterable {
 
     Context mContext;
-    private List<PostModel> mData;
+    private List<PostModel> mData, mDataFiltered;
 
     FeedAdapter() {
         this.mData = new ArrayList<>();
-    }
-
-    FeedAdapter(List<PostModel> list) {
-        this.mData = list;
+        this.mDataFiltered = new ArrayList<>();
     }
 
     public void setList(List<PostModel> list) {
         this.mData = list;
+        if (mDataFiltered == null || mDataFiltered.isEmpty())
+            mDataFiltered = mData;
     }
-
+    public List<PostModel> getList() {
+        return mDataFiltered;
+    }
 
     @NonNull
     @Override
@@ -55,7 +60,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
         // TODO: apply animation to views here
         // https://youtu.be/rJ-7KgMAJUo
 
-        PostModel item = mData.get(position);
+        PostModel item = mDataFiltered.get(position);
 
         if (!item.getId().isEmpty()) {
             Glide.with(holder.feed_img)
@@ -85,7 +90,55 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        if (mDataFiltered == null)
+            return 0;
+        return mDataFiltered.size();
+    }
+
+    @Override
+    public android.widget.Filter getFilter() {
+        return new android.widget.Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                // keys : 필터들을 차례로 담은 문자열 -> Filter로 변환
+                String[] keys = constraint.toString().split(":");
+                for (String s : keys)
+                    Log.d(TAG, "performFiltering: ************" + s);
+
+                if (constraint.toString().length() <= 0) {
+                    mDataFiltered = mData;
+                } else {
+                    // 필터로 찾은 후 반환
+                    mDataFiltered = new ArrayList<PostModel>() {
+                        {
+                            for (PostModel p : mData) {
+                                // flag를 사용하여 모든 필터에 들어맞도록 함.
+                                boolean flag = true;
+
+                                for (String s : keys) {
+                                    if (!p.getFilters().contains(Filter.valueOf(s)))
+                                        flag = false;
+                                }
+                                if (flag) add(p);
+                            }
+                        }
+                    };
+                }
+                Log.d(TAG, "performFiltering: ********* size : " + mDataFiltered.size());
+
+                // results에 결과 담고 return
+                FilterResults results = new FilterResults();
+                results.values = mDataFiltered;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                // results : return 값
+                mDataFiltered = (List<PostModel>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
 
