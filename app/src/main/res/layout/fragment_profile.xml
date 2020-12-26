@@ -184,11 +184,13 @@
                         android:layout_marginRight="10dp"
                         android:src="@drawable/profile_feed"/>
 
-                    <TextView
+                    <Button
+                        android:id="@+id/popupmenu_btn"
+                        android:onClick="popupOnClick"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="필터"/>
+                        android:text="필터▼"/>
 
                 </LinearLayout>
 
