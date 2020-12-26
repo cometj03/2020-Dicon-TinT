@@ -229,7 +229,7 @@ public class FeedFragment extends Fragment {
             timeout = true;
             if (allLoaded)
                 shimmerRecyclerView.hideShimmerAdapter();   // recyclerView loading stop
-        }, 2300);
+        }, 1000);
 
         FirebaseLoadPost
                 .LoadPosts(

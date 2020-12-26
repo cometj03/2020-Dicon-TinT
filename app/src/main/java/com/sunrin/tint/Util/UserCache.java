@@ -39,6 +39,11 @@ public class UserCache {
                 userModel.addPostID(value);
                 break;
             case UPDATE_STORAGE:
+                if (userModel.getStorageID().contains(value)) {
+                    // 이미 존재함
+                    f.onUpdateFailed("이미 보관함에 존재합니다.");
+                    return;
+                }
                 userModel.addStorageID(value);
                 break;
             case UPDATE_FILTERS:
