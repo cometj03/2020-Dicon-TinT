@@ -54,7 +54,9 @@ public class ProfileFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.popup_makeup:
+                                //실행할 내용
                                 Toast.makeText(getActivity(),"popup_makeup",Toast.LENGTH_SHORT).show();
+
                                 break;
                             case R.id.popup_hair:
                                 Toast.makeText(getActivity(),"popup_hair",Toast.LENGTH_SHORT).show();
