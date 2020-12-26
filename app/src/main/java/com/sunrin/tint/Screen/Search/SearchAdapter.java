@@ -1,4 +1,4 @@
-package com.sunrin.tint.MainScreen.Search;
+package com.sunrin.tint.Screen.Search;
 
 import android.view.LayoutInflater;
 import android.view.View;

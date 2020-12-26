@@ -1,4 +1,4 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Screen;
 
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -15,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.R;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Screen.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +8,16 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
-import com.sunrin.tint.Util.FirebaseLogIn;
+import com.sunrin.tint.Screen.MainActivity;
+import com.sunrin.tint.R;
+import com.sunrin.tint.Screen.Register.RegisterActivity;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.List;
 
 public class LogInActivity extends AppCompatActivity {
 

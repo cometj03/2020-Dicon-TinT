@@ -1,4 +1,4 @@
-package com.sunrin.tint.MainScreen.Feed;
+package com.sunrin.tint.Screen.Feed;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,14 +24,13 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.Model.PostModel;
-import com.sunrin.tint.PostViewActivity;
+import com.sunrin.tint.Screen.PostViewActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.UserCache;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.content.ContentValues.TAG;
 

@@ -1,4 +1,4 @@
-package com.sunrin.tint.MainScreen.Posting;
+package com.sunrin.tint.Screen.Posting;
 
 import android.Manifest;
 import android.content.Context;
@@ -33,7 +33,6 @@ import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import gun0912.tedbottompicker.TedBottomPicker;

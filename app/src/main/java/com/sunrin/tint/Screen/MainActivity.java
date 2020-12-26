@@ -1,18 +1,14 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.Lifecycle;
 import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -20,13 +16,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.sunrin.tint.MainScreen.Feed.FeedFragment;
-import com.sunrin.tint.MainScreen.Posting.PostingFragment;
-import com.sunrin.tint.MainScreen.Profile.ProfileFragment;
-import com.sunrin.tint.MainScreen.Search.SearchFragment;
+import com.sunrin.tint.R;
+import com.sunrin.tint.Screen.Feed.FeedFragment;
+import com.sunrin.tint.Screen.Posting.PostingFragment;
+import com.sunrin.tint.Screen.Profile.ProfileFragment;
+import com.sunrin.tint.Screen.Search.SearchFragment;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {

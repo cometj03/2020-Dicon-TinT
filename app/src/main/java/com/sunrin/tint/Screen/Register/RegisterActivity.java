@@ -1,11 +1,11 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Screen.Register;
 
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.sunrin.tint.Util.FirebaseRegister;
+import com.sunrin.tint.R;
+import com.sunrin.tint.Screen.Register.FirebaseRegister;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 

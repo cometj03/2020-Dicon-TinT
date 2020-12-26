@@ -1,4 +1,4 @@
-package com.sunrin.tint;
+package com.sunrin.tint.Screen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sunrin.tint.R;
+import com.sunrin.tint.Screen.Login.LogInActivity;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
 
 public class SplashActivity extends AppCompatActivity {
