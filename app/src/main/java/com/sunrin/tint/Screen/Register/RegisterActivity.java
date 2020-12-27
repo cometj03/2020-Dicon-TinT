@@ -42,9 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseRegister
                 .register(email, password, name,
                         userModel -> {
-                            dialog.setMessage("계정 생성 성공!").finish(true);
-                            UserCache.setUser(this, userModel);
-                            finish();
+                            dialog.setMessage("계정 생성 성공!")
+                                    .setFinishListener(() -> {
+                                        UserCache.setUser(this, userModel);
+                                        finish();
+                                    }).finish(true);
                         },
                         errorMsg -> dialog.setMessage(errorMsg).finish(false));
     }

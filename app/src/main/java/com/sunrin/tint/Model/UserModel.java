@@ -7,8 +7,8 @@ import java.util.List;
 
 public class UserModel {
 
-    private String name, email, profile;
-    private List<String> postID, storageID;
+    private String name, email, status, profile;
+    private List<String> postID, storageID, lookBookID;
     private List<Filter> userFilters;
 
     public UserModel() {}
@@ -17,10 +17,12 @@ public class UserModel {
     public UserModel(String name, String email) {
         this.name = name;
         this.email = email;
+        this.status = status;
         this.profile = null;
-        postID = new ArrayList<>();
-        storageID = new ArrayList<>();
-        userFilters = new ArrayList<>();
+        this.postID = new ArrayList<>();
+        this.storageID = new ArrayList<>();
+        this.lookBookID = new ArrayList<>();
+        this.userFilters = new ArrayList<>();
     }
 
     public UserModel(String name, String email, List<String> postID, List<String> storageID, List<Filter> userFilters) {

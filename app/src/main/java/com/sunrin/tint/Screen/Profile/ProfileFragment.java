@@ -16,9 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.UserCache;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
@@ -27,8 +30,9 @@ public class ProfileFragment extends Fragment {
     TextView tv_username;
     ImageButton btn_addLookBook, btn_addPost, btn_storage, btn_logout;
     Button btn_filterMenu;
+    CircleImageView profile;
 
-    UserModel userModel;
+    private UserModel userModel;
 
     @Nullable
     @Override
@@ -40,7 +44,11 @@ public class ProfileFragment extends Fragment {
         userModel = UserCache.getUser(mContext);
 
         tv_username.setText(userModel.getName());
-
+        Glide.with(profile)
+                .load(userModel.getProfile())
+                .placeholder(R.drawable.profile_empty_feed) // 사진이 로딩 되기 전 미리보기 이미지
+                .error(R.drawable.profile_empty_feed)       // 사진 불러오지 못했을 때
+                .into(profile);
 
         btn_storage.setOnClickListener(v -> Toast.makeText(mContext, "Storage", Toast.LENGTH_SHORT).show());
         btn_logout.setOnClickListener(v -> logout());
@@ -91,6 +99,7 @@ public class ProfileFragment extends Fragment {
         btn_filterMenu = view.findViewById(R.id.popupmenu_btn);
         btn_storage = view.findViewById(R.id.btn_storage);
         btn_logout = view.findViewById(R.id.btn_setting);
+        profile = view.findViewById(R.id.profile_imageview);
     }
 
     @Override
