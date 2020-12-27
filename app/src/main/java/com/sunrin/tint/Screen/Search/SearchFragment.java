@@ -25,7 +25,7 @@ import com.sunrin.tint.Util.FirebaseLoadPost;
 
 import java.util.ArrayList;
 
-public class SearchFragment extends Fragment{
+public class SearchFragment extends Fragment implements View.OnClickListener {
     Context mContext;
     private RecyclerView recyclerView;
     private SearchAdapter adapter;
@@ -52,12 +52,28 @@ public class SearchFragment extends Fragment{
         inflater1.inflate(R.layout.recommand_layout, recommandLayout, true);
         inflater1.inflate(R.layout.none_result_layout, noneResultLayout, true);
 
-        setRecommandLayout();
-
-
         //추천 검색어 onClick
         TextView recommand1 = view.findViewById(R.id.recommand1);
-        //recommand1.setOnClickListener(this);
+        TextView recommand2 = view.findViewById(R.id.recommand2);
+        TextView recommand3 = view.findViewById(R.id.recommand3);
+        TextView recommand4 = view.findViewById(R.id.recommand4);
+        TextView recommand5 = view.findViewById(R.id.recommand5);
+        TextView recommand11 = view.findViewById(R.id.recommand11);
+        TextView recommand12 = view.findViewById(R.id.recommand12);
+        TextView recommand13 = view.findViewById(R.id.recommand13);
+        TextView recommand14 = view.findViewById(R.id.recommand14);
+        TextView recommand15 = view.findViewById(R.id.recommand15);
+
+        recommand1.setOnClickListener(this);
+        recommand2.setOnClickListener(this);
+        recommand3.setOnClickListener(this);
+        recommand4.setOnClickListener(this);
+        recommand5.setOnClickListener(this);
+        recommand11.setOnClickListener(this);
+        recommand12.setOnClickListener(this);
+        recommand13.setOnClickListener(this);
+        recommand14.setOnClickListener(this);
+        recommand15.setOnClickListener(this);
 
         postAll = new ArrayList<>();
         posters = new ArrayList<>();
@@ -73,6 +89,8 @@ public class SearchFragment extends Fragment{
 
         adapter = new SearchAdapter(posters, this);
         recyclerView.setAdapter(adapter); //recyclerView에 adapter 연결
+
+        setRecommandLayout();
 
         getData();
         //SearchView 함수
@@ -171,4 +189,31 @@ public class SearchFragment extends Fragment{
         mContext = context;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.recommand1:
+            case R.id.recommand11:
+                searchView.setQuery("틴트", true);
+                break;
+            case R.id.recommand2:
+            case R.id.recommand12:
+                searchView.setQuery("새해", true);
+                break;
+            case R.id.recommand3:
+            case R.id.recommand13:
+                searchView.setQuery("새학기", true);
+                break;
+            case R.id.recommand4:
+            case R.id.recommand14:
+                searchView.setQuery("패션", true);
+                break;
+            case R.id.recommand5:
+            case R.id.recommand15:
+                searchView.setQuery("학생", true);
+        }
+
+        searchView.clearFocus();
+    }
 }
