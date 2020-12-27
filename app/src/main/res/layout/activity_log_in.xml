@@ -2,86 +2,95 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColorPrimary"
     android:fillViewport="true">
 
-    <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:src="@drawable/logo_large"
+            android:id="@+id/imageView4"
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="40dp"/>
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/logo_large"
+            app:layout_constraintBottom_toTopOf="@+id/emailTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <EditText
             android:id="@+id/emailTxt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_radius_stroke_black"
+            android:hint="@string/login_id_hint"
             android:inputType="textEmailAddress"
+            android:padding="10dp"
             android:textColor="@color/gray_500"
             android:textColorHint="@color/gray_200"
-            android:background="@drawable/border_radius_stroke_black"
-            android:hint="@string/login_id_hint"/>
+            app:layout_constraintBottom_toTopOf="@+id/passwordTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         <EditText
             android:id="@+id/passwordTxt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_radius_stroke_black"
+            android:hint="@string/login_pw_hint"
             android:inputType="textPassword"
+            android:padding="10dp"
             android:textColor="@color/gray_500"
             android:textColorHint="@color/gray_200"
-            android:background="@drawable/border_radius_stroke_black"
-            android:hint="@string/login_pw_hint"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailTxt" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/sign_up_btn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="20dp" >
+            android:layout_marginEnd="8dp"
+            android:text="@string/sign_up"
+            android:textColor="@color/dark_gray"
+            android:textSize="18sp"
+            app:iconTint="#FF37FF"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sign_in_btn"
+            app:layout_constraintEnd_toStartOf="@+id/sign_in_btn" />
 
-            <Button
-                android:id="@+id/sign_up_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/sign_up"
-                android:textColor="@color/dark_gray"
-                android:textSize="18sp"
-                app:iconTint="#FF37FF"
-                app:layout_constraintBaseline_toBaselineOf="@+id/sign_in_btn"
-                app:layout_constraintEnd_toStartOf="@+id/sign_in_btn"
-                style="?android:attr/borderlessButtonStyle" />
+        <Button
+            android:id="@+id/sign_in_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/button_state_background"
+            android:enabled="false"
+            android:text="@string/sign_in"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordTxt" />
 
-            <Button
-                android:id="@+id/sign_in_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_in"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_state_background"
-                android:enabled="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </ScrollView>

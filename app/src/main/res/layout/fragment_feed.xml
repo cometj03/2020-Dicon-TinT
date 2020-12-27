@@ -7,22 +7,10 @@
     android:background="@color/backgroundColorPrimary"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <Button
-        android:id="@+id/logoutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="로그아웃"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filterToggle" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-136dp"
-        tools:layout_editor_absoluteY="-16dp">
+        android:layout_height="match_parent">
 
         <!-- To Show loading recyclerview -->
         <com.cooltechworks.views.shimmer.ShimmerRecyclerView
@@ -48,6 +36,33 @@
 <!--            tools:listitem="@layout/feed_item" />-->
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/recycler_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feed_empty_text1"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:text="@string/feed_empty_text2"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/filterToggle"

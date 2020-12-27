@@ -23,11 +23,9 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
             String tmp = SharedPreferenceUtil.getString(this, "is_first_app");
             if (user == null || tmp.isEmpty()) {
                 startActivity(new Intent(this, LogInActivity.class));
-                SharedPreferenceUtil.setString(this, "is_first_app", "false");
             } else {
                 startActivity(new Intent(this, MainActivity.class));
             }

@@ -1,5 +1,6 @@
 package com.sunrin.tint.Screen.Register;
 
+import android.net.Uri;
 import android.util.Patterns;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,33 +18,30 @@ public class FirebaseRegister {
     private static OnRegisterFailureListener onRegisterFailureListener;
 
     public interface OnRegisterSuccessListener {
-        void onRegisterSuccess(UserModel userModel);
+        void onRegisterSuccess();
     }
 
     public interface OnRegisterFailureListener {
         void onRegisterFailed(String errorMsg);
     }
 
-    public static void register(String email, String password, String name, OnRegisterSuccessListener s, OnRegisterFailureListener f) {
+    public static void register(String email, String password, OnRegisterSuccessListener s, OnRegisterFailureListener f) {
         onRegisterFailureListener = f;
 
-        if (email == null || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email == null || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             onRegisterFailureListener.onRegisterFailed("유효한 이메일을 적어주세요.");
             return;
         }
-        if (password == null || password.length() < 6) {
-            onRegisterFailureListener.onRegisterFailed("비밀번호는 6자리 이상이어야 합니다.");
-            return;
-        }
-        if (name == null || name.isEmpty()) {
-            onRegisterFailureListener.onRegisterFailed("이름을 적어주세요.");
+
+        if (password ==  null || password.length() < 6) {
+            onRegisterFailureListener.onRegisterFailed("비밀번호는 6자리 이상 입력해주세요.");
             return;
         }
 
         checkEmailAlreadyExists(email,
-                result -> createUserData(email, name,
+                result -> uploadUserData(new UserModel(email),
                         aVoid -> registerUser(email, password,
-                                authResult -> s.onRegisterSuccess(new UserModel(name, email)))));
+                            authResult -> s.onRegisterSuccess())));
     }
 
     private static void checkEmailAlreadyExists(String email, OnSuccessListener<SignInMethodQueryResult> s) {
@@ -61,12 +59,12 @@ public class FirebaseRegister {
                         FirebaseErrorUtil.getErrorMessage(e, "이미 존재하는 이메일입니다.")));
     }
 
-    private static void createUserData(String email, String name, OnSuccessListener<Void> s) {
+    private static void uploadUserData(UserModel userModel, OnSuccessListener<Void> s) {
         FirebaseFirestore
                 .getInstance()
                 .collection("users")
-                .document(email)
-                .set(new UserModel(name, email))
+                .document(userModel.getEmail())
+                .set(userModel)
                 .addOnSuccessListener(s)
                 .addOnFailureListener(e -> onRegisterFailureListener.onRegisterFailed(
                         FirebaseErrorUtil.getErrorMessage(e, "유저 데이터 업로드에 실패했습니다.")));

@@ -44,12 +44,10 @@ public class FeedFragment extends Fragment {
     private List<CheckableChipView> chipViews = new ArrayList<>();
     private boolean timeout, allLoaded;
 
-    // RecyclerView Item Data
-    List<PostModel> postModelList = new ArrayList<>();
-
     ChipGroup chipGroup;
     HorizontalScrollView chipContainer;
     ImageButton filterToggle;
+    ViewGroup emptyView;    // recyclerview에 아무것도 없을 때
 
     SwipeRefreshLayout refreshLayout;
     ShimmerRecyclerView shimmerRecyclerView;
@@ -62,13 +60,6 @@ public class FeedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
         init(view);
-
-        Button button = view.findViewById(R.id.logoutBtn);
-        button.setOnClickListener(view1 -> {
-            UserCache.logout(mContext);
-            Toast.makeText(mContext, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
-            getActivity().finish();
-        });
 
         //***** Chip Toggle *****//
         filterToggle.setOnClickListener(v -> {
@@ -107,17 +98,17 @@ public class FeedFragment extends Fragment {
 
         //***** RecyclerView *****//
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
-        layoutManager.setStackFromEnd(true);
-        shimmerRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        adapter = new FeedAdapter();
+//        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
+//        layoutManager.setStackFromEnd(true);
+        shimmerRecyclerView.setLayoutManager(layoutManager);
+        adapter = new FeedAdapter(emptyView);
         shimmerRecyclerView.setAdapter(adapter);
         getData();
 
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, new LinearLayoutManager(mContext).getOrientation());
         //recyclerView.addItemDecoration(dividerItemDecoration);
         // 아이템 간 간격 조정
-        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(10);
+        VerticalSpaceDecoration itemDecoration = new VerticalSpaceDecoration(20);
         shimmerRecyclerView.addItemDecoration(itemDecoration);
 
         shimmerRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -164,13 +155,13 @@ public class FeedFragment extends Fragment {
                     break;
                 case R.id.feed_storageBox:
                     // 보관하기 버튼
-                    onClickStorage(postModelList.get(position));
+                    onClickStorage(adapter.getList().get(position));
                     break;
                 case R.id.feed_img:
                     // 이미지 클릭
                     // 몀시적 인텐트에 FeedData 객체 담아서 보내기
                     Intent intent = new Intent(mContext, PostViewActivity.class);
-                    intent.putExtra("item", postModelList.get(position));
+                    intent.putExtra("item", adapter.getList().get(position));
                     startActivity(intent);
                     break;
             }
@@ -189,13 +180,20 @@ public class FeedFragment extends Fragment {
         chipViews.add(view.findViewById(R.id.chip3));
         chipViews.add(view.findViewById(R.id.chip4));
         chipViews.add(view.findViewById(R.id.chip5));
+        emptyView = view.findViewById(R.id.recycler_empty_view);
 
         for (CheckableChipView chip : chipViews)
             chip.setOnCheckedChangeListener((chipView, aBoolean) -> {
                 chip.setCheckedColor(ContextCompat.getColor(mContext,
                         aBoolean ? R.color.pink_700 : R.color.gray));
+                updateList();
                 return null;
             });
+
+        List<Filter> userFilters = UserCache.getUser(mContext).getUserFilters();
+        for (Filter f : userFilters) {
+            chipViews.get(f.ordinal()).setCheckedAnimated(true, () -> {return null;});
+        }
     }
 
     private void onClickStorage(PostModel postModel) {
@@ -221,10 +219,25 @@ public class FeedFragment extends Fragment {
         return new ArrayList<Filter>() {
             {
                 for (int i = 0; i < chipViews.size(); i++)
-                    if (chipViews.get(i).isChecked())
+                    if (chipViews.get(i).isChecked() && i < Filter.values().length)
                         add(Filter.values()[i]);
             }
         };
+    }
+
+    private void updateList() {
+        // 필터들을 문자열로 변환한 후 업데이트
+        StringBuilder key = new StringBuilder();
+        String regex = "";
+
+        for (Filter filter : getFilters()) {
+            key.append(regex);
+            key.append(filter.toString());
+            regex = ":";
+        }
+
+        if (adapter != null)
+            adapter.getFilter().filter(key);
     }
 
     private void getData()
@@ -237,7 +250,7 @@ public class FeedFragment extends Fragment {
             timeout = true;
             if (allLoaded)
                 shimmerRecyclerView.hideShimmerAdapter();   // recyclerView loading stop
-        }, 1000);
+        }, 500);
 
         FirebaseLoadPost
                 .LoadPosts(
@@ -247,9 +260,8 @@ public class FeedFragment extends Fragment {
                                 if (timeout)
                                     shimmerRecyclerView.hideShimmerAdapter();
 
-                                postModelList = postModels;
-                                adapter.setList(postModelList);
-                                adapter.notifyDataSetChanged();
+                                adapter.setList(postModels);
+                                updateList();
                             }
                             },
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());

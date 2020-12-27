@@ -17,6 +17,17 @@ import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
 
+    public interface OnItemClickListener{
+        void onItemClick(View v, int pos);
+    }
+
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    }
+
+
     private ArrayList<PostModel> arrayList;
     private SearchFragment context;
 
@@ -66,6 +77,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             tv_title = itemView.findViewById(R.id.tv_title);
             tv_subTitle = itemView.findViewById(R.id.tv_subTitle);
             tv_content = itemView.findViewById(R.id.tv_content);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        if(mListener != null){
+                            mListener.onItemClick(v, pos);
+                        }
+                    }
+                }
+            });
         }
     }
 }
