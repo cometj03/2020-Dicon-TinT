@@ -22,7 +22,7 @@ public class CreateUtil {
             if (!images.isEmpty()) {
                 List<String> imageList = uriToString(images);
                 Intent postIntent = new Intent(context, PostingActivity.class);
-                postIntent.putExtra("post", imageList.toArray());
+                postIntent.putExtra("images", imageList.toArray(new String[imageList.size()]));
 //                PostModel post = new PostModel(uriToString(images));
 //                postIntent.putExtra("post", post); 아니 왜 안 되는거지
                 fa.startActivity(postIntent);

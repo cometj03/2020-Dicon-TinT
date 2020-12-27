@@ -49,7 +49,7 @@ public class FirebaseUploadPost {
 
         // 필터 체크
         if (postModel.getFilters().isEmpty()) {
-            onUploadFailureListener.onUploadFailed("필터는 적어도 하나 이상 체크 되어야 해요.");
+            onUploadFailureListener.onUploadFailed("필터를 선택해주세요!");
             return;
         }
 
