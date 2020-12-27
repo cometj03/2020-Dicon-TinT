@@ -117,8 +117,7 @@ public class ProfileFragment extends Fragment {
         //***** RecyclerView *****//
         // LookBook
         lookBook_Recycler.showShimmerAdapter();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
         lookBook_Recycler.setLayoutManager(layoutManager);
         lookBookAdapter = new ProfileLookBookAdapter(emptyView1);
         post_Recycler.setAdapter(lookBookAdapter);

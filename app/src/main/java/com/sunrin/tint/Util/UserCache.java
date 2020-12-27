@@ -52,6 +52,8 @@ public class UserCache {
                 userModel.addLookBookID(value);
                 break;
             case UPDATE_FILTERS:
+                if (filterList == null)
+                    return;
                 userModel.setUserFilters(filterList);
                 break;
             case DELETE_POST:
