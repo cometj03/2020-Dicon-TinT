@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -27,7 +26,7 @@ import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
-import com.sunrin.tint.Screen.PostViewActivity;
+import com.sunrin.tint.Screen.ShowPostActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.UserCache;
@@ -47,6 +46,7 @@ public class FeedFragment extends Fragment {
     ChipGroup chipGroup;
     HorizontalScrollView chipContainer;
     ImageButton filterToggle;
+    ViewGroup emptyView;    // recyclerview에 아무것도 없을 때
 
     SwipeRefreshLayout refreshLayout;
     ShimmerRecyclerView shimmerRecyclerView;
@@ -100,7 +100,7 @@ public class FeedFragment extends Fragment {
 //        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
 //        layoutManager.setStackFromEnd(true);
         shimmerRecyclerView.setLayoutManager(layoutManager);
-        adapter = new FeedAdapter();
+        adapter = new FeedAdapter(emptyView);
         shimmerRecyclerView.setAdapter(adapter);
         getData();
 
@@ -158,8 +158,8 @@ public class FeedFragment extends Fragment {
                     break;
                 case R.id.feed_img:
                     // 이미지 클릭
-                    // 몀시적 인텐트에 FeedData 객체 담아서 보내기
-                    Intent intent = new Intent(mContext, PostViewActivity.class);
+                    // 몀시적 인텐트에 PostModel 객체 담아서 보내기
+                    Intent intent = new Intent(mContext, ShowPostActivity.class);
                     intent.putExtra("item", adapter.getList().get(position));
                     startActivity(intent);
                     break;
@@ -179,6 +179,7 @@ public class FeedFragment extends Fragment {
         chipViews.add(view.findViewById(R.id.chip3));
         chipViews.add(view.findViewById(R.id.chip4));
         chipViews.add(view.findViewById(R.id.chip5));
+        emptyView = view.findViewById(R.id.recycler_empty_view);
 
         for (CheckableChipView chip : chipViews)
             chip.setOnCheckedChangeListener((chipView, aBoolean) -> {
@@ -217,7 +218,7 @@ public class FeedFragment extends Fragment {
         return new ArrayList<Filter>() {
             {
                 for (int i = 0; i < chipViews.size(); i++)
-                    if (chipViews.get(i).isChecked())
+                    if (chipViews.get(i).isChecked() && i < Filter.values().length)
                         add(Filter.values()[i]);
             }
         };
@@ -248,7 +249,7 @@ public class FeedFragment extends Fragment {
             timeout = true;
             if (allLoaded)
                 shimmerRecyclerView.hideShimmerAdapter();   // recyclerView loading stop
-        }, 1000);
+        }, 500);
 
         FirebaseLoadPost
                 .LoadPosts(

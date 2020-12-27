@@ -1,7 +1,6 @@
 package com.sunrin.tint.Screen.Feed;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +22,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> implements Filterable {
 
     Context mContext;
     private List<PostModel> mData, mDataFiltered;
 
-    FeedAdapter() {
+    ViewGroup emptyView;
+
+    FeedAdapter(ViewGroup emptyView) {
+        this.emptyView = emptyView;
         this.mData = new ArrayList<>();
         this.mDataFiltered = new ArrayList<>();
     }
@@ -134,6 +134,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                 // results : return 값
                 mDataFiltered = (List<PostModel>) results.values;
                 notifyDataSetChanged();
+
+                if (emptyView != null)
+                    if (getItemCount() <= 0)
+                        emptyView.setVisibility(View.VISIBLE);
+                    else
+                        emptyView.setVisibility(View.GONE);
             }
         };
     }

@@ -34,7 +34,9 @@
         <activity android:name=".Screen.MainActivity" />
         <activity android:name=".Screen.Login.LogInActivity" />
         <activity android:name=".Screen.Register.RegisterActivity" />
-        <activity android:name=".Screen.PostViewActivity" />
+        <activity android:name=".Screen.Register.Register2Activity" />
+        <activity android:name=".Screen.ShowPostActivity" />
+        <activity android:name=".Screen.Posting.PostingActivity" />
 
     </application>
 

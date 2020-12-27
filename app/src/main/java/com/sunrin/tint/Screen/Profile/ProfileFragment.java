@@ -1,6 +1,7 @@
 package com.sunrin.tint.Screen.Profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +17,27 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Screen.MainActivity;
+import com.sunrin.tint.Screen.SplashActivity;
+import com.sunrin.tint.Util.CreateUtil;
+import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.UserCache;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
     Context mContext;
 
-    TextView tv_username;
+    TextView tv_username, tv_status;
     ImageButton btn_addLookBook, btn_addPost, btn_storage, btn_logout;
     Button btn_filterMenu;
+    CircleImageView profile;
 
-    UserModel userModel;
+    private UserModel userModel;
 
     @Nullable
     @Override
@@ -40,10 +49,18 @@ public class ProfileFragment extends Fragment {
         userModel = UserCache.getUser(mContext);
 
         tv_username.setText(userModel.getName());
+        tv_status.setText(userModel.getStatus());
+        Glide.with(profile)
+                .load(userModel.getProfile())
+                .placeholder(R.drawable.profile_empty_feed) // 사진이 로딩 되기 전 미리보기 이미지
+                .error(R.drawable.profile_empty_feed)       // 사진 불러오지 못했을 때
+                .into(profile);
 
-
+        profile.setOnClickListener(v -> changeProfile());
         btn_storage.setOnClickListener(v -> Toast.makeText(mContext, "Storage", Toast.LENGTH_SHORT).show());
         btn_logout.setOnClickListener(v -> logout());
+        btn_addLookBook.setOnClickListener(v -> Toast.makeText(mContext, "AddLookBook", Toast.LENGTH_SHORT).show());
+        btn_addPost.setOnClickListener(v -> CreateUtil.CreatePost(mContext, getActivity()));
 
         btn_filterMenu.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(getActivity(), v);//v는 클릭된 뷰를 의미
@@ -74,13 +91,21 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    private void changeProfile() {
+        ImagePickerUtil.PickImage(mContext, getActivity(), "Profile", image -> {
+            Toast.makeText(mContext, "프로필 변경은 개발중에 있습니다 :)", Toast.LENGTH_SHORT).show();
+        });
+    }
+
     private void logout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle("로그아웃").setMessage("정말 로그아웃 하시겠습니까?");
         builder.setPositiveButton("로그아웃", (dialog, which) -> {
             UserCache.logout(mContext);
             Toast.makeText(mContext, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-            getActivity().finish();
+
+            startActivity(new Intent(mContext, SplashActivity.class));
+            ((MainActivity) mContext).finish();
         });
         builder.setNegativeButton("취소", (dialog, which) -> {});
         builder.setCancelable(true).show();
@@ -88,9 +113,13 @@ public class ProfileFragment extends Fragment {
 
     private void init(View view) {
         tv_username = view.findViewById(R.id.tv_username);
+        tv_status = view.findViewById(R.id.tv_status);
         btn_filterMenu = view.findViewById(R.id.popupmenu_btn);
         btn_storage = view.findViewById(R.id.btn_storage);
         btn_logout = view.findViewById(R.id.btn_setting);
+        btn_addLookBook = view.findViewById(R.id.add_lookbook_btn);
+        btn_addPost = view.findViewById(R.id.add_post_btn);
+        profile = view.findViewById(R.id.profile_imageview);
     }
 
     @Override

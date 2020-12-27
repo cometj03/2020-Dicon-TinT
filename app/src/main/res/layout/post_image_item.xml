@@ -5,15 +5,15 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="16dp" >
 
 
     <ImageView
         android:id="@+id/media_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerInside"
         android:adjustViewBounds="true"
-        android:contentDescription="new post image"
         android:visibility="visible" />
 
 

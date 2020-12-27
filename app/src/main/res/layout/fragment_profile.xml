@@ -82,6 +82,17 @@
             app:layout_constraintStart_toStartOf="@+id/profile_imageview"
             app:layout_constraintTop_toBottomOf="@+id/profile_imageview" />
 
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="상태 메시지"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/profile_imageview"
+            app:layout_constraintStart_toStartOf="@+id/profile_imageview"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lookbook"
             android:layout_width="match_parent"
@@ -89,7 +100,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username">
+            app:layout_constraintTop_toBottomOf="@+id/tv_status">
 
             <TextView
                 android:id="@+id/textView"
@@ -125,15 +136,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:clipToPadding="false"
-                android:paddingTop="70dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_lookbook_btn"
                 app:shimmer_demo_angle="20"
-                app:shimmer_demo_child_count="2"
-                app:shimmer_demo_layout="@layout/feed_item_demo"
+                app:shimmer_demo_child_count="3"
+                app:shimmer_demo_layout_manager_type="linear_horizontal"
+                app:shimmer_demo_layout="@layout/profile_lookbook_item_demo"
                 app:shimmer_demo_shimmer_color="#80ffffff" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -228,8 +238,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:clipToPadding="false"
-                android:paddingTop="70dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

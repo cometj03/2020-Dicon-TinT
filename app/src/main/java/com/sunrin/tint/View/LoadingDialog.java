@@ -71,7 +71,8 @@ public class LoadingDialog extends Dialog {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             cancel();
-            onDialogFinishListener.onFinish();
+            if (onDialogFinishListener != null)
+                onDialogFinishListener.onFinish();
         }, 1500);
     }
 }
