@@ -159,7 +159,7 @@ public class FeedFragment extends Fragment {
                     break;
                 case R.id.feed_img:
                     // 이미지 클릭
-                    // 몀시적 인텐트에 FeedData 객체 담아서 보내기
+                    // 몀시적 인텐트에 PostModel 객체 담아서 보내기
                     Intent intent = new Intent(mContext, PostViewActivity.class);
                     intent.putExtra("item", adapter.getList().get(position));
                     startActivity(intent);

@@ -1,6 +1,5 @@
 package com.sunrin.tint.Screen.Posting;
 
-import android.Manifest;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,19 +23,17 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.okdroid.checkablechipview.CheckableChipView;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.FirebaseUploadPost;
+import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import gun0912.tedbottompicker.TedBottomPicker;
 
 public class PostingFragment extends Fragment {
 
@@ -75,7 +72,7 @@ public class PostingFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            checkIfCanUpload();
+            checkCanUpload();
         }
 
         @Override
@@ -131,39 +128,13 @@ public class PostingFragment extends Fragment {
     }
 
     private void GetImages() {
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                TedBottomPicker.with(getActivity())
-                        .setPeekHeight(1600)
-                        .showTitle(false)
-                        .setCompleteButtonText("Done")
-                        .setEmptySelectionText("No Select")
-                        .setSelectedUriList(selectedImages)
-                        .showMultiImage(uriList -> {
-                            selectedImages = uriList;
-                            isImageSelected = !uriList.isEmpty();
-                            showUriList(uriList);
-                            checkIfCanUpload();
-                        });
-            }
-
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(mContext, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        checkPermission(permissionListener);
-    }
-
-    private void checkPermission(PermissionListener permissionlistener) {
-        TedPermission
-                .with(mContext)
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("권한을 거부하시면 서비스를 이용하실 수 없습니다.\n\n[설정] > [권한]에서 권한 사용을 설정할 수 있습니다.")
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .check();
+        CreateUtil.CreatePost(mContext, getActivity());
+        /*ImagePickerUtil.PickImages(mContext, getActivity(), images -> {
+            selectedImages = images;
+            isImageSelected = !images.isEmpty();
+            showUriList(images);
+            checkCanUpload();
+        });*/
     }
 
     private void showUriList(List<Uri> uriList) {
@@ -194,7 +165,7 @@ public class PostingFragment extends Fragment {
         }
     }
 
-    private void checkIfCanUpload() {
+    private void checkCanUpload() {
         boolean t = titleText.getText().toString().isEmpty();
         boolean s = subtitleText.getText().toString().isEmpty();
         postBtn.setEnabled(isImageSelected && !t && !s);
