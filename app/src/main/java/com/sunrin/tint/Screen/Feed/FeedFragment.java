@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -27,7 +26,7 @@ import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
-import com.sunrin.tint.Screen.PostViewActivity;
+import com.sunrin.tint.Screen.ShowPostActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 import com.sunrin.tint.Util.UserCache;
@@ -93,9 +92,6 @@ public class FeedFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.d(TAG, "onActivityCreated: *******");
-
-
         //***** RecyclerView *****//
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
 //        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
@@ -160,7 +156,7 @@ public class FeedFragment extends Fragment {
                 case R.id.feed_img:
                     // 이미지 클릭
                     // 몀시적 인텐트에 PostModel 객체 담아서 보내기
-                    Intent intent = new Intent(mContext, PostViewActivity.class);
+                    Intent intent = new Intent(mContext, ShowPostActivity.class);
                     intent.putExtra("item", adapter.getList().get(position));
                     startActivity(intent);
                     break;

@@ -2,14 +2,10 @@ package com.sunrin.tint.Util;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.TimedMetaData;
 import android.net.Uri;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sunrin.tint.Model.PostModel;
-import com.sunrin.tint.Screen.MainActivity;
-import com.sunrin.tint.Screen.PostViewActivity;
 import com.sunrin.tint.Screen.Posting.PostingActivity;
 
 import java.util.ArrayList;

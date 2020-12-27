@@ -1,7 +1,6 @@
 package com.sunrin.tint.Screen.Feed;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,6 @@ import com.sunrin.tint.Util.DateUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> implements Filterable {
 

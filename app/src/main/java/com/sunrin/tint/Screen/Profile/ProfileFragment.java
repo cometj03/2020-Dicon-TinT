@@ -16,14 +16,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
+import com.sunrin.tint.Model.LookBookModel;
+import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.MainActivity;
 import com.sunrin.tint.Screen.SplashActivity;
+import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.UserCache;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,6 +43,13 @@ public class ProfileFragment extends Fragment {
     ImageButton btn_addLookBook, btn_addPost, btn_storage, btn_logout;
     Button btn_filterMenu;
     CircleImageView profile;
+
+    ShimmerRecyclerView lookBook_Recycler, post_Recycler;
+    ProfileLookBookAdapter lookBookAdapter;
+    ProfilePostAdapter postAdapter;
+
+    private List<LookBookModel> lookBookModelList;
+    private List<PostModel> postModelList;
 
     private UserModel userModel;
 
@@ -58,6 +73,8 @@ public class ProfileFragment extends Fragment {
         profile.setOnClickListener(v -> changeProfile());
         btn_storage.setOnClickListener(v -> Toast.makeText(mContext, "Storage", Toast.LENGTH_SHORT).show());
         btn_logout.setOnClickListener(v -> logout());
+        btn_addLookBook.setOnClickListener(v -> Toast.makeText(mContext, "AddLookBook", Toast.LENGTH_SHORT).show());
+        btn_addPost.setOnClickListener(v -> CreateUtil.CreatePost(mContext, getActivity()));
 
         btn_filterMenu.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(getActivity(), v);//v는 클릭된 뷰를 의미
@@ -88,6 +105,38 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //***** RecyclerView *****//
+        // LookBook
+        lookBook_Recycler.showShimmerAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        // Post
+        post_Recycler.showShimmerAdapter();
+        post_Recycler.setLayoutManager(new GridLayoutManager(mContext, 3));
+        postAdapter = new ProfilePostAdapter();
+        post_Recycler.setAdapter(postAdapter);
+        getPostData();
+    }
+
+    private void getPostData() {
+        FirebaseUserCreation
+                .LoadUserPosts(userModel.getPostID(),
+                        postModels -> {
+                            if (postAdapter != null) {
+                                post_Recycler.hideShimmerAdapter();
+                                postModelList = postModels;
+                                postAdapter.setList(postModels);
+                                postAdapter.notifyDataSetChanged();
+                            }
+                        },
+                        errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
+    }
+
     private void changeProfile() {
         ImagePickerUtil.PickImage(mContext, getActivity(), "Profile", image -> {
             Toast.makeText(mContext, "프로필 변경은 개발중에 있습니다 :)", Toast.LENGTH_SHORT).show();
@@ -114,7 +163,11 @@ public class ProfileFragment extends Fragment {
         btn_filterMenu = view.findViewById(R.id.popupmenu_btn);
         btn_storage = view.findViewById(R.id.btn_storage);
         btn_logout = view.findViewById(R.id.btn_setting);
+        btn_addLookBook = view.findViewById(R.id.add_lookbook_btn);
+        btn_addPost = view.findViewById(R.id.add_post_btn);
         profile = view.findViewById(R.id.profile_imageview);
+        lookBook_Recycler = view.findViewById(R.id.lookbook_recycler);
+        post_Recycler = view.findViewById(R.id.post_recycler);
     }
 
     @Override
