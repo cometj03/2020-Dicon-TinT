@@ -219,7 +219,7 @@ public class FeedFragment extends Fragment {
         return new ArrayList<Filter>() {
             {
                 for (int i = 0; i < chipViews.size(); i++)
-                    if (chipViews.get(i).isChecked())
+                    if (chipViews.get(i).isChecked() && i < Filter.values().length)
                         add(Filter.values()[i]);
             }
         };
@@ -250,7 +250,7 @@ public class FeedFragment extends Fragment {
             timeout = true;
             if (allLoaded)
                 shimmerRecyclerView.hideShimmerAdapter();   // recyclerView loading stop
-        }, 1000);
+        }, 500);
 
         FirebaseLoadPost
                 .LoadPosts(

@@ -11,8 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.R;
+import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
@@ -47,7 +49,13 @@ public class Register2Activity extends AppCompatActivity {
     }
 
     private void setProfileImageView() {
-        // TODO:
+        ImagePickerUtil.PickImage(this, Register2Activity.this, "Profile", image -> {
+            profile = image;
+            Glide.with(this)
+                    .load(image)
+                    .error(R.drawable.profile_empty_feed)
+                    .into(profileImageView);
+        });
     }
 
     private void updateUser() {
