@@ -1,4 +1,4 @@
-package com.sunrin.tint.Screen.Feed;
+package com.sunrin.tint.Screen.Profile;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.DateUtil;
@@ -22,67 +21,54 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder> implements Filterable {
+public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.ItemViewHolder> implements Filterable {
 
-    Context mContext;
     private List<PostModel> mData, mDataFiltered;
+    Context mContext;
 
-    ViewGroup emptyView;
-
-    FeedAdapter(ViewGroup emptyView) {
-        this.emptyView = emptyView;
+    ProfilePostAdapter(){
         this.mData = new ArrayList<>();
         this.mDataFiltered = new ArrayList<>();
     }
 
     public void setList(List<PostModel> list) {
         this.mData = list;
-        if (mDataFiltered == null || mDataFiltered.isEmpty())
+        if(mDataFiltered == null || mDataFiltered.isEmpty())
             mDataFiltered = mData;
     }
-    public List<PostModel> getList() {
-        return mDataFiltered;
-    }
+
+    public List<PostModel> getList(){ return mDataFiltered; }
+
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.feed_item, parent, false);
-        return new ItemViewHolder(view);
+        View v = inflater.inflate(R.layout.profile_item_temp, parent, false);
+        return new ItemViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
 
-        // Bind Data Here
-        // TODO: apply animation to views here
-        // https://youtu.be/rJ-7KgMAJUo
-
         PostModel item = mDataFiltered.get(position);
 
-        if (!item.getId().isEmpty()) {
-            Glide.with(holder.feed_img)
-                    .load(item.getImages().get(0))
-                    .into(holder.feed_img);
+        if(!item.getId().isEmpty()){
+            Glide.with(holder.feed_img).load((item.getImages().get(0))).into(holder.feed_img);
         }
         holder.title.setText(item.getTitle());
         holder.subTitle.setText(item.getSubTitle());
         holder.timeInterval.setText(DateUtil.getTimeAgo(item.getDate(), mContext.getResources()));
         holder.userName.setText(item.getUserName());
 
-        // Add Chip Filters
-
         holder.chipGroup.removeAllViews();
 
         List<String> filterNames = Arrays.asList(mContext.getResources().getStringArray(R.array.FilterNames));
-        for (Filter filter : item.getFilters()) {
-
+        for (com.sunrin.tint.Filter filter : item.getFilters()){
             View imageHolder = LayoutInflater.from(mContext).inflate(R.layout.feed_item_chip, null);
             TextView chip = imageHolder.findViewById(R.id.chipTextView);
-            chip.setText(filterNames.get(filter.ordinal()));    // ordinal : Enum to Int
-            // chip.setTextSize(18);
+            chip.setText(filterNames.get(filter.ordinal()));
 
             holder.chipGroup.addView(imageHolder);
         }
@@ -90,7 +76,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 
     @Override
     public int getItemCount() {
-        if (mDataFiltered == null)
+        if(mDataFiltered ==null)
             return 0;
         return mDataFiltered.size();
     }
@@ -114,7 +100,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                                 boolean flag = true;
 
                                 for (String s : keys) {
-                                    if (!p.getFilters().contains(Filter.valueOf(s)))
+                                    if (!p.getFilters().contains(com.sunrin.tint.Filter.valueOf(s)))
                                         flag = false;
                                 }
                                 if (flag) add(p);
@@ -134,18 +120,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                 // results : return 값
                 mDataFiltered = (List<PostModel>) results.values;
                 notifyDataSetChanged();
-
-                if (emptyView != null)
-                    if (getItemCount() <= 0)
-                        emptyView.setVisibility(View.VISIBLE);
-                    else
-                        emptyView.setVisibility(View.GONE);
             }
         };
     }
 
-
-    //*****//
     public interface OnItemClickListener {
         void OnItemClick(View v, int position);
     }
@@ -157,6 +135,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     private OnItemClickListener itemClickListener;
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
+
         ImageView feed_img, userProfile;
         ImageButton commentBtn, shareBtn, storageBoxBtn;
         TextView title, subTitle, timeInterval, userName;
@@ -174,9 +153,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
             timeInterval = itemView.findViewById(R.id.feed_timeInterval);
             userName = itemView.findViewById(R.id.feed_userName);
             chipGroup = itemView.findViewById(R.id.feed_chipGroup);
-            //chipSample = itemView.findViewById(R.id.feed_chipSample);
 
-            //*** Button Listener Setting ***//
+
             shareBtn.setOnClickListener(v -> {
                 int pos = getAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION)
@@ -203,5 +181,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                         itemClickListener.OnItemClick(v, pos);
             });
         }
+
+
     }
 }
