@@ -24,7 +24,7 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
     private List<PostModel> mData, mDataFiltered;
     Context mContext;
 
-    ProfilePostAdapter() {
+    public ProfilePostAdapter() {
         this.mData = new ArrayList<>();
         this.mDataFiltered = new ArrayList<>();
     }

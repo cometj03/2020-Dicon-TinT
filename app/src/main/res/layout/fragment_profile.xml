@@ -134,7 +134,7 @@
             <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/lookbook_recycler"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="226dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
@@ -238,7 +238,7 @@
             <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/post_recycler"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"

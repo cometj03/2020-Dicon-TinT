@@ -36,7 +36,8 @@
         <activity android:name=".Screen.Register.RegisterActivity" />
         <activity android:name=".Screen.Register.Register2Activity" />
         <activity android:name=".Screen.ShowPostActivity" />
-        <activity android:name=".Screen.Posting.PostingActivity" />
+        <activity android:name=".Screen.Posting.CreatePostActivity" />
+        <activity android:name=".Screen.Posting.CreateLookBookActivity" />
 
     </application>
 

@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PostingActivity extends AppCompatActivity {
+public class CreatePostActivity extends AppCompatActivity {
 
     Button postBtn;
     EditText titleText, subtitleText, contentText;
@@ -44,7 +43,7 @@ public class PostingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_posting);
+        setContentView(R.layout.activity_create_post);
 
         init();
 

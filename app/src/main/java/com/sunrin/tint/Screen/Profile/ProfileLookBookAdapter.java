@@ -45,7 +45,7 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                String[] keys = constraint.toString().split(":");
+                /*String[] keys = constraint.toString().split(":");
 
                 if(constraint.toString().length() <=0){
                     mDataFiltered = mData;
@@ -64,7 +64,7 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
                             }
                         }
                     };
-                }
+                }*/
 
                 FilterResults results = new FilterResults();
                 results.values = mDataFiltered;
@@ -103,7 +103,7 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         LookBookModel item = mDataFiltered.get(position);
 
-        if(!item.getId().isEmpty()){
+        /*if(!item.getId().isEmpty()){
             Glide.with(holder.lookbook_img).load(item.getImage().get(0)).into(holder.lookbook_img);
         }
         holder.contents.setText(item.getContents());
@@ -119,7 +119,7 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
             chip.setText(filterNames.get(filter.ordinal()));
 
             holder.chipGroup.addView(imageHolder);
-        }
+        }*/
     }
 
     @Override
