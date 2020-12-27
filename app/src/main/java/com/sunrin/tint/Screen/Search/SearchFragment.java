@@ -34,7 +34,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private ArrayList<PostModel> posters;
     private SearchView searchView;
 
-    private LinearLayout recommandLayout;
+    private LinearLayout recommendLayout;
     private LinearLayout noneResultLayout;
     private LinearLayout resultLayout;
 
@@ -44,36 +44,37 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         //사용될 화면
-        recommandLayout = (LinearLayout)view.findViewById(R.id.recommandLayout);
+        recommendLayout = (LinearLayout)view.findViewById(R.id.recommendLayout);
         noneResultLayout = (LinearLayout)view.findViewById(R.id.noneResultLayout);
         resultLayout = (LinearLayout)view.findViewById(R.id.resultLayout);
 
         LayoutInflater inflater1 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater1.inflate(R.layout.recommand_layout, recommandLayout, true);
+        inflater1.inflate(R.layout.recommend_layout, recommendLayout, true);
         inflater1.inflate(R.layout.none_result_layout, noneResultLayout, true);
 
         //추천 검색어 onClick
-        TextView recommand1 = view.findViewById(R.id.recommand1);
-        TextView recommand2 = view.findViewById(R.id.recommand2);
-        TextView recommand3 = view.findViewById(R.id.recommand3);
-        TextView recommand4 = view.findViewById(R.id.recommand4);
-        TextView recommand5 = view.findViewById(R.id.recommand5);
-        TextView recommand11 = view.findViewById(R.id.recommand11);
-        TextView recommand12 = view.findViewById(R.id.recommand12);
-        TextView recommand13 = view.findViewById(R.id.recommand13);
-        TextView recommand14 = view.findViewById(R.id.recommand14);
-        TextView recommand15 = view.findViewById(R.id.recommand15);
+        TextView recommend1 = view.findViewById(R.id.recommend1);
+        TextView recommend2 = view.findViewById(R.id.recommend2);
+        TextView recommend3 = view.findViewById(R.id.recommend3);
+        TextView recommend4 = view.findViewById(R.id.recommend4);
+        TextView recommend5 = view.findViewById(R.id.recommend5);
+        TextView recommend11 = view.findViewById(R.id.recommend11);
+        TextView recommend12 = view.findViewById(R.id.recommend12);
+        TextView recommend13 = view.findViewById(R.id.recommend13);
+        TextView recommend14 = view.findViewById(R.id.recommend14);
+        TextView recommend15 = view.findViewById(R.id.recommend15);
 
-        recommand1.setOnClickListener(this);
-        recommand2.setOnClickListener(this);
-        recommand3.setOnClickListener(this);
-        recommand4.setOnClickListener(this);
-        recommand5.setOnClickListener(this);
-        recommand11.setOnClickListener(this);
-        recommand12.setOnClickListener(this);
-        recommand13.setOnClickListener(this);
-        recommand14.setOnClickListener(this);
-        recommand15.setOnClickListener(this);
+        recommend1.setOnClickListener(this);
+        recommend2.setOnClickListener(this);
+        recommend3.setOnClickListener(this);
+        recommend4.setOnClickListener(this);
+        recommend5.setOnClickListener(this);
+        recommend11.setOnClickListener(this);
+        recommend12.setOnClickListener(this);
+        recommend13.setOnClickListener(this);
+        recommend14.setOnClickListener(this);
+        recommend15.setOnClickListener(this);
+
 
         postAll = new ArrayList<>();
         posters = new ArrayList<>();
@@ -90,7 +91,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         adapter = new SearchAdapter(posters, this);
         recyclerView.setAdapter(adapter); //recyclerView에 adapter 연결
 
-        setRecommandLayout();
+        setrecommendLayout();
 
         getData();
         //SearchView 함수
@@ -150,23 +151,23 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void setRecommandLayout(){
+    private void setrecommendLayout(){ //recommandLayout을 보여줌
         noneResultLayout.setVisibility(View.GONE);
         resultLayout.setVisibility(View.GONE);
     }
 
-    private void setNoneResultLayout(){
-        if(recommandLayout.getVisibility() == View.VISIBLE){
-            recommandLayout.setVisibility(View.GONE);
+    private void setNoneResultLayout(){ //noneResultLayout을 보여줌
+        if(recommendLayout.getVisibility() == View.VISIBLE){
+            recommendLayout.setVisibility(View.GONE);
         }else{
             resultLayout.setVisibility(View.GONE);
         }
         noneResultLayout.setVisibility(View.VISIBLE);
     }
 
-    private void setResultLayout(){
-        if(recommandLayout.getVisibility() == View.VISIBLE){
-            recommandLayout.setVisibility(View.GONE);
+    private void setResultLayout(){ //ResultLayout을 보여줌
+        if(recommendLayout.getVisibility() == View.VISIBLE){
+            recommendLayout.setVisibility(View.GONE);
         }else{
             noneResultLayout.setVisibility(View.GONE);
         }
@@ -193,24 +194,24 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.recommand1:
-            case R.id.recommand11:
+            case R.id.recommend1:
+            case R.id.recommend11:
                 searchView.setQuery("틴트", true);
                 break;
-            case R.id.recommand2:
-            case R.id.recommand12:
+            case R.id.recommend2:
+            case R.id.recommend12:
                 searchView.setQuery("새해", true);
                 break;
-            case R.id.recommand3:
-            case R.id.recommand13:
+            case R.id.recommend3:
+            case R.id.recommend13:
                 searchView.setQuery("새학기", true);
                 break;
-            case R.id.recommand4:
-            case R.id.recommand14:
+            case R.id.recommend4:
+            case R.id.recommend14:
                 searchView.setQuery("패션", true);
                 break;
-            case R.id.recommand5:
-            case R.id.recommand15:
+            case R.id.recommend5:
+            case R.id.recommend15:
                 searchView.setQuery("학생", true);
         }
 
