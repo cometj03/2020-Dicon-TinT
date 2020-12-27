@@ -13,11 +13,10 @@ public class UserModel {
 
     public UserModel() {}
 
-    // TODO: Add Profile Image
-    public UserModel(String name, String email) {
-        this.name = name;
+    public UserModel(String email) {
         this.email = email;
-        this.status = status;
+        this.name = "";
+        this.status = "";
         this.profile = null;
         this.postID = new ArrayList<>();
         this.storageID = new ArrayList<>();
@@ -25,12 +24,15 @@ public class UserModel {
         this.userFilters = new ArrayList<>();
     }
 
-    public UserModel(String name, String email, List<String> postID, List<String> storageID, List<Filter> userFilters) {
+    public UserModel(String name, String email, String status, String profile) {
         this.name = name;
         this.email = email;
-        this.postID = postID;
-        this.storageID = storageID;
-        this.userFilters = userFilters;
+        this.status = status;
+        this.profile = profile;
+        this.postID = new ArrayList<>();
+        this.storageID = new ArrayList<>();
+        this.lookBookID = new ArrayList<>();
+        this.userFilters = new ArrayList<>();
     }
 
     // add IDs
@@ -51,6 +53,7 @@ public class UserModel {
         return name;
     }
 
+    // *** get set *** //
     public void setName(String name) {
         this.name = name;
     }
@@ -93,5 +96,21 @@ public class UserModel {
 
     public void setUserFilters(List<Filter> userFilters) {
         this.userFilters = userFilters;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<String> getLookBookID() {
+        return lookBookID;
+    }
+
+    public void setLookBookID(List<String> lookBookID) {
+        this.lookBookID = lookBookID;
     }
 }

@@ -27,7 +27,7 @@ public class ProfileFragment extends Fragment {
 
     Context mContext;
 
-    TextView tv_username;
+    TextView tv_username, tv_status;
     ImageButton btn_addLookBook, btn_addPost, btn_storage, btn_logout;
     Button btn_filterMenu;
     CircleImageView profile;
@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
         userModel = UserCache.getUser(mContext);
 
         tv_username.setText(userModel.getName());
+        tv_status.setText(userModel.getStatus());
         Glide.with(profile)
                 .load(userModel.getProfile())
                 .placeholder(R.drawable.profile_empty_feed) // 사진이 로딩 되기 전 미리보기 이미지
@@ -96,6 +97,7 @@ public class ProfileFragment extends Fragment {
 
     private void init(View view) {
         tv_username = view.findViewById(R.id.tv_username);
+        tv_status = view.findViewById(R.id.tv_status);
         btn_filterMenu = view.findViewById(R.id.popupmenu_btn);
         btn_storage = view.findViewById(R.id.btn_storage);
         btn_logout = view.findViewById(R.id.btn_setting);
