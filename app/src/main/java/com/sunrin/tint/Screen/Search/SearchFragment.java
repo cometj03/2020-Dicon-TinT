@@ -134,7 +134,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                return false;
+                if(s.length() == 0 && recommendLayout.getVisibility() == View.GONE){
+                    setrecommendLayout();
+                }
+                return true;
             } //입력 값이 달라질 때
         });
 
@@ -152,8 +155,15 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setrecommendLayout(){ //recommandLayout을 보여줌
-        noneResultLayout.setVisibility(View.GONE);
-        resultLayout.setVisibility(View.GONE);
+        if(noneResultLayout.getVisibility() == View.VISIBLE){
+            noneResultLayout.setVisibility(View.GONE);
+        }
+        if(resultLayout.getVisibility() == View.VISIBLE){
+            resultLayout.setVisibility(View.GONE);
+        }
+        if(recommendLayout.getVisibility() == View.GONE){
+            recommendLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setNoneResultLayout(){ //noneResultLayout을 보여줌
