@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -47,13 +48,11 @@ public class PostingFragment extends Fragment {
         ImageView imgBtn = view.findViewById(R.id.postBtn);
         imgBtn.setOnClickListener(v -> CreateUtil.CreatePost(mContext, getActivity()));
 
-        Button lookBookBtn = view.findViewById(R.id.lookbookBtn);
+        ImageButton lookBookBtn = view.findViewById(R.id.lookbookBtn);
         lookBookBtn.setOnClickListener(v -> CreateUtil.CreateLookBook(mContext, getActivity()));
 
         return view;
     }
-
-
 
     @Override
     public void onAttach(@NonNull Context context) {
