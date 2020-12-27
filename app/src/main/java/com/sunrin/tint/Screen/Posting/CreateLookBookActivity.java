@@ -1,6 +1,7 @@
 package com.sunrin.tint.Screen.Posting;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -26,11 +27,16 @@ public class CreateLookBookActivity extends AppCompatActivity {
     ProfilePostAdapter postAdapter;
 
     List<PostModel> postModelList = new ArrayList<>();
+    List<Boolean> checkedPost = new ArrayList<>();
+
+    private UserModel userModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_lookbook);
+
+        userModel = UserCache.getUser(this);
 
         mainImage = getIntent().getStringExtra("lookbook_mainImage");
 
@@ -42,6 +48,19 @@ public class CreateLookBookActivity extends AppCompatActivity {
         postAdapter = new ProfilePostAdapter();
         linkPostRecycler.setAdapter(postAdapter);
         getLinkPostData();
+
+        for (int i = 0; i < userModel.getPostID().size(); i++)
+            checkedPost.add(false);
+
+        postAdapter.setOnItemClickListener((v, cover, position) -> {
+            switch (v.getId()) {
+                case R.id.post_thumb_nail:
+                    checkedPost.set(position, !checkedPost.get(position));
+                    cover.setVisibility(checkedPost.get(position)
+                            ? View.VISIBLE : View.INVISIBLE);
+                    break;
+            }
+        });
     }
 
     private void createLookBook() {
@@ -49,7 +68,6 @@ public class CreateLookBookActivity extends AppCompatActivity {
     }
 
     private void getLinkPostData() {
-        UserModel userModel = UserCache.getUser(this);
 
         FirebaseUserCreation
                 .LoadUserPosts(userModel.getPostID(),

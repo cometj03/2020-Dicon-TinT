@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
@@ -62,9 +64,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
 
         PostModel item = mDataFiltered.get(position);
 
-        if (!item.getId().isEmpty()) {
+        if (!item.getId().isEmpty() && !item.getImages().isEmpty()) {
+            // 정사각형
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions = requestOptions.transform(new CenterCrop());
             Glide.with(holder.feed_img)
                     .load(item.getImages().get(0))
+                    .apply(requestOptions)
                     .into(holder.feed_img);
         }
         holder.title.setText(item.getTitle());

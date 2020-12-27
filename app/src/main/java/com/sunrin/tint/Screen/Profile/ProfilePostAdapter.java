@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
 
@@ -53,7 +55,13 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
         PostModel item = mDataFiltered.get(position);
 
         if(!item.getId().isEmpty() && !item.getImages().isEmpty()) {
-            Glide.with(holder.thumbNail).load((item.getImages().get(0))).into(holder.thumbNail);
+            // 정사각형으로 잘라서 보여줌
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions = requestOptions.transform(new CenterCrop());
+            Glide.with(holder.thumbNail)
+                    .load((item.getImages().get(0)))
+                    .apply(requestOptions)
+                    .into(holder.thumbNail);
         }
     }
 
@@ -108,7 +116,7 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(View v, int position);
+        void OnItemClick(View v, View cover, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener mListener) {
@@ -120,16 +128,18 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
         ImageView thumbNail;
+        View cover;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             thumbNail = itemView.findViewById(R.id.post_thumb_nail);
+            cover = itemView.findViewById(R.id.cover);
 
             thumbNail.setOnClickListener(v -> {
                 int pos = getAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION)
                     if (itemClickListener != null)
-                        itemClickListener.OnItemClick(v, pos);
+                        itemClickListener.OnItemClick(v, cover, pos);
             });
         }
     }
