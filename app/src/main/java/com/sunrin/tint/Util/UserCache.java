@@ -29,8 +29,11 @@ public class UserCache {
     }
 
     public static UserModel getUser(Context context) {
+        String json = SharedPreferenceUtil.getString(context, "user_json");
+        if (json.length() <= 0)
+            return new UserModel();
         Gson gson = new Gson();
-        return gson.fromJson(SharedPreferenceUtil.getString(context, "user_json"), UserModel.class);
+        return gson.fromJson(json, UserModel.class);
     }
 
     public static void updateUser(Context context, String value, List<Filter> filterList, int tmp,
@@ -67,7 +70,8 @@ public class UserCache {
     }
 
     public static void logout(Context context) {
-        SharedPreferenceUtil.setString(context, "user_json", null);
+        SharedPreferenceUtil.setString(context, "user_json", "");
+        SharedPreferenceUtil.setString(context, "is_first_app", "");
         FirebaseAuth.getInstance().signOut();
     }
 }

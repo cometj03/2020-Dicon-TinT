@@ -11,7 +11,16 @@ public class UserModel {
     private List<String> postID, storageID, lookBookID;
     private List<Filter> userFilters;
 
-    public UserModel() {}
+    public UserModel() {
+        this.email = "";
+        this.name = "";
+        this.status = "";
+        this.profile = null;
+        this.postID = new ArrayList<>();
+        this.storageID = new ArrayList<>();
+        this.lookBookID = new ArrayList<>();
+        this.userFilters = new ArrayList<>();
+    }
 
     public UserModel(String email) {
         this.email = email;
