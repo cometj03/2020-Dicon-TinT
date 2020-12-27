@@ -96,6 +96,13 @@ public class CreateLookBookActivity extends AppCompatActivity {
     }
 
     private void getLinkPostData() {
+        if (userModel.getPostID().isEmpty()) {
+            if (postAdapter != null) {
+                postAdapter.setList(new ArrayList<>());
+                postAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
 
         FirebaseUserCreation
                 .LoadUserPosts(userModel.getPostID(),
