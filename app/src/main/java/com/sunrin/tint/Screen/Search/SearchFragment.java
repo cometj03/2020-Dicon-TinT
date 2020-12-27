@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -32,16 +33,25 @@ public class SearchFragment extends Fragment {
     private ArrayList<PostModel> postAll;
     private ArrayList<PostModel> posters;
 
+    private LinearLayout recommandLayout;
+    private LinearLayout noneResultLayout;
+    private LinearLayout resultLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        BeforeSearchFragment beforeSearchFragment = BeforeSearchFragment.newInstance(); //
-        setFragment(beforeSearchFragment);
+        recommandLayout = (LinearLayout)view.findViewById(R.id.recommandLayout);
+        noneResultLayout = (LinearLayout)view.findViewById(R.id.noneResultLayout);
+        resultLayout = (LinearLayout)view.findViewById(R.id.resultLayout);
 
-        BlankFragment blankFragment = BlankFragment.newInstance();
-        NoneSearchFragment noneSearchFragment = NoneSearchFragment.newInstance();
+        LayoutInflater inflater1 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater1.inflate(R.layout.recommand_layout, recommandLayout, true);
+        inflater1.inflate(R.layout.none_result_layout, noneResultLayout, true);
+
+
+        setRecommandLayout();
 
         postAll = new ArrayList<>();
         posters = new ArrayList<>();
@@ -88,14 +98,10 @@ public class SearchFragment extends Fragment {
                 }
 
                 //Fragment화면 조정
-                if(beforeSearchFragment.isAdded() && posters.isEmpty()){
-                    replaceFragment(noneSearchFragment);
-                }else if(beforeSearchFragment.isAdded() && !posters.isEmpty()){
-                    replaceFragment(blankFragment);
-                } else if(blankFragment.isAdded() && posters.isEmpty()){
-                    replaceFragment(noneSearchFragment);
-                } else if(noneSearchFragment.isAdded() && !posters.isEmpty()){
-                    replaceFragment(blankFragment);
+                if(posters.isEmpty() && noneResultLayout.getVisibility() == View.GONE){
+                    setNoneResultLayout();
+                } else if(!posters.isEmpty() && resultLayout.getVisibility() == View.GONE){
+                    setResultLayout();
                 }
 
                 return true;
@@ -120,18 +126,27 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    private void setFragment(Fragment child){
-        FragmentTransaction childFt = getChildFragmentManager().beginTransaction();
-        childFt.add(R.id.frameLayout, child);
-        childFt.commit();
+    private void setRecommandLayout(){
+        noneResultLayout.setVisibility(View.GONE);
+        resultLayout.setVisibility(View.GONE);
     }
 
-    private void replaceFragment(Fragment child){
-        FragmentTransaction childFt = getChildFragmentManager().beginTransaction();
-        if(!child.isAdded()){
-            childFt.replace(R.id.frameLayout, child);
-            childFt.commit();
+    private void setNoneResultLayout(){
+        if(recommandLayout.getVisibility() == View.VISIBLE){
+            recommandLayout.setVisibility(View.GONE);
+        }else{
+            resultLayout.setVisibility(View.GONE);
         }
+        noneResultLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void setResultLayout(){
+        if(recommandLayout.getVisibility() == View.VISIBLE){
+            recommandLayout.setVisibility(View.GONE);
+        }else{
+            noneResultLayout.setVisibility(View.GONE);
+        }
+        resultLayout.setVisibility(View.VISIBLE);
     }
 
     private void getData(){
