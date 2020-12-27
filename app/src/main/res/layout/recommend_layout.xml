@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:text="추천 검색어"
             android:textSize="14dp"
+            android:textColor="@color/textColorPrimary"
             android:layout_marginBottom="10dp"/>
 
         <LinearLayout
@@ -36,6 +37,7 @@
                     android:background="@drawable/search_back"
                     android:text="틴트"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="24sp" />
 
                 <TextView
@@ -47,6 +49,7 @@
                     android:background="@drawable/search_back"
                     android:text="새해"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="24sp" />
 
                 <TextView
@@ -58,6 +61,7 @@
                     android:background="@drawable/search_back"
                     android:text="새학기"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -77,6 +81,7 @@
                     android:background="@drawable/search_back"
                     android:text="패션"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="24sp" />
 
                 <TextView
@@ -88,6 +93,7 @@
                     android:background="@drawable/search_back"
                     android:text="학생"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="24sp" />
 
             </LinearLayout>

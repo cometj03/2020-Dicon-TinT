@@ -9,6 +9,7 @@
         android:layout_height="300dp"
         android:gravity="center"
         android:textSize="14dp"
+        android:textColor="@color/textColorPrimary"
         android:text="조건에 맞는 게시물을 찾을 수 없어요"/>
 
     <LinearLayout
@@ -21,6 +22,7 @@
             android:layout_height="wrap_content"
             android:textSize="14dp"
             android:text="추천 검색어"
+            android:textColor="@color/textColorPrimary"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <LinearLayout
@@ -42,6 +44,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/search_back"
                     android:text="틴트"
+                    android:textColor="@color/textColorPrimary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp" />
 
@@ -53,6 +56,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/search_back"
                     android:text="새해"
+                    android:textColor="@color/textColorPrimary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp" />
 
@@ -64,6 +68,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/search_back"
                     android:text="새학기"
+                    android:textColor="@color/textColorPrimary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp" />
 
@@ -83,6 +88,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/search_back"
                     android:text="패션"
+                    android:textColor="@color/textColorPrimary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp" />
 
@@ -94,6 +100,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/search_back"
                     android:text="학생"
+                    android:textColor="@color/textColorPrimary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp" />
 
