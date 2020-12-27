@@ -25,15 +25,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Screen.Feed.FeedFragment;
 import com.sunrin.tint.Util.FirebaseDeletePost;
-import com.sunrin.tint.Util.FirebaseUpdateUser;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 
 import java.util.List;
 
-public class PostViewActivity extends AppCompatActivity {
+public class ShowPostActivity extends AppCompatActivity {
 
     TextView titleText, subtitleText, contentText;
     ViewGroup imagesContainer;
@@ -44,7 +42,7 @@ public class PostViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_view);
+        setContentView(R.layout.activity_show_post);
 
         titleText = findViewById(R.id.title);
         subtitleText = findViewById(R.id.subtitle);
@@ -113,7 +111,7 @@ public class PostViewActivity extends AppCompatActivity {
 
             // 파이어베이스에 있는 포스트 삭제
             FirebaseDeletePost
-                    .DeletePost(data.getId(), PostViewActivity.this,
+                    .DeletePost(data.getId(), ShowPostActivity.this,
                             a -> {
                                 // 유저 정보 업데이트
                                 UserCache.updateUser(this, data.getId(), null, UserCache.DELETE_POST,

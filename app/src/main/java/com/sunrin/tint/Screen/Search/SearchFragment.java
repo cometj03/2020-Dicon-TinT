@@ -3,7 +3,6 @@ package com.sunrin.tint.Screen.Search;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Screen.PostViewActivity;
+import com.sunrin.tint.Screen.ShowPostActivity;
 import com.sunrin.tint.Util.FirebaseLoadPost;
 
 import java.util.ArrayList;
@@ -111,7 +110,7 @@ public class SearchFragment extends Fragment {
         adapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                Intent intent = new Intent(mContext, PostViewActivity.class);
+                Intent intent = new Intent(mContext, ShowPostActivity.class);
                 intent.putExtra("item", posters.get(pos));
                 startActivity(intent);
             }

@@ -141,8 +141,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_lookbook_btn"
                 app:shimmer_demo_angle="20"
-                app:shimmer_demo_child_count="2"
-                app:shimmer_demo_layout="@layout/feed_item_demo"
+                app:shimmer_demo_child_count="3"
+                app:shimmer_demo_layout_manager_type="linear_horizontal"
+                app:shimmer_demo_layout="@layout/profile_lookbook_item_demo"
                 app:shimmer_demo_shimmer_color="#80ffffff" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

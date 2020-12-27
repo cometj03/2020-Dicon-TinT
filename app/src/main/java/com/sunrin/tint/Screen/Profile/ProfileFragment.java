@@ -22,6 +22,7 @@ import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.MainActivity;
 import com.sunrin.tint.Screen.SplashActivity;
+import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.UserCache;
 
@@ -58,6 +59,8 @@ public class ProfileFragment extends Fragment {
         profile.setOnClickListener(v -> changeProfile());
         btn_storage.setOnClickListener(v -> Toast.makeText(mContext, "Storage", Toast.LENGTH_SHORT).show());
         btn_logout.setOnClickListener(v -> logout());
+        btn_addLookBook.setOnClickListener(v -> Toast.makeText(mContext, "AddLookBook", Toast.LENGTH_SHORT).show());
+        btn_addPost.setOnClickListener(v -> CreateUtil.CreatePost(mContext, getActivity()));
 
         btn_filterMenu.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(getActivity(), v);//v는 클릭된 뷰를 의미
@@ -114,6 +117,8 @@ public class ProfileFragment extends Fragment {
         btn_filterMenu = view.findViewById(R.id.popupmenu_btn);
         btn_storage = view.findViewById(R.id.btn_storage);
         btn_logout = view.findViewById(R.id.btn_setting);
+        btn_addLookBook = view.findViewById(R.id.add_lookbook_btn);
+        btn_addPost = view.findViewById(R.id.add_post_btn);
         profile = view.findViewById(R.id.profile_imageview);
     }
 
