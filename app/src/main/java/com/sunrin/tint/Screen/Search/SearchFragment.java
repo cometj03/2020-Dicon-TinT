@@ -2,6 +2,7 @@ package com.sunrin.tint.Screen.Search;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 public class SearchFragment extends Fragment {
     Context mContext;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private SearchAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<PostModel> postAll;
     private ArrayList<PostModel> posters;
@@ -32,6 +34,12 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        BeforeSearchFragment beforeSearchFragment = BeforeSearchFragment.newInstance();
+        setFragment(beforeSearchFragment);
+
+        BlankFragment blankFragment = BlankFragment.newInstance();
+        NoneSearchFragment noneSearchFragment = NoneSearchFragment.newInstance();
 
         postAll = new ArrayList<>();
         posters = new ArrayList<>();
@@ -51,11 +59,8 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                return false;
-            } //검색 버튼을 눌렀을 때
 
-            @Override
-            public boolean onQueryTextChange(String s) {
+                replaceFragment(blankFragment);
 
                 //recyclerView로 띄울 리스트 초기화
                 posters.clear();
@@ -85,12 +90,34 @@ public class SearchFragment extends Fragment {
                     }
                     adapter.notifyDataSetChanged(); //리스트 저장 및 새로고침
                 }
+
+                if(posters.isEmpty()){
+                    replaceFragment(noneSearchFragment);
+                    Log.i("empty", "1");
+                }
+
                 return true;
+            } //검색 버튼을 눌렀을 때
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
             } //입력 값이 달라질 때
         });
 
         return view;
+    }
 
+    private void setFragment(Fragment child){
+        FragmentTransaction childFt = getChildFragmentManager().beginTransaction();
+        childFt.add(R.id.frameLayout, child);
+        childFt.commit();
+    }
+
+    private void replaceFragment(Fragment child){
+        FragmentTransaction childFt = getChildFragmentManager().beginTransaction();
+        childFt.replace(R.id.frameLayout, child);
+        childFt.commit();
     }
 
     @Override
