@@ -6,7 +6,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:gravity="center"
         android:textSize="14dp"
         android:text="조건에 맞는 게시물을 찾을 수 없어요"/>
