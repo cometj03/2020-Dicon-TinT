@@ -11,7 +11,8 @@ public class FirebaseUpdateUser {
                 .getInstance()
                 .collection("users")
                 .document(userModel.getEmail())
-                .update("postID", userModel.getPostID(), "storageID", userModel.getStorageID(), "userFilters", userModel.getUserFilters())
+                .update("postID", userModel.getPostID(), "storageID", userModel.getStorageID(),
+                        "lookBookID", userModel.getLookBookID(), "userFilters", userModel.getUserFilters())
                 .addOnSuccessListener(s)
                 .addOnFailureListener(e -> f.onUpdateFailed(
                         FirebaseErrorUtil.getErrorMessage(e, "사용자 업데이트에 실패했습니다.")));

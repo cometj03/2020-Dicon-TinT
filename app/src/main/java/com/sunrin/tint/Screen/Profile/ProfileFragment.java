@@ -3,6 +3,7 @@ package com.sunrin.tint.Screen.Profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import com.sunrin.tint.Util.UserCache;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.content.ContentValues.TAG;
 
 public class ProfileFragment extends Fragment {
 
@@ -116,6 +119,14 @@ public class ProfileFragment extends Fragment {
         lookBook_Recycler.showShimmerAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        lookBook_Recycler.setLayoutManager(layoutManager);
+        lookBookAdapter = new ProfileLookBookAdapter(emptyView1);
+        post_Recycler.setAdapter(lookBookAdapter);
+        getLookBookData();
+
+        lookBookAdapter.setOnItemClickListener((v, position) -> {
+
+        });
 
         // Post
         post_Recycler.showShimmerAdapter();
@@ -129,6 +140,21 @@ public class ProfileFragment extends Fragment {
             intent.putExtra("item", postAdapter.getList().get(position));
             startActivity(intent);
         });
+    }
+
+    private void getLookBookData() {
+        FirebaseUserCreation
+                .LoadUserLookBooks(userModel.getLookBookID(),
+                        lookBookModels -> {
+                            if (lookBookAdapter != null) {
+                                lookBook_Recycler.hideShimmerAdapter();
+                                lookBookModelList = lookBookModels;
+                                lookBookAdapter.setList(lookBookModels);
+                                lookBookAdapter.notifyDataSetChanged();
+                                Log.e(TAG, "getLookBookData: ***********" + lookBookModels.size());
+                            }
+                        },
+                        errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }
 
     private void getPostData() {

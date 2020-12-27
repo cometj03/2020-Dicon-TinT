@@ -28,7 +28,6 @@ public class DateUtil {
 
 
     public static String getTimeAgo(long millis, Resources res) {
-        // TODO: Refactor with Resource - StringArray
 
         // 밀리세컨드로 변환
 //        if (time < 1000000000000L) {

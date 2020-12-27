@@ -13,10 +13,6 @@ import com.google.firebase.storage.UploadTask;
 import com.sunrin.tint.Model.LookBookModel;
 import com.sunrin.tint.Model.UserModel;
 
-import java.util.List;
-
-import static android.content.ContentValues.TAG;
-
 public class FirebaseUploadLookBook {
 
     private static FirebaseUploadPost.OnUploadFailureListener onUploadFailureListener;

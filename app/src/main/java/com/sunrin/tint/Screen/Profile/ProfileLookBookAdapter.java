@@ -13,12 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.sunrin.tint.Model.LookBookModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.DateUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -27,7 +27,10 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
     Context mContext;
     private List<LookBookModel> mData, mDataFiltered;
 
-    ProfileLookBookAdapter(){
+    ViewGroup emptyView;
+
+    public ProfileLookBookAdapter(ViewGroup emptyView) {
+        this.emptyView = emptyView;
         this.mData = new ArrayList<>();
         this.mDataFiltered = new ArrayList<>();
     }
@@ -36,6 +39,12 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
         this.mData = list;
         if(mDataFiltered == null || mDataFiltered.isEmpty())
             mDataFiltered = mData;
+
+        if (emptyView != null)
+            if (getItemCount() <= 0)
+                emptyView.setVisibility(View.VISIBLE);
+            else
+                emptyView.setVisibility(View.GONE);
     }
 
     public List<LookBookModel> getList(){ return mDataFiltered; }
@@ -75,6 +84,12 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 mDataFiltered = (List<LookBookModel>) results.values;
                 notifyDataSetChanged();
+
+                if (emptyView != null)
+                    if (getItemCount() <= 0)
+                        emptyView.setVisibility(View.VISIBLE);
+                    else
+                        emptyView.setVisibility(View.GONE);
             }
         };
     }
@@ -83,7 +98,7 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
         void OnItemClick(View v, int position);
     }
 
-    public void setItemClickListener(OnItemClickListener mListener){
+    public void setOnItemClickListener(OnItemClickListener mListener) {
         this.itemClickListener = mListener;
     }
 
@@ -95,7 +110,7 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
         mContext = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) parent.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.profile_item_lookbook_temp, parent, false);
+        View v = inflater.inflate(R.layout.profile_lookbook_item, parent, false);
         return new ItemViewHolder(v);
     }
 
@@ -103,23 +118,15 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         LookBookModel item = mDataFiltered.get(position);
 
-        /*if(!item.getId().isEmpty()){
-            Glide.with(holder.lookbook_img).load(item.getImage().get(0)).into(holder.lookbook_img);
+        if(!item.getId().isEmpty() && item.getMainImage() != null) {
+            // 정사각형으로 잘라서 보여줌
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions = requestOptions.transform(new CenterCrop());
+            Glide.with(holder.thumbNail)
+                    .load((item.getMainImage()))
+                    .apply(requestOptions)
+                    .into(holder.thumbNail);
         }
-        holder.contents.setText(item.getContents());
-        holder.userName.setText(item.getUserName());
-        holder.timeInterval.setText(DateUtil.getTimeAgo(item.getDate(), mContext.getResources()));
-
-        holder.chipGroup.removeAllViews();
-
-        List<String> filterNames = Arrays.asList(mContext.getResources().getStringArray(R.array.FilterNames));
-        for (com.sunrin.tint.Filter filter: item.getFilters()) {
-            View imageHolder = LayoutInflater.from(mContext).inflate(R.layout.feed_item_chip, null);
-            TextView chip = imageHolder.findViewById(R.id.chipTextView);
-            chip.setText(filterNames.get(filter.ordinal()));
-
-            holder.chipGroup.addView(imageHolder);
-        }*/
     }
 
     @Override
@@ -130,21 +137,14 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        ImageView lookbook_img, userProfile;
-        TextView contents, timeInterval, userName;
-        ViewGroup chipGroup;
+        ImageView thumbNail;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            lookbook_img = itemView.findViewById(R.id.feed_img);
-            userProfile = itemView.findViewById(R.id.feed_userProfile);
-            contents = itemView.findViewById(R.id.lookbook_contents);
-            timeInterval = itemView.findViewById(R.id.feed_timeInterval);
-            userName = itemView.findViewById(R.id.feed_userName);
-            chipGroup = itemView.findViewById(R.id.feed_chipGroup);
 
+            thumbNail = itemView.findViewById(R.id.post_thumb_nail);
 
-            lookbook_img.setOnClickListener(v -> {
+            thumbNail.setOnClickListener(v -> {
                 int pos = getAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION)
                     if (itemClickListener != null)
