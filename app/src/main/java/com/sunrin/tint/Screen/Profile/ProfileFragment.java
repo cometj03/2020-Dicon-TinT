@@ -33,6 +33,7 @@ import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.UserCache;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -142,6 +143,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getLookBookData() {
+        if (userModel.getLookBookID().isEmpty()) {
+            if (lookBookAdapter != null) {
+                lookBookAdapter.setList(new ArrayList<>());
+                lookBookAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
+
         FirebaseUserCreation
                 .LoadUserLookBooks(userModel.getLookBookID(),
                         lookBookModels -> {
@@ -157,6 +166,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getPostData() {
+        if (userModel.getPostID().isEmpty()) {
+            if (postAdapter != null) {
+                postAdapter.setList(new ArrayList<>());
+                postAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
+
         FirebaseUserCreation
                 .LoadUserPosts(userModel.getPostID(),
                         postModels -> {
