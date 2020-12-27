@@ -44,6 +44,10 @@ public class UserModel {
         this.storageID.add(id);
     }
 
+    public void addLookBookID(String id) {
+        this.lookBookID.add(id);
+    }
+
     // delete IDs
     public void deletePostID(String id) {
         this.postID.remove(id);

@@ -25,8 +25,10 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
 
     private List<PostModel> mData, mDataFiltered;
     Context mContext;
+    ViewGroup emptyView;
 
-    public ProfilePostAdapter() {
+    public ProfilePostAdapter(ViewGroup emptyView) {
+        this.emptyView = emptyView;
         this.mData = new ArrayList<>();
         this.mDataFiltered = new ArrayList<>();
     }
@@ -35,6 +37,12 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
         this.mData = list;
         if(mDataFiltered == null || mDataFiltered.isEmpty())
             mDataFiltered = mData;
+
+        if (emptyView != null)
+            if (getItemCount() <= 0)
+                emptyView.setVisibility(View.VISIBLE);
+            else
+                emptyView.setVisibility(View.GONE);
     }
 
     public List<PostModel> getList(){ return mDataFiltered; }
@@ -67,7 +75,7 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
 
     @Override
     public int getItemCount() {
-        if(mDataFiltered ==null)
+        if(mDataFiltered == null)
             return 0;
         return mDataFiltered.size();
     }
@@ -111,6 +119,12 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
                 // results : return 값
                 mDataFiltered = (List<PostModel>) results.values;
                 notifyDataSetChanged();
+
+                if (emptyView != null)
+                    if (getItemCount() <= 0)
+                        emptyView.setVisibility(View.VISIBLE);
+                    else
+                        emptyView.setVisibility(View.GONE);
             }
         };
     }

@@ -1,6 +1,7 @@
 package com.sunrin.tint.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LookBookModel implements Serializable {
@@ -11,9 +12,11 @@ public class LookBookModel implements Serializable {
 
     public LookBookModel() {}
 
-    public LookBookModel(List<String> listList, String mainImage) {
-        this.linkList = listList;
+    public LookBookModel(List<String> linkList, String mainImage) {
+        this.linkList = linkList;
         this.mainImage = mainImage;
+        this.linkList = new ArrayList<>();
+        this.id = this.userName = this.userEmail = this.date = "";
     }
 
     public List<String> getLinkList() {

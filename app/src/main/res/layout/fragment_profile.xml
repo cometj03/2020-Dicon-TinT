@@ -148,6 +148,24 @@
                 app:shimmer_demo_layout="@layout/profile_lookbook_item_demo"
                 app:shimmer_demo_shimmer_color="#80ffffff" />
 
+            <LinearLayout
+                android:id="@+id/empty_view1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/lookbook_recycler"
+                app:layout_constraintEnd_toEndOf="@+id/lookbook_recycler"
+                app:layout_constraintStart_toStartOf="@+id/lookbook_recycler"
+                app:layout_constraintTop_toTopOf="@+id/lookbook_recycler">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feed_empty_text2"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -239,7 +257,7 @@
             <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/post_recycler"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -252,6 +270,24 @@
                 app:shimmer_demo_layout="@layout/profile_post_grid_item_demo"
                 app:shimmer_demo_layout_manager_type="grid"
                 app:shimmer_demo_shimmer_color="#80ffffff" />
+
+            <LinearLayout
+                android:id="@+id/empty_view2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/post_recycler"
+                app:layout_constraintStart_toStartOf="@+id/post_recycler"
+                app:layout_constraintTop_toTopOf="@+id/post_recycler">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feed_empty_text2"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

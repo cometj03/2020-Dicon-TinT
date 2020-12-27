@@ -18,8 +18,9 @@ public class UserCache {
 
     public static final int UPDATE_POST = 0;
     public static final int UPDATE_STORAGE = 1;
-    public static final int UPDATE_FILTERS = 2;
-    public static final int DELETE_POST = 3;
+    public static final int UPDATE_LOOKBOOK = 2;
+    public static final int UPDATE_FILTERS = 3;
+    public static final int DELETE_POST = 4;
 
     public static void setUser(Context context, UserModel userModel) {
         Gson gson = new Gson();
@@ -46,6 +47,9 @@ public class UserCache {
                     return;
                 }
                 userModel.addStorageID(value);
+                break;
+            case UPDATE_LOOKBOOK:
+                userModel.addLookBookID(value);
                 break;
             case UPDATE_FILTERS:
                 userModel.setUserFilters(filterList);

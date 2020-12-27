@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
     ImageButton btn_addLookBook, btn_addPost, btn_storage, btn_logout;
     Button btn_filterMenu;
     CircleImageView profile;
+    ViewGroup emptyView1, emptyView2;
 
     ShimmerRecyclerView lookBook_Recycler, post_Recycler;
     ProfileLookBookAdapter lookBookAdapter;
@@ -74,7 +75,7 @@ public class ProfileFragment extends Fragment {
         profile.setOnClickListener(v -> changeProfile());
         btn_storage.setOnClickListener(v -> Toast.makeText(mContext, "Storage", Toast.LENGTH_SHORT).show());
         btn_logout.setOnClickListener(v -> logout());
-        btn_addLookBook.setOnClickListener(v -> Toast.makeText(mContext, "AddLookBook", Toast.LENGTH_SHORT).show());
+        btn_addLookBook.setOnClickListener(v -> CreateUtil.CreateLookBook(mContext, getActivity()));
         btn_addPost.setOnClickListener(v -> CreateUtil.CreatePost(mContext, getActivity()));
 
         btn_filterMenu.setOnClickListener(v -> {
@@ -119,7 +120,7 @@ public class ProfileFragment extends Fragment {
         // Post
         post_Recycler.showShimmerAdapter();
         post_Recycler.setLayoutManager(new GridLayoutManager(mContext, 3));
-        postAdapter = new ProfilePostAdapter();
+        postAdapter = new ProfilePostAdapter(emptyView2);
         post_Recycler.setAdapter(postAdapter);
         getPostData();
 
@@ -175,6 +176,8 @@ public class ProfileFragment extends Fragment {
         profile = view.findViewById(R.id.profile_imageview);
         lookBook_Recycler = view.findViewById(R.id.lookbook_recycler);
         post_Recycler = view.findViewById(R.id.post_recycler);
+        emptyView1 = view.findViewById(R.id.empty_view1);
+        emptyView2 = view.findViewById(R.id.empty_view2);
     }
 
     @Override
