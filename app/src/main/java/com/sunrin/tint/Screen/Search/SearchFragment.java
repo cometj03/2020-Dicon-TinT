@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,13 +25,14 @@ import com.sunrin.tint.Util.FirebaseLoadPost;
 
 import java.util.ArrayList;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment{
     Context mContext;
     private RecyclerView recyclerView;
     private SearchAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<PostModel> postAll;
     private ArrayList<PostModel> posters;
+    private SearchView searchView;
 
     private LinearLayout recommandLayout;
     private LinearLayout noneResultLayout;
@@ -41,6 +43,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        //사용될 화면
         recommandLayout = (LinearLayout)view.findViewById(R.id.recommandLayout);
         noneResultLayout = (LinearLayout)view.findViewById(R.id.noneResultLayout);
         resultLayout = (LinearLayout)view.findViewById(R.id.resultLayout);
@@ -49,13 +52,17 @@ public class SearchFragment extends Fragment {
         inflater1.inflate(R.layout.recommand_layout, recommandLayout, true);
         inflater1.inflate(R.layout.none_result_layout, noneResultLayout, true);
 
-
         setRecommandLayout();
+
+
+        //추천 검색어 onClick
+        TextView recommand1 = view.findViewById(R.id.recommand1);
+        //recommand1.setOnClickListener(this);
 
         postAll = new ArrayList<>();
         posters = new ArrayList<>();
 
-        SearchView searchView = view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.searchView);
         recyclerView = view.findViewById(R.id.recyclerView);
 
         recyclerView.setHasFixedSize(true); //리사이클러뷰 성능 강화
@@ -163,4 +170,5 @@ public class SearchFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
     }
+
 }
