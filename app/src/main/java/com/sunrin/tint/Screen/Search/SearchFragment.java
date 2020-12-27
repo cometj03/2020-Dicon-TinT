@@ -37,7 +37,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        BeforeSearchFragment beforeSearchFragment = BeforeSearchFragment.newInstance();
+        BeforeSearchFragment beforeSearchFragment = BeforeSearchFragment.newInstance(); //
         setFragment(beforeSearchFragment);
 
         BlankFragment blankFragment = BlankFragment.newInstance();
@@ -58,23 +58,16 @@ public class SearchFragment extends Fragment {
         adapter = new SearchAdapter(posters, this);
         recyclerView.setAdapter(adapter); //recyclerView에 adapter 연결
 
+        getData();
+        //SearchView 함수
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
 
-                replaceFragment(blankFragment);
-
                 //recyclerView로 띄울 리스트 초기화
-                posters.clear();
-
-                //Firebase에서 전체 데이터 가져오기
-                FirebaseLoadPost.LoadPosts(
-                        postModels -> {
-                            postAll = (ArrayList<PostModel>) postModels;
-                        },
-                        errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show()
-                );
-
+                if(!posters.isEmpty()) {
+                    posters.clear();
+                }
 
                 //입력 값과 FireBase에 있는 데이터의 값을 비교
                 //비교해서 입력한 문자열이 있는 데이터만 ArrayList(posters)에 저장해서 SearchAdapter로 보내기
@@ -82,7 +75,6 @@ public class SearchFragment extends Fragment {
                 //데이터의 제목, 소제목, 내용의 replace(" ", "")를 사용해 공백을 없앤후
                 //입력한 문자열이 있는지 contains()를 사용해 검사
                 s = s.replace(" ", "").toLowerCase();
-
                 for (PostModel post : postAll) {
                     if (post.getTitle().replace(" ", "").toLowerCase().contains(s) ||
                             post.getSubTitle().replace(" ", "").toLowerCase().contains(s) ||
@@ -90,12 +82,20 @@ public class SearchFragment extends Fragment {
                     ) {
                         posters.add(post);
                     }
-                    adapter.notifyDataSetChanged(); //리스트 저장 및 새로고침
+                    if(adapter != null){
+                        adapter.notifyDataSetChanged(); //리스트 저장 및 새로고침
+                    }
                 }
 
-                if(posters.isEmpty()){
+                //Fragment화면 조정
+                if(beforeSearchFragment.isAdded() && posters.isEmpty()){
                     replaceFragment(noneSearchFragment);
-                    Log.i("empty", "1");
+                }else if(beforeSearchFragment.isAdded() && !posters.isEmpty()){
+                    replaceFragment(blankFragment);
+                } else if(blankFragment.isAdded() && posters.isEmpty()){
+                    replaceFragment(noneSearchFragment);
+                } else if(noneSearchFragment.isAdded() && !posters.isEmpty()){
+                    replaceFragment(blankFragment);
                 }
 
                 return true;
@@ -117,7 +117,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
@@ -129,8 +128,20 @@ public class SearchFragment extends Fragment {
 
     private void replaceFragment(Fragment child){
         FragmentTransaction childFt = getChildFragmentManager().beginTransaction();
-        childFt.replace(R.id.frameLayout, child);
-        childFt.commit();
+        if(!child.isAdded()){
+            childFt.replace(R.id.frameLayout, child);
+            childFt.commit();
+        }
+    }
+
+    private void getData(){
+        //Firebase에서 전체 데이터 가져오기
+        FirebaseLoadPost.LoadPosts(
+                postModels -> {
+                    postAll = (ArrayList<PostModel>) postModels;
+                },
+                errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show()
+        );
     }
 
     @Override
