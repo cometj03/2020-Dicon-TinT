@@ -26,6 +26,7 @@ import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.Model.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.MainActivity;
+import com.sunrin.tint.Screen.ShowPostActivity;
 import com.sunrin.tint.Screen.SplashActivity;
 import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.ImagePickerUtil;
@@ -121,6 +122,12 @@ public class ProfileFragment extends Fragment {
         postAdapter = new ProfilePostAdapter();
         post_Recycler.setAdapter(postAdapter);
         getPostData();
+
+        postAdapter.setOnItemClickListener((v, cover, position) -> {
+            Intent intent = new Intent(mContext, ShowPostActivity.class);
+            intent.putExtra("item", postAdapter.getList().get(position));
+            startActivity(intent);
+        });
     }
 
     private void getPostData() {

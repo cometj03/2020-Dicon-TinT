@@ -154,9 +154,10 @@
             android:id="@+id/posts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/lookbook"
+            android:layout_marginTop="24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lookbook">
 
             <TextView
                 android:id="@+id/textView2"
@@ -175,12 +176,12 @@
                 android:layout_height="27dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="4dp"
-                android:paddingStart="2dp"
-                android:paddingEnd="1dp"
-                android:paddingTop="3dp"
-                android:src="@drawable/ic_profile_plus"
-                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
+                android:paddingStart="2dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="1dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_profile_plus"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toTopOf="@+id/textView2" />
@@ -201,10 +202,10 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginEnd="4dp"
-                android:padding="2dp"
-                android:src="@drawable/ic_profile_grid"
                 android:background="@android:color/transparent"
+                android:padding="2dp"
                 android:scaleType="centerInside"
+                android:src="@drawable/ic_profile_grid"
                 app:layout_constraintBottom_toBottomOf="@+id/feed_post_grid"
                 app:layout_constraintEnd_toStartOf="@+id/feed_post_grid"
                 app:layout_constraintTop_toTopOf="@+id/feed_post_grid" />
@@ -246,10 +247,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popupmenu_btn"
                 app:shimmer_demo_angle="20"
-                app:shimmer_demo_grid_child_count="3"
                 app:shimmer_demo_child_count="6"
-                app:shimmer_demo_layout_manager_type="grid"
+                app:shimmer_demo_grid_child_count="3"
                 app:shimmer_demo_layout="@layout/profile_post_grid_item_demo"
+                app:shimmer_demo_layout_manager_type="grid"
                 app:shimmer_demo_shimmer_color="#80ffffff" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
