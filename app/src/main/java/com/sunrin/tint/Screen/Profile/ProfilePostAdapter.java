@@ -15,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.sunrin.tint.Model.PostModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.DateUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.ItemViewHolder> implements Filterable {
@@ -26,7 +24,7 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
     private List<PostModel> mData, mDataFiltered;
     Context mContext;
 
-    ProfilePostAdapter(){
+    ProfilePostAdapter() {
         this.mData = new ArrayList<>();
         this.mDataFiltered = new ArrayList<>();
     }
@@ -45,7 +43,7 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.profile_item_temp, parent, false);
+        View v = inflater.inflate(R.layout.profile_post_item, parent, false);
         return new ItemViewHolder(v);
     }
 
@@ -54,23 +52,8 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
 
         PostModel item = mDataFiltered.get(position);
 
-        if(!item.getId().isEmpty()){
-            Glide.with(holder.feed_img).load((item.getImages().get(0))).into(holder.feed_img);
-        }
-        holder.title.setText(item.getTitle());
-        holder.subTitle.setText(item.getSubTitle());
-        holder.timeInterval.setText(DateUtil.getTimeAgo(item.getDate(), mContext.getResources()));
-        holder.userName.setText(item.getUserName());
-
-        holder.chipGroup.removeAllViews();
-
-        List<String> filterNames = Arrays.asList(mContext.getResources().getStringArray(R.array.FilterNames));
-        for (com.sunrin.tint.Filter filter : item.getFilters()){
-            View imageHolder = LayoutInflater.from(mContext).inflate(R.layout.feed_item_chip, null);
-            TextView chip = imageHolder.findViewById(R.id.chipTextView);
-            chip.setText(filterNames.get(filter.ordinal()));
-
-            holder.chipGroup.addView(imageHolder);
+        if(!item.getId().isEmpty() && !item.getImages().isEmpty()) {
+            Glide.with(holder.thumbNail).load((item.getImages().get(0))).into(holder.thumbNail);
         }
     }
 
@@ -136,52 +119,18 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView feed_img, userProfile;
-        ImageButton commentBtn, shareBtn, storageBoxBtn;
-        TextView title, subTitle, timeInterval, userName;
-        ViewGroup chipGroup;
+        ImageView thumbNail;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            feed_img = itemView.findViewById(R.id.feed_img);
-            userProfile = itemView.findViewById(R.id.feed_userProfile);
-            shareBtn = itemView.findViewById(R.id.feed_share);
-            commentBtn = itemView.findViewById(R.id.feed_comment);
-            storageBoxBtn = itemView.findViewById(R.id.feed_storageBox);
-            title = itemView.findViewById(R.id.feed_title);
-            subTitle = itemView.findViewById(R.id.feed_subTitle);
-            timeInterval = itemView.findViewById(R.id.feed_timeInterval);
-            userName = itemView.findViewById(R.id.feed_userName);
-            chipGroup = itemView.findViewById(R.id.feed_chipGroup);
+            thumbNail = itemView.findViewById(R.id.post_thumb_nail);
 
-
-            shareBtn.setOnClickListener(v -> {
-                int pos = getAdapterPosition();
-                if (pos != RecyclerView.NO_POSITION)
-                    if (itemClickListener != null)
-                        // 아이템 클릭
-                        itemClickListener.OnItemClick(v, pos);
-            });
-            commentBtn.setOnClickListener(v -> {
-                int pos = getAdapterPosition();
-                if (pos != RecyclerView.NO_POSITION)
-                    if (itemClickListener != null)
-                        itemClickListener.OnItemClick(v, pos);
-            });
-            storageBoxBtn.setOnClickListener(v -> {
-                int pos = getAdapterPosition();
-                if (pos != RecyclerView.NO_POSITION)
-                    if (itemClickListener != null)
-                        itemClickListener.OnItemClick(v, pos);
-            });
-            feed_img.setOnClickListener(v -> {
+            thumbNail.setOnClickListener(v -> {
                 int pos = getAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION)
                     if (itemClickListener != null)
                         itemClickListener.OnItemClick(v, pos);
             });
         }
-
-
     }
 }

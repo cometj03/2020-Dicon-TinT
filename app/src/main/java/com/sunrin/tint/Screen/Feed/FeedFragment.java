@@ -92,9 +92,6 @@ public class FeedFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.d(TAG, "onActivityCreated: *******");
-
-
         //***** RecyclerView *****//
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
 //        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
