@@ -125,7 +125,7 @@ public class ProfileFragment extends Fragment {
         getLookBookData();
 
         lookBookAdapter.setOnItemClickListener((v, position) -> {
-
+            Toast.makeText(mContext, "asdf", Toast.LENGTH_SHORT).show();
         });
 
         // Post
@@ -143,14 +143,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getLookBookData() {
-        if (userModel.getLookBookID().isEmpty()) {
-            if (lookBookAdapter != null) {
-                lookBookAdapter.setList(new ArrayList<>());
-                lookBookAdapter.notifyDataSetChanged();
-            }
-            return;
-        }
-
         FirebaseUserCreation
                 .LoadUserLookBooks(userModel.getLookBookID(),
                         lookBookModels -> {
@@ -166,14 +158,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getPostData() {
-        if (userModel.getPostID().isEmpty()) {
-            if (postAdapter != null) {
-                postAdapter.setList(new ArrayList<>());
-                postAdapter.notifyDataSetChanged();
-            }
-            return;
-        }
-
         FirebaseUserCreation
                 .LoadUserPosts(userModel.getPostID(),
                         postModels -> {

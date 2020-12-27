@@ -46,6 +46,10 @@ public class FirebaseUserCreation {
             tmp1++;
             AddPost(document.toObject(PostModel.class));
         };
+        if (postIDs.isEmpty()) {
+            s.onSuccess(new ArrayList<>());
+            return;
+        }
         loadUserPost(postIDs.get(tmp1));
     }
 
@@ -84,6 +88,11 @@ public class FirebaseUserCreation {
             tmp2++;
             AddLookBook(document.toObject(LookBookModel.class));
         };
+
+        if (lookBookIDs.isEmpty()) {
+            s.onSuccess(new ArrayList<>());
+            return;
+        }
         loadUserLookBook(lookBookIDs.get(tmp2));
     }
 

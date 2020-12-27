@@ -124,6 +124,8 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
             requestOptions = requestOptions.transform(new CenterCrop());
             Glide.with(holder.thumbNail)
                     .load((item.getMainImage()))
+                    .placeholder(R.drawable.post_image_empty)
+                    .error(R.drawable.post_image_empty)
                     .apply(requestOptions)
                     .into(holder.thumbNail);
         }
