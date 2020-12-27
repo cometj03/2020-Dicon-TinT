@@ -4,6 +4,7 @@ import com.sunrin.tint.Filter;
 import com.sunrin.tint.Util.DateUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 // Intent 로 객체를 보내기 위해 Serializable 상속
@@ -18,6 +19,12 @@ public class PostModel implements Comparable<PostModel>, Serializable {
     private String title, subTitle, content, date;
 
     public PostModel() {}
+
+    public PostModel(List<String> images) {
+        this.filters = new ArrayList<>();
+        this.images = images;
+        this.id = this.userName = this.userEmail = this.title = this.subTitle = this.content = this.date = "";
+    }
 
     public PostModel(List<Filter> filters, List<String> images, String title, String subTitle, String content) {
         this.filters = filters;

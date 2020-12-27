@@ -56,7 +56,7 @@ public class ImagePickerUtil {
                         .setPeekHeight(1600)
                         .showTitle(false)
                         .setCompleteButtonText("Done")
-                        .setEmptySelectionText("No Select")
+                        .setEmptySelectionText("No Selected")
                         .setSelectedUriList(selectedImages)
                         .showMultiImage(uriList -> {
                             selectedImages = uriList;
