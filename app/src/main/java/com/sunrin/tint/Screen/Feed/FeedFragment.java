@@ -47,6 +47,7 @@ public class FeedFragment extends Fragment {
     ChipGroup chipGroup;
     HorizontalScrollView chipContainer;
     ImageButton filterToggle;
+    ViewGroup emptyView;    // recyclerview에 아무것도 없을 때
 
     SwipeRefreshLayout refreshLayout;
     ShimmerRecyclerView shimmerRecyclerView;
@@ -100,7 +101,7 @@ public class FeedFragment extends Fragment {
 //        layoutManager.setReverseLayout(true);   // 아이템끼리 겹치는 순서를 바꾸기 위해서
 //        layoutManager.setStackFromEnd(true);
         shimmerRecyclerView.setLayoutManager(layoutManager);
-        adapter = new FeedAdapter();
+        adapter = new FeedAdapter(emptyView);
         shimmerRecyclerView.setAdapter(adapter);
         getData();
 
@@ -179,6 +180,7 @@ public class FeedFragment extends Fragment {
         chipViews.add(view.findViewById(R.id.chip3));
         chipViews.add(view.findViewById(R.id.chip4));
         chipViews.add(view.findViewById(R.id.chip5));
+        emptyView = view.findViewById(R.id.recycler_empty_view);
 
         for (CheckableChipView chip : chipViews)
             chip.setOnCheckedChangeListener((chipView, aBoolean) -> {

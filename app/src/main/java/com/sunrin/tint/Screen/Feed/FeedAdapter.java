@@ -30,7 +30,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
     Context mContext;
     private List<PostModel> mData, mDataFiltered;
 
-    FeedAdapter() {
+    ViewGroup emptyView;
+
+    FeedAdapter(ViewGroup emptyView) {
+        this.emptyView = emptyView;
         this.mData = new ArrayList<>();
         this.mDataFiltered = new ArrayList<>();
     }
@@ -134,6 +137,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ItemViewHolder
                 // results : return 값
                 mDataFiltered = (List<PostModel>) results.values;
                 notifyDataSetChanged();
+
+                if (emptyView != null)
+                    if (getItemCount() <= 0)
+                        emptyView.setVisibility(View.VISIBLE);
+                    else
+                        emptyView.setVisibility(View.GONE);
             }
         };
     }

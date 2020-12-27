@@ -23,4 +23,6 @@
     <string name="sign_up">회원가입</string>
     <string name="submit">등록</string>
 
+    <string name="feed_empty_text1">조건에 맞는 게시물을 찾을 수 없어요</string>
+    <string name="feed_empty_text2">첫 번째 게시물을 업로드 해보세요</string>
 </resources>
