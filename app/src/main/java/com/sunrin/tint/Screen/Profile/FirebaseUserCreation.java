@@ -42,14 +42,14 @@ public class FirebaseUserCreation {
         onLoadFailureListener = f;
         onPostSuccessListener = s;
 
-        onSuccessListener1 = document -> {
-            tmp1++;
-            AddPost(document.toObject(PostModel.class));
-        };
         if (postIDs.isEmpty()) {
             s.onSuccess(new ArrayList<>());
             return;
         }
+        onSuccessListener1 = document -> {
+            tmp1++;
+            AddPost(document.toObject(PostModel.class));
+        };
         loadUserPost(postIDs.get(tmp1));
     }
 
@@ -84,15 +84,14 @@ public class FirebaseUserCreation {
         onLoadFailureListener = f;
         onLookBookSuccessListener = s;
 
-        onSuccessListener2 = document -> {
-            tmp2++;
-            AddLookBook(document.toObject(LookBookModel.class));
-        };
-
         if (lookBookIDs.isEmpty()) {
             s.onSuccess(new ArrayList<>());
             return;
         }
+        onSuccessListener2 = document -> {
+            tmp2++;
+            AddLookBook(document.toObject(LookBookModel.class));
+        };
         loadUserLookBook(lookBookIDs.get(tmp2));
     }
 

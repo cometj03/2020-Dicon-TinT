@@ -31,7 +31,7 @@ public class UserCache {
     public static UserModel getUser(Context context) {
         String json = SharedPreferenceUtil.getString(context, "user_json");
         if (json.length() <= 0)
-            return new UserModel();
+            return null;
         Gson gson = new Gson();
         return gson.fromJson(json, UserModel.class);
     }
@@ -39,13 +39,15 @@ public class UserCache {
     public static void updateUser(Context context, String value, List<Filter> filterList, int tmp,
                                   OnSuccessListener<Void> s, onUpdateFailureListener f) {
         UserModel userModel = getUser(context);
+        if (userModel == null)
+            return;
         switch (tmp) {
             case UPDATE_POST:
                 userModel.addPostID(value);
                 break;
             case UPDATE_STORAGE:
                 if (userModel.getStorageID().contains(value)) {
-                    // 이미 존재함
+                    // 이미 보관함에 존재함
                     f.onUpdateFailed("이미 보관함에 존재합니다.");
                     return;
                 }
@@ -55,8 +57,6 @@ public class UserCache {
                 userModel.addLookBookID(value);
                 break;
             case UPDATE_FILTERS:
-                if (filterList == null)
-                    return;
                 userModel.setUserFilters(filterList);
                 break;
             case DELETE_POST:

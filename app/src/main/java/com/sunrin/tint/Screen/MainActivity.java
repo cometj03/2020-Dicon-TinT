@@ -91,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 // Tab 다시 선택됨
                 switch (tab.getPosition()) {
                     case 0:
-                        // TODO: recyclerView goes to top
+                        // RecyclerView goes to top
+                        FeedFragment feedFragment = (FeedFragment) getSupportFragmentManager().findFragmentById(R.id.viewPager2_container);
+                        feedFragment.GotoTOP();
                         break;
                 }
             }

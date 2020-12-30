@@ -263,6 +263,11 @@ public class FeedFragment extends Fragment {
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
     }
 
+    public void GotoTOP() {
+        shimmerRecyclerView.smoothScrollToPosition(0);
+        getData();
+    }
+
 
     @Override
     public void onPause() {
