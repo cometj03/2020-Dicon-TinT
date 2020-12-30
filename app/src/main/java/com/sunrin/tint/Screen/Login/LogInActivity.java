@@ -13,6 +13,7 @@ import com.google.firebase.FirebaseApp;
 import com.sunrin.tint.Screen.MainActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.Register.RegisterActivity;
+import com.sunrin.tint.Util.SharedPreferenceUtil;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 
@@ -79,6 +80,7 @@ public class LogInActivity extends AppCompatActivity {
                             UserCache.setUser(this, userModel);
                             dialog.setMessage("로그인 성공!")
                                     .setFinishListener(() -> {
+                                        SharedPreferenceUtil.setString(this, "is_first_app", "false");
                                         startActivity(new Intent(this, MainActivity.class));
                                         finish();
                                     }).finish(true);
