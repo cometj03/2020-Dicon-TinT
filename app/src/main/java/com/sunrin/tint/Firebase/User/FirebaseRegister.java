@@ -1,6 +1,5 @@
-package com.sunrin.tint.Screen.Register;
+package com.sunrin.tint.Firebase.User;
 
-import android.net.Uri;
 import android.util.Patterns;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -8,7 +7,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.sunrin.tint.Model.UserModel;
+import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.Util.FirebaseErrorUtil;
 
 import java.util.List;

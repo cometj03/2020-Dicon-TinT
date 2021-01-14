@@ -20,9 +20,9 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.sunrin.tint.Filter;
-import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.FirebaseUploadPost;
+import com.sunrin.tint.Firebase.UpLoad.FirebaseUploadPost;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 

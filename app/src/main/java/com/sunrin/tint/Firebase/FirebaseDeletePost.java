@@ -1,9 +1,11 @@
-package com.sunrin.tint.Util;
+package com.sunrin.tint.Firebase;
 
 import android.content.Context;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sunrin.tint.Util.FirebaseErrorUtil;
+import com.sunrin.tint.Util.UserCache;
 
 public class FirebaseDeletePost {
 

@@ -23,9 +23,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.FirebaseDeletePost;
+import com.sunrin.tint.Firebase.FirebaseDeletePost;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 

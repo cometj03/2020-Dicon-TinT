@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +24,15 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.Filter;
-import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.Screen.ShowPostActivity;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Util.FirebaseLoadPost;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPost;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class FeedFragment extends Fragment {
 

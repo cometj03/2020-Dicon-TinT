@@ -1,10 +1,11 @@
-package com.sunrin.tint.Util;
+package com.sunrin.tint.Firebase.DownLoad;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.Models.PostModel;
+import com.sunrin.tint.Util.FirebaseErrorUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;

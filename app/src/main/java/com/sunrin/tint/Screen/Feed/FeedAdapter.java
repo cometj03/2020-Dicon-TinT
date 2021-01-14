@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.sunrin.tint.Filter;
-import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.DateUtil;
 

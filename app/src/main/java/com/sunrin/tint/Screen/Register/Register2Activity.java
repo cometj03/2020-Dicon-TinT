@@ -12,7 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.sunrin.tint.Model.UserModel;
+import com.sunrin.tint.Firebase.UpLoad.FirebaseUploadProfile;
+import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.SharedPreferenceUtil;

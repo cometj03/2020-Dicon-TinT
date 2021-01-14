@@ -1,4 +1,4 @@
-package com.sunrin.tint.Model;
+package com.sunrin.tint.Models;
 
 import com.sunrin.tint.Filter;
 

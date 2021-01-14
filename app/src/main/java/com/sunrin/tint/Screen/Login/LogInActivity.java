@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.FirebaseApp;
+import com.sunrin.tint.Firebase.User.FirebaseLogIn;
 import com.sunrin.tint.Screen.MainActivity;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.Register.RegisterActivity;

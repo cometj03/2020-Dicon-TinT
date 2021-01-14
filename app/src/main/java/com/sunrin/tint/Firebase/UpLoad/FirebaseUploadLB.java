@@ -1,8 +1,7 @@
-package com.sunrin.tint.Util;
+package com.sunrin.tint.Firebase.UpLoad;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -10,10 +9,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.sunrin.tint.Model.LookBookModel;
-import com.sunrin.tint.Model.UserModel;
+import com.sunrin.tint.Models.LookBookModel;
+import com.sunrin.tint.Models.UserModel;
+import com.sunrin.tint.Util.DateUtil;
+import com.sunrin.tint.Util.FirebaseErrorUtil;
+import com.sunrin.tint.Util.UserCache;
 
-public class FirebaseUploadLookBook {
+public class FirebaseUploadLB {
+
+    // LB : LookBook
 
     private static FirebaseUploadPost.OnUploadFailureListener onUploadFailureListener;
 

@@ -22,9 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
-import com.sunrin.tint.Model.LookBookModel;
-import com.sunrin.tint.Model.PostModel;
-import com.sunrin.tint.Model.UserModel;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserLB;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserPost;
+import com.sunrin.tint.Models.LookBookModel;
+import com.sunrin.tint.Models.PostModel;
+import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.MainActivity;
 import com.sunrin.tint.Screen.ShowPostActivity;
@@ -33,7 +35,6 @@ import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.UserCache;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,6 +69,7 @@ public class ProfileFragment extends Fragment {
 
         userModel = UserCache.getUser(mContext);
 
+        assert userModel != null;
         tv_username.setText(userModel.getName());
         tv_status.setText(userModel.getStatus());
         Glide.with(profile)
@@ -143,7 +145,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getLookBookData() {
-        FirebaseUserCreation
+        FirebaseLoadUserLB
                 .LoadUserLookBooks(userModel.getLookBookID(),
                         lookBookModels -> {
                             if (lookBookAdapter != null) {
@@ -158,7 +160,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getPostData() {
-        FirebaseUserCreation
+        FirebaseLoadUserPost
                 .LoadUserPosts(userModel.getPostID(),
                         postModels -> {
                             if (postAdapter != null) {

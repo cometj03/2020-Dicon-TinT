@@ -1,8 +1,10 @@
-package com.sunrin.tint.Util;
+package com.sunrin.tint.Firebase.User;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.sunrin.tint.Model.UserModel;
+import com.sunrin.tint.Models.UserModel;
+import com.sunrin.tint.Util.FirebaseErrorUtil;
+import com.sunrin.tint.Util.UserCache;
 
 public class FirebaseUpdateUser {
 

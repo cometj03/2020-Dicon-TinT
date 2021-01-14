@@ -6,7 +6,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.sunrin.tint.Filter;
-import com.sunrin.tint.Model.UserModel;
+import com.sunrin.tint.Firebase.User.FirebaseUpdateUser;
+import com.sunrin.tint.Models.UserModel;
 
 import java.util.List;
 

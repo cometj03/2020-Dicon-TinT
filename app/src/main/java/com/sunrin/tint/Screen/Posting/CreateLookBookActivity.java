@@ -12,13 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
-import com.sunrin.tint.Model.LookBookModel;
-import com.sunrin.tint.Model.PostModel;
-import com.sunrin.tint.Model.UserModel;
+import com.sunrin.tint.Models.LookBookModel;
+import com.sunrin.tint.Models.PostModel;
+import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Screen.Profile.FirebaseUserCreation;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserPost;
 import com.sunrin.tint.Screen.Profile.ProfilePostAdapter;
-import com.sunrin.tint.Util.FirebaseUploadLookBook;
+import com.sunrin.tint.Firebase.UpLoad.FirebaseUploadLB;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 
@@ -83,7 +83,7 @@ public class CreateLookBookActivity extends AppCompatActivity {
         List<String> linkIDs = getLinkIDs();
         Log.e("CreateLookBookActivity", "createLookBook: id size!!!!!" + linkIDs.size());
 
-        FirebaseUploadLookBook
+        FirebaseUploadLB
                 .Upload(this, new LookBookModel(linkIDs, mainImage),
                         documentID -> {
                             UserCache.updateUser(this, documentID, null, UserCache.UPDATE_LOOKBOOK,
@@ -96,7 +96,7 @@ public class CreateLookBookActivity extends AppCompatActivity {
     }
 
     private void getLinkPostData() {
-        FirebaseUserCreation
+        FirebaseLoadUserPost
                 .LoadUserPosts(userModel.getPostID(),
                         postModels -> {
                             if (postAdapter != null) {

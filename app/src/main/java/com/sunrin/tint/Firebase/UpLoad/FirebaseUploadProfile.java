@@ -1,4 +1,4 @@
-package com.sunrin.tint.Screen.Register;
+package com.sunrin.tint.Firebase.UpLoad;
 
 import android.net.Uri;
 import android.webkit.MimeTypeMap;

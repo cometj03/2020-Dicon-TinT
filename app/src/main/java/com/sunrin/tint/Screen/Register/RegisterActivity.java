@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.sunrin.tint.Firebase.User.FirebaseRegister;
 import com.sunrin.tint.R;
 import com.sunrin.tint.View.LoadingDialog;
 

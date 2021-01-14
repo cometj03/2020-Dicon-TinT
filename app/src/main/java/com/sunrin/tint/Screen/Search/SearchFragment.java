@@ -14,14 +14,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sunrin.tint.Model.PostModel;
+import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.ShowPostActivity;
-import com.sunrin.tint.Util.FirebaseLoadPost;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPost;
 
 import java.util.ArrayList;
 
