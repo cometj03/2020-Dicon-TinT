@@ -77,6 +77,7 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="닉네임"
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="@+id/profile_imageview"
@@ -134,19 +135,17 @@
                 android:id="@+id/lookbook_recycler"
                 android:layout_width="0dp"
                 android:layout_height="240dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_lookbook_btn"
                 app:shimmer_demo_angle="20"
-                app:shimmer_demo_child_count="3"
+                app:shimmer_demo_child_count="5"
                 app:shimmer_demo_layout="@layout/profile_lookbook_item_demo"
                 app:shimmer_demo_layout_manager_type="linear_horizontal"
                 app:shimmer_demo_shimmer_color="#80ffffff"
-                tools:listitem="@layout/profile_lookbook_item"/>
+                tools:listitem="@layout/profile_lookbook_item" />
 
             <LinearLayout
                 android:id="@+id/empty_view1"
@@ -258,9 +257,10 @@
             <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/post_recycler"
                 android:layout_width="0dp"
-                android:layout_height="500dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -277,11 +277,13 @@
                 android:id="@+id/empty_view2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="48dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/post_recycler"
                 app:layout_constraintStart_toStartOf="@+id/post_recycler"
-                app:layout_constraintTop_toTopOf="@+id/post_recycler">
+                app:layout_constraintTop_toTopOf="@+id/post_recycler"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.sunrin.tint.Filter;
 import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.R;
 
@@ -83,8 +84,8 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
         return new android.widget.Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                // keys : 필터들을 차례로 담은 문자열 -> Filter로 변환
-                String[] keys = constraint.toString().split(":");
+
+                Filter filter = Filter.valueOf(constraint.toString());
 
                 if (constraint.toString().length() <= 0) {
                     mDataFiltered = mData;
@@ -93,14 +94,8 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
                     mDataFiltered = new ArrayList<PostModel>() {
                         {
                             for (PostModel p : mData) {
-                                // flag를 사용하여 모든 필터에 들어맞도록 함.
-                                boolean flag = true;
-
-                                for (String s : keys) {
-                                    if (!p.getFilters().contains(com.sunrin.tint.Filter.valueOf(s)))
-                                        flag = false;
-                                }
-                                if (flag) add(p);
+                                if (p.getFilters() != null && p.getFilters().contains(filter))
+                                    add(p);
                             }
                         }
                     };

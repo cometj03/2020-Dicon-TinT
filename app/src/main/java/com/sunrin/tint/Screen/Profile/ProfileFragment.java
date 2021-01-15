@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
 
     ShimmerRecyclerView lookBook_Recycler, post_Recycler;
     ProfileLookBookAdapter lookBookAdapter;
-    ProfilePostAdapter postAdapter;
+    ProfilePostAdapter postAdapter, postAdapter1;
 
     private List<LookBookModel> lookBookModelList;
     private List<PostModel> postModelList;
@@ -120,9 +120,11 @@ public class ProfileFragment extends Fragment {
         //***** RecyclerView *****//
         // LookBook
         lookBook_Recycler.showShimmerAdapter();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
-        lookBook_Recycler.setLayoutManager(layoutManager);
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+        lookBook_Recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         lookBookAdapter = new ProfileLookBookAdapter(emptyView1);
+        //postAdapter1 = new ProfilePostAdapter(emptyView1);
+        //post_Recycler.setAdapter(postAdapter1);
         post_Recycler.setAdapter(lookBookAdapter);
         getLookBookData();
 
@@ -153,7 +155,8 @@ public class ProfileFragment extends Fragment {
                                 lookBookModelList = lookBookModels;
                                 lookBookAdapter.setList(lookBookModels);
                                 lookBookAdapter.notifyDataSetChanged();
-                                Log.e(TAG, "getLookBookData: ***********" + lookBookModels.size());
+                                Toast.makeText(mContext, "룩북 불러옴", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "getLookBookData: 룩북 불러옴");
                             }
                         },
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());

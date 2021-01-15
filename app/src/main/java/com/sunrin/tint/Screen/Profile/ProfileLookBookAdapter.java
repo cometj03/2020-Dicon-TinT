@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBookAdapter.ItemViewHolder> implements Filterable {
+public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBookAdapter.ItemViewHolder> {
 
     Context mContext;
     private List<LookBookModel> mData, mDataFiltered;
@@ -48,60 +48,6 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
 
     public List<LookBookModel> getList(){ return mDataFiltered; }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                /*String[] keys = constraint.toString().split(":");
-
-                if(constraint.toString().length() <=0){
-                    mDataFiltered = mData;
-                }
-                else{
-                    mDataFiltered = new ArrayList<LookBookModel>(){
-                        {
-                            for(LookBookModel m: mData){
-                                boolean flag = true;
-
-                                for(String s: keys){
-                                    if(!m.getFilters().contains(com.sunrin.tint.Filter.valueOf(s)))
-                                        flag = false;
-                                }
-                                if(flag) add(m);
-                            }
-                        }
-                    };
-                }*/
-
-                FilterResults results = new FilterResults();
-                results.values = mDataFiltered;
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                mDataFiltered = (List<LookBookModel>) results.values;
-                notifyDataSetChanged();
-
-                if (emptyView != null)
-                    if (getItemCount() <= 0)
-                        emptyView.setVisibility(View.VISIBLE);
-                    else
-                        emptyView.setVisibility(View.GONE);
-            }
-        };
-    }
-
-    public interface OnItemClickListener{
-        void OnItemClick(View v, int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener mListener) {
-        this.itemClickListener = mListener;
-    }
-
-    private OnItemClickListener itemClickListener;
 
     @NonNull
     @Override
@@ -137,7 +83,18 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
         return mDataFiltered.size();
     }
 
+    public interface OnItemClickListener{
+        void OnItemClick(View v, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mListener) {
+        this.itemClickListener = mListener;
+    }
+
+    private OnItemClickListener itemClickListener;
+
     public class ItemViewHolder extends RecyclerView.ViewHolder {
+
         ImageView thumbNail;
 
         public ItemViewHolder(@NonNull View itemView) {
