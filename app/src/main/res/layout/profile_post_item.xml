@@ -20,13 +20,13 @@
             android:id="@+id/post_thumb_nail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:src="@drawable/post_image_empty"/>
 
         <View
             android:id="@+id/cover"
             android:layout_width="match_parent"
-            android:layout_height="407dp"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:visibility="invisible"
             android:layout_gravity="bottom"

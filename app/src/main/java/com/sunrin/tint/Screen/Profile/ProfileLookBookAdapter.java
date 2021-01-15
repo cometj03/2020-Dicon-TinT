@@ -24,20 +24,17 @@ import java.util.List;
 public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBookAdapter.ItemViewHolder> {
 
     Context mContext;
-    private List<LookBookModel> mData, mDataFiltered;
+    private List<LookBookModel> mData;
 
     ViewGroup emptyView;
 
     public ProfileLookBookAdapter(ViewGroup emptyView) {
         this.emptyView = emptyView;
         this.mData = new ArrayList<>();
-        this.mDataFiltered = new ArrayList<>();
     }
 
     public void setList(List<LookBookModel> list){
         this.mData = list;
-        if(mDataFiltered == null || mDataFiltered.isEmpty())
-            mDataFiltered = mData;
 
         if (emptyView != null)
             if (getItemCount() <= 0)
@@ -46,7 +43,7 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
                 emptyView.setVisibility(View.GONE);
     }
 
-    public List<LookBookModel> getList(){ return mDataFiltered; }
+    public List<LookBookModel> getList(){ return mData; }
 
 
     @NonNull
@@ -61,7 +58,7 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        LookBookModel item = mDataFiltered.get(position);
+        LookBookModel item = mData.get(position);
 
         if(!item.getId().isEmpty() && item.getMainImage() != null) {
             // 정사각형으로 잘라서 보여줌
@@ -78,9 +75,9 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
 
     @Override
     public int getItemCount() {
-        if(mDataFiltered == null)
+        if(mData == null)
             return 0;
-        return mDataFiltered.size();
+        return mData.size();
     }
 
     public interface OnItemClickListener{

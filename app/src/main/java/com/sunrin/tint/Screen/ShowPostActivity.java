@@ -92,6 +92,8 @@ public class ShowPostActivity extends AppCompatActivity {
             Glide.with(thumbnail)
                     .load(s)
                     .apply(new RequestOptions().fitCenter())
+                    .placeholder(R.drawable.post_image_empty)   // 사진이 로딩 되기 전 미리보기 이미지
+                    .error(R.drawable.post_image_empty)         // 사진 불러오지 못했을 때
                     .into(thumbnail);
 
             imagesContainer.addView(imageHolder);

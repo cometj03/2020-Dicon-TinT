@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
@@ -51,6 +52,7 @@ public class ProfileFragment extends Fragment {
     CircleImageView profile;
     ViewGroup emptyView1, emptyView2;
 
+    SwipeRefreshLayout swipeRefreshLayout;
     ShimmerRecyclerView lookBook_Recycler, post_Recycler;
     ProfileLookBookAdapter lookBookAdapter;
     ProfilePostAdapter postAdapter, postAdapter1;
@@ -123,10 +125,10 @@ public class ProfileFragment extends Fragment {
         //LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
         lookBook_Recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         lookBookAdapter = new ProfileLookBookAdapter(emptyView1);
-        //postAdapter1 = new ProfilePostAdapter(emptyView1);
-        //post_Recycler.setAdapter(postAdapter1);
-        post_Recycler.setAdapter(lookBookAdapter);
-        getLookBookData();
+        postAdapter1 = new ProfilePostAdapter(emptyView1);
+        post_Recycler.setAdapter(postAdapter1);
+        //post_Recycler.setAdapter(lookBookAdapter);
+        //getLookBookData();
 
         lookBookAdapter.setOnItemClickListener((v, position) -> {
             Toast.makeText(mContext, "asdf", Toast.LENGTH_SHORT).show();
@@ -144,9 +146,18 @@ public class ProfileFragment extends Fragment {
             intent.putExtra("item", postAdapter.getList().get(position));
             startActivity(intent);
         });
+
+        //**** RefreshLayout ****//
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            getLookBookData();
+            getPostData();
+        });
+        swipeRefreshLayout.setColorSchemeResources(R.color.pink_700);
     }
 
     private void getLookBookData() {
+        lookBook_Recycler.showShimmerAdapter();
+
         FirebaseLoadUserLB
                 .LoadUserLookBooks(userModel.getLookBookID(),
                         lookBookModels -> {
@@ -155,6 +166,8 @@ public class ProfileFragment extends Fragment {
                                 lookBookModelList = lookBookModels;
                                 lookBookAdapter.setList(lookBookModels);
                                 lookBookAdapter.notifyDataSetChanged();
+
+                                swipeRefreshLayout.setRefreshing(false);    // 로딩 종료
                                 Toast.makeText(mContext, "룩북 불러옴", Toast.LENGTH_SHORT).show();
                                 Log.e(TAG, "getLookBookData: 룩북 불러옴");
                             }
@@ -163,6 +176,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getPostData() {
+        post_Recycler.showShimmerAdapter();
+
         FirebaseLoadUserPost
                 .LoadUserPosts(userModel.getPostID(),
                         postModels -> {
@@ -171,6 +186,12 @@ public class ProfileFragment extends Fragment {
                                 postModelList = postModels;
                                 postAdapter.setList(postModels);
                                 postAdapter.notifyDataSetChanged();
+                            }
+                            if (postAdapter1 != null) {
+                                post_Recycler.hideShimmerAdapter();
+                                postModelList = postModels;
+                                postAdapter1.setList(postModels);
+                                postAdapter1.notifyDataSetChanged();
                             }
                         },
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
@@ -209,6 +230,7 @@ public class ProfileFragment extends Fragment {
         post_Recycler = view.findViewById(R.id.post_recycler);
         emptyView1 = view.findViewById(R.id.empty_view1);
         emptyView2 = view.findViewById(R.id.empty_view2);
+        swipeRefreshLayout = view.findViewById(R.id.profile_refresh);
     }
 
     @Override
