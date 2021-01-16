@@ -23,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
+import com.sunrin.tint.Filter;
 import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserLB;
 import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserPost;
 import com.sunrin.tint.Models.LookBookModel;
@@ -92,19 +93,24 @@ public class ProfileFragment extends Fragment {
             popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()){
-                    case R.id.popup_all:
-                        break;
                     case R.id.popup_makeup:
+                        postAdapter.getFilter().filter(Filter.eMakeUp.toString());
                         break;
                     case R.id.popup_hair:
+                        postAdapter.getFilter().filter(Filter.eHair.toString());
                         break;
                     case R.id.popup_fashion:
+                        postAdapter.getFilter().filter(Filter.eFashion.toString());
                         break;
                     case R.id.popup_nail:
+                        postAdapter.getFilter().filter(Filter.eNail.toString());
                         break;
                     case R.id.popup_diet:
+                        postAdapter.getFilter().filter(Filter.eDiet.toString());
                         break;
                     default:
+                    case R.id.popup_all:
+                        postAdapter.getFilter().filter("");
                         break;
                 }
                 return true;
@@ -191,7 +197,6 @@ public class ProfileFragment extends Fragment {
                             // 임시
                             if (postAdapter1 != null) {
                                 post_Recycler.hideShimmerAdapter();
-                                postModelList = postModels;
                                 postAdapter1.setList(postModels);
                                 postAdapter1.notifyDataSetChanged();
                             }
