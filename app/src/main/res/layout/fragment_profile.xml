@@ -268,9 +268,10 @@
                         android:id="@+id/post_recycler"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="32dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -292,7 +293,7 @@
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="@+id/post_recycler"
                         app:layout_constraintStart_toStartOf="@+id/post_recycler"
-                        app:layout_constraintTop_toTopOf="@+id/post_recycler"
+                        app:layout_constraintTop_toBottomOf="@+id/popupmenu_btn"
                         app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView

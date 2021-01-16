@@ -125,10 +125,11 @@ public class ProfileFragment extends Fragment {
         //LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
         lookBook_Recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         lookBookAdapter = new ProfileLookBookAdapter(emptyView1);
-        postAdapter1 = new ProfilePostAdapter(emptyView1);
-        post_Recycler.setAdapter(postAdapter1);
         //post_Recycler.setAdapter(lookBookAdapter);
         //getLookBookData();
+        // TODO: Fix adapter or recyclerview
+        postAdapter1 = new ProfilePostAdapter(emptyView1);
+        post_Recycler.setAdapter(postAdapter1); // 임시로 테스트로 어댑터 바꿈
 
         lookBookAdapter.setOnItemClickListener((v, position) -> {
             Toast.makeText(mContext, "asdf", Toast.LENGTH_SHORT).show();
@@ -187,6 +188,7 @@ public class ProfileFragment extends Fragment {
                                 postAdapter.setList(postModels);
                                 postAdapter.notifyDataSetChanged();
                             }
+                            // 임시
                             if (postAdapter1 != null) {
                                 post_Recycler.hideShimmerAdapter();
                                 postModelList = postModels;
