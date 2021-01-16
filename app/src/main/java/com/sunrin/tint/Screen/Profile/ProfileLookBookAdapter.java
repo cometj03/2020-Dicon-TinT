@@ -43,7 +43,9 @@ public class ProfileLookBookAdapter extends RecyclerView.Adapter<ProfileLookBook
                 emptyView.setVisibility(View.GONE);
     }
 
-    public List<LookBookModel> getList(){ return mData; }
+    public List<LookBookModel> getList() {
+        return mData;
+    }
 
 
     @NonNull

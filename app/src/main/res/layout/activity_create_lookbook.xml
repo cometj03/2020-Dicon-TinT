@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/profile_post_item" />
+        tools:listitem="@layout/post_item_grid" />
 
     <LinearLayout
         android:id="@+id/empty_view"

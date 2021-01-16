@@ -26,19 +26,17 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserLB;
 import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserPost;
-import com.sunrin.tint.Models.LookBookModel;
-import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.MainActivity;
+import com.sunrin.tint.Screen.ShowLBActivity;
 import com.sunrin.tint.Screen.ShowPostActivity;
 import com.sunrin.tint.Screen.SplashActivity;
+import com.sunrin.tint.Screen.StorageActivity;
 import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
 import com.sunrin.tint.Util.UserCache;
-
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -60,7 +58,7 @@ public class ProfileFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     ShimmerRecyclerView lookBook_Recycler, post_Recycler;
     ProfileLookBookAdapter lookBookAdapter;
-    ProfilePostAdapter postAdapter;
+    PostGridAdapter postAdapter;
 
     private UserModel userModel;
 
@@ -83,13 +81,13 @@ public class ProfileFragment extends Fragment {
                 .into(profile);
 
         profile.setOnClickListener(v -> changeProfile());
-        btn_storage.setOnClickListener(v -> Toast.makeText(mContext, "Storage", Toast.LENGTH_SHORT).show());
+        btn_storage.setOnClickListener(v -> startActivity(new Intent(mContext, StorageActivity.class)));
         btn_logout.setOnClickListener(v -> logout());
         btn_addLookBook.setOnClickListener(v -> CreateUtil.CreateLookBook(mContext, getActivity()));
         btn_addPost.setOnClickListener(v -> CreateUtil.CreatePost(mContext, getActivity()));
 
         btn_filterMenu.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(getActivity(), v);//v는 클릭된 뷰를 의미
+            PopupMenu popup = new PopupMenu(getActivity(), v);  //v는 클릭된 뷰를 의미
 
             popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
@@ -132,6 +130,8 @@ public class ProfileFragment extends Fragment {
                     SharedPreferenceUtil.setString(mContext, PREF_POST_FILTER, selectedFilter.toString());
                 }
                 else {
+                    // TODO: View all is not working
+                    Toast.makeText(mContext, "전체", Toast.LENGTH_SHORT).show();
                     postAdapter.getFilter().filter("");
                     SharedPreferenceUtil.setString(mContext, PREF_POST_FILTER, "");
                 }
@@ -156,14 +156,15 @@ public class ProfileFragment extends Fragment {
         getLookBookData();
 
         lookBookAdapter.setOnItemClickListener((v, position) -> {
-            // TODO: Create LookBook View
-            Toast.makeText(mContext, "asdf", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(mContext, ShowLBActivity.class);
+            intent.putExtra("lb_item", lookBookAdapter.getList().get(position));
+            startActivity(intent);
         });
 
         // Post
         post_Recycler.showShimmerAdapter();
         post_Recycler.setLayoutManager(new GridLayoutManager(mContext, 3));
-        postAdapter = new ProfilePostAdapter(emptyView2);
+        postAdapter = new PostGridAdapter(emptyView2);
         post_Recycler.setAdapter(postAdapter);
         getPostData();
 

@@ -69,6 +69,7 @@ public class ShowPostActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);    // disable title
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("");
         toolbar.setSubtitle("");
     }
@@ -150,6 +151,9 @@ public class ShowPostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
+            case android.R.id.home:
+                finish();
+                return true;
             case R.id.post_item_delete:
                 onClickDelete();
                 return userIsAuthor;

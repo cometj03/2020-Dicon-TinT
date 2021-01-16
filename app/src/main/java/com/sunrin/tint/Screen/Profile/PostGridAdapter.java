@@ -20,13 +20,13 @@ import com.sunrin.tint.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.ItemViewHolder> implements Filterable {
+public class PostGridAdapter extends RecyclerView.Adapter<PostGridAdapter.ItemViewHolder> implements Filterable {
 
     private List<PostModel> mData, mDataFiltered;
     Context mContext;
     ViewGroup emptyView;
 
-    public ProfilePostAdapter(ViewGroup emptyView) {
+    public PostGridAdapter(ViewGroup emptyView) {
         this.emptyView = emptyView;
         this.mData = new ArrayList<>();
         this.mDataFiltered = new ArrayList<>();
@@ -52,7 +52,7 @@ public class ProfilePostAdapter extends RecyclerView.Adapter<ProfilePostAdapter.
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.profile_post_item, parent, false);
+        View v = inflater.inflate(R.layout.post_item_grid, parent, false);
         return new ItemViewHolder(v);
     }
 

@@ -17,7 +17,7 @@ import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserPost;
-import com.sunrin.tint.Screen.Profile.ProfilePostAdapter;
+import com.sunrin.tint.Screen.Profile.PostGridAdapter;
 import com.sunrin.tint.Firebase.UpLoad.FirebaseUploadLB;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
@@ -30,19 +30,19 @@ public class CreateLookBookActivity extends AppCompatActivity {
     ViewGroup emptyView;
     String mainImage;
     ShimmerRecyclerView linkPostRecycler;
-    ProfilePostAdapter postAdapter;
+    PostGridAdapter postAdapter;
 
     List<PostModel> postModelList = new ArrayList<>();
     List<Boolean> checkedPost = new ArrayList<>();
 
-    private UserModel userModel;
+    private UserModel user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_lookbook);
 
-        userModel = UserCache.getUser(this);
+        user = UserCache.getUser(this);
 
         mainImage = getIntent().getStringExtra("lookbook_mainImage");
 
@@ -53,25 +53,19 @@ public class CreateLookBookActivity extends AppCompatActivity {
 
         linkPostRecycler = findViewById(R.id.link_post_recycler);
         linkPostRecycler.setLayoutManager(new GridLayoutManager(this, 3));
-        postAdapter = new ProfilePostAdapter(emptyView);
+        postAdapter = new PostGridAdapter(emptyView);
         linkPostRecycler.setAdapter(postAdapter);
         getLinkPostData();
 
-        Log.d("CreateLookBookActivity", "onCreate: size : *******" + postAdapter.getList().size());
-
         postAdapter.setOnItemClickListener((v, cover, position) -> {
-            switch (v.getId()) {
-                case R.id.post_thumb_nail:
-                    if (checkedPost.get(position)) {
-                        checkedPost.set(position, false);
-                        cover.setVisibility(View.INVISIBLE);
-                        Log.e("CreateLookBookActivity", "onCreate: " + position + " : " + checkedPost.get(position));
-                    } else {
-                        checkedPost.set(position, true);
-                        cover.setVisibility(View.VISIBLE);
-                        Log.e("CreateLookBookActivity", "onCreate: " + position + " : " + checkedPost.get(position));
-                    }
-                    break;
+            if (v.getId() == R.id.post_thumb_nail) {
+                if (checkedPost.get(position)) {
+                    checkedPost.set(position, false);
+                    cover.setVisibility(View.INVISIBLE);
+                } else {
+                    checkedPost.set(position, true);
+                    cover.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -81,32 +75,27 @@ public class CreateLookBookActivity extends AppCompatActivity {
         dialog.setMessage("룩북 업로드 중...").show();
 
         List<String> linkIDs = getLinkIDs();
-        Log.e("CreateLookBookActivity", "createLookBook: id size!!!!!" + linkIDs.size());
 
         FirebaseUploadLB
                 .Upload(this, new LookBookModel(linkIDs, mainImage),
                         documentID -> {
                             UserCache.updateUser(this, documentID, null, UserCache.UPDATE_LOOKBOOK,
-                                    success -> dialog.setMessage("업로드 성공!").setFinishListener(() -> {
-                                        finish();
-                                    }).finish(true),
+                                    success -> dialog.setMessage("업로드 성공!").setFinishListener(this::finish).finish(true),
                                     errMsg -> dialog.setMessage(errMsg).finish(false));
                         },
                         errorMsg -> dialog.setMessage(errorMsg).finish(false));
     }
 
     private void getLinkPostData() {
+        linkPostRecycler.showShimmerAdapter();
+
         FirebaseLoadUserPost
-                .LoadUserPosts(userModel.getPostID(),
+                .LoadUserPosts(user.getPostID(),
                         postModels -> {
                             if (postAdapter != null) {
-                                Log.d("CreateLookBookActivity", "getLinkPostData: *******size " + postModels.size());
-
+                                linkPostRecycler.hideShimmerAdapter();
                                 for (int i = 0; i < postModels.size(); i++)
                                     checkedPost.add(false);
-
-                                Log.e("CreateLookBookActivity", "getLinkPostData: *******size2 " + checkedPost.size());
-
                                 postModelList = postModels;
                                 postAdapter.setList(postModels);
                                 postAdapter.notifyDataSetChanged();

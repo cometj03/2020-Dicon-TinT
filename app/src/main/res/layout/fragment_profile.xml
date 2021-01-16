@@ -282,13 +282,13 @@
                         app:shimmer_demo_layout="@layout/profile_post_grid_item_demo"
                         app:shimmer_demo_layout_manager_type="grid"
                         app:shimmer_demo_shimmer_color="#80ffffff"
-                        tools:listitem="@layout/profile_post_item"/>
+                        tools:listitem="@layout/post_item_grid"/>
 
                     <LinearLayout
                         android:id="@+id/empty_view2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="48dp"
                         android:layout_marginBottom="48dp"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="@+id/post_recycler"
