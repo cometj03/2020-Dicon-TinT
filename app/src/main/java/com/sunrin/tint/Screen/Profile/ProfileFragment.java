@@ -60,10 +60,7 @@ public class ProfileFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     ShimmerRecyclerView lookBook_Recycler, post_Recycler;
     ProfileLookBookAdapter lookBookAdapter;
-    ProfilePostAdapter postAdapter, postAdapter1;
-
-    private List<LookBookModel> lookBookModelList;
-    private List<PostModel> postModelList;
+    ProfilePostAdapter postAdapter;
 
     private UserModel userModel;
 
@@ -127,7 +124,6 @@ public class ProfileFragment extends Fragment {
                         selectedFilter = null;
                         break;
                 }
-
                 btn_filterMenu.setText(title);
                 SharedPreferenceUtil.setString(mContext, PREF_TITLE, title);
 
@@ -154,16 +150,13 @@ public class ProfileFragment extends Fragment {
         //***** RecyclerView *****//
         // LookBook
         lookBook_Recycler.showShimmerAdapter();
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
         lookBook_Recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         lookBookAdapter = new ProfileLookBookAdapter(emptyView1);
-        //post_Recycler.setAdapter(lookBookAdapter);
-        //getLookBookData();
-        // TODO: Fix adapter or recyclerview
-        postAdapter1 = new ProfilePostAdapter(emptyView1);
-        post_Recycler.setAdapter(postAdapter1); // 임시로 테스트로 어댑터 바꿈
+        lookBook_Recycler.setAdapter(lookBookAdapter);
+        getLookBookData();
 
         lookBookAdapter.setOnItemClickListener((v, position) -> {
+            // TODO: Create LookBook View
             Toast.makeText(mContext, "asdf", Toast.LENGTH_SHORT).show();
         });
 
@@ -196,12 +189,10 @@ public class ProfileFragment extends Fragment {
                         lookBookModels -> {
                             if (lookBookAdapter != null) {
                                 lookBook_Recycler.hideShimmerAdapter();
-                                lookBookModelList = lookBookModels;
                                 lookBookAdapter.setList(lookBookModels);
                                 lookBookAdapter.notifyDataSetChanged();
 
                                 swipeRefreshLayout.setRefreshing(false);    // 로딩 종료
-                                Toast.makeText(mContext, "룩북 불러옴", Toast.LENGTH_SHORT).show();
                                 Log.e(TAG, "getLookBookData: 룩북 불러옴");
                             }
                         },
@@ -216,17 +207,10 @@ public class ProfileFragment extends Fragment {
                         postModels -> {
                             if (postAdapter != null) {
                                 post_Recycler.hideShimmerAdapter();
-                                postModelList = postModels;
                                 postAdapter.setList(postModels);
 
                                 String menuFilter = SharedPreferenceUtil.getString(mContext, PREF_POST_FILTER);
                                 postAdapter.getFilter().filter(menuFilter);
-                            }
-                            // 임시
-                            if (postAdapter1 != null) {
-                                post_Recycler.hideShimmerAdapter();
-                                postAdapter1.setList(postModels);
-                                postAdapter1.notifyDataSetChanged();
                             }
                         },
                         errorMsg -> Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show());
