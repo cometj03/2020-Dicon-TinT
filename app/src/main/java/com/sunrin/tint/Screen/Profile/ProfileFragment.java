@@ -35,6 +35,7 @@ import com.sunrin.tint.Screen.ShowPostActivity;
 import com.sunrin.tint.Screen.SplashActivity;
 import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.ImagePickerUtil;
+import com.sunrin.tint.Util.SharedPreferenceUtil;
 import com.sunrin.tint.Util.UserCache;
 
 import java.util.List;
@@ -44,6 +45,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.content.ContentValues.TAG;
 
 public class ProfileFragment extends Fragment {
+
+    private final String PREF_TITLE = "profile_menu_title";
+    private final String PREF_POST_FILTER = "profile_post_filter";
 
     Context mContext;
 
@@ -92,30 +96,52 @@ public class ProfileFragment extends Fragment {
 
             popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()){
+
+                String[] filterNames = getResources().getStringArray(R.array.FilterNames);
+                String title;
+                Filter selectedFilter;
+
+                switch (item.getItemId()) {
                     case R.id.popup_makeup:
-                        postAdapter.getFilter().filter(Filter.eMakeUp.toString());
+                        title = filterNames[0] + " ▼";
+                        selectedFilter = Filter.eMakeUp;
                         break;
                     case R.id.popup_hair:
-                        postAdapter.getFilter().filter(Filter.eHair.toString());
+                        title = filterNames[1] + " ▼";
+                        selectedFilter = Filter.eHair;
                         break;
                     case R.id.popup_fashion:
-                        postAdapter.getFilter().filter(Filter.eFashion.toString());
+                        title = filterNames[2] + " ▼";
+                        selectedFilter = Filter.eFashion;
                         break;
                     case R.id.popup_nail:
-                        postAdapter.getFilter().filter(Filter.eNail.toString());
+                        title = filterNames[3] + " ▼";
+                        selectedFilter = Filter.eNail;
                         break;
                     case R.id.popup_diet:
-                        postAdapter.getFilter().filter(Filter.eDiet.toString());
+                        title = filterNames[4] + " ▼";
+                        selectedFilter = Filter.eDiet;
                         break;
                     default:
-                    case R.id.popup_all:
-                        postAdapter.getFilter().filter("");
+                        title = "전체 ▼";
+                        selectedFilter = null;
                         break;
+                }
+
+                btn_filterMenu.setText(title);
+                SharedPreferenceUtil.setString(mContext, PREF_TITLE, title);
+
+                if (selectedFilter != null) {
+                    postAdapter.getFilter().filter(selectedFilter.toString());
+                    SharedPreferenceUtil.setString(mContext, PREF_POST_FILTER, selectedFilter.toString());
+                }
+                else {
+                    postAdapter.getFilter().filter("");
+                    SharedPreferenceUtil.setString(mContext, PREF_POST_FILTER, "");
                 }
                 return true;
             });
-            popup.show();//Popup Menu 보이기
+            popup.show();   //Popup Menu 보이기
         });
 
         return view;
@@ -192,7 +218,9 @@ public class ProfileFragment extends Fragment {
                                 post_Recycler.hideShimmerAdapter();
                                 postModelList = postModels;
                                 postAdapter.setList(postModels);
-                                postAdapter.notifyDataSetChanged();
+
+                                String menuFilter = SharedPreferenceUtil.getString(mContext, PREF_POST_FILTER);
+                                postAdapter.getFilter().filter(menuFilter);
                             }
                             // 임시
                             if (postAdapter1 != null) {
@@ -238,6 +266,9 @@ public class ProfileFragment extends Fragment {
         emptyView1 = view.findViewById(R.id.empty_view1);
         emptyView2 = view.findViewById(R.id.empty_view2);
         swipeRefreshLayout = view.findViewById(R.id.profile_refresh);
+
+        String menuTitle = SharedPreferenceUtil.getString(mContext, PREF_TITLE);
+        btn_filterMenu.setText(menuTitle.length() > 0 ? menuTitle : "전체 ▼");
     }
 
     @Override

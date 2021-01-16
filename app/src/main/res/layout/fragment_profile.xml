@@ -253,12 +253,12 @@
 
                     <Button
                         android:id="@+id/popupmenu_btn"
-                        android:layout_width="60dp"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
                         android:background="@android:color/transparent"
-                        android:text="필터 ▼"
+                        android:text="전체 ▼"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -288,7 +288,7 @@
                         android:id="@+id/empty_view2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginBottom="48dp"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="@+id/post_recycler"
