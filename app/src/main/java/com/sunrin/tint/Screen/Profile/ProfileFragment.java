@@ -93,48 +93,41 @@ public class ProfileFragment extends Fragment {
             popup.setOnMenuItemClickListener(item -> {
 
                 String[] filterNames = getResources().getStringArray(R.array.FilterNames);
-                String title;
-                Filter selectedFilter;
+                String title = "전체 ▼", filterString = "ALL";
 
                 switch (item.getItemId()) {
+                    case R.id.popup_all:
+                        // TODO: WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY???????????
+                        Toast.makeText(mContext, "asdfasdfa", Toast.LENGTH_SHORT).show();
+                        postAdapter.getFilter().filter("sibal");
+                        SharedPreferenceUtil.setString(mContext, PREF_POST_FILTER, "sibal");
+                        break;
                     case R.id.popup_makeup:
                         title = filterNames[0] + " ▼";
-                        selectedFilter = Filter.eMakeUp;
+                        filterString = Filter.eMakeUp.toString();
                         break;
                     case R.id.popup_hair:
                         title = filterNames[1] + " ▼";
-                        selectedFilter = Filter.eHair;
+                        filterString = Filter.eHair.toString();
                         break;
                     case R.id.popup_fashion:
                         title = filterNames[2] + " ▼";
-                        selectedFilter = Filter.eFashion;
+                        filterString = Filter.eFashion.toString();
                         break;
                     case R.id.popup_nail:
                         title = filterNames[3] + " ▼";
-                        selectedFilter = Filter.eNail;
+                        filterString = Filter.eNail.toString();
                         break;
                     case R.id.popup_diet:
                         title = filterNames[4] + " ▼";
-                        selectedFilter = Filter.eDiet;
-                        break;
-                    default:
-                        title = "전체 ▼";
-                        selectedFilter = null;
+                        filterString = Filter.eDiet.toString();
                         break;
                 }
                 btn_filterMenu.setText(title);
                 SharedPreferenceUtil.setString(mContext, PREF_TITLE, title);
+                postAdapter.getFilter().filter(filterString);
+                SharedPreferenceUtil.setString(mContext, PREF_POST_FILTER, filterString);
 
-                if (selectedFilter != null) {
-                    postAdapter.getFilter().filter(selectedFilter.toString());
-                    SharedPreferenceUtil.setString(mContext, PREF_POST_FILTER, selectedFilter.toString());
-                }
-                else {
-                    // TODO: View all is not working
-                    Toast.makeText(mContext, "전체", Toast.LENGTH_SHORT).show();
-                    postAdapter.getFilter().filter("");
-                    SharedPreferenceUtil.setString(mContext, PREF_POST_FILTER, "");
-                }
                 return true;
             });
             popup.show();   //Popup Menu 보이기

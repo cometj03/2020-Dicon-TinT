@@ -29,12 +29,11 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/link_post_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

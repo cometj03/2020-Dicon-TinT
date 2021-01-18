@@ -10,8 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.sunrin.tint.Models.LookBookModel;
 import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.Models.UserModel;
@@ -29,7 +29,7 @@ public class CreateLookBookActivity extends AppCompatActivity {
 
     ViewGroup emptyView;
     String mainImage;
-    ShimmerRecyclerView linkPostRecycler;
+    RecyclerView linkPostRecycler;
     PostGridAdapter postAdapter;
 
     List<PostModel> postModelList = new ArrayList<>();
@@ -59,13 +59,9 @@ public class CreateLookBookActivity extends AppCompatActivity {
 
         postAdapter.setOnItemClickListener((v, cover, position) -> {
             if (v.getId() == R.id.post_thumb_nail) {
-                if (checkedPost.get(position)) {
-                    checkedPost.set(position, false);
-                    cover.setVisibility(View.INVISIBLE);
-                } else {
-                    checkedPost.set(position, true);
-                    cover.setVisibility(View.VISIBLE);
-                }
+                checkedPost.set(position, !checkedPost.get(position));
+                cover.setVisibility(checkedPost.get(position) ?
+                        View.VISIBLE : View.INVISIBLE);
             }
         });
     }
@@ -74,10 +70,10 @@ public class CreateLookBookActivity extends AppCompatActivity {
         LoadingDialog dialog = new LoadingDialog(this);
         dialog.setMessage("룩북 업로드 중...").show();
 
-        List<String> linkIDs = getLinkIDs();
+        List<String> linkID = getLinkIDs();
 
         FirebaseUploadLB
-                .Upload(this, new LookBookModel(linkIDs, mainImage),
+                .Upload(this, new LookBookModel(linkID, mainImage),
                         documentID -> {
                             UserCache.updateUser(this, documentID, null, UserCache.UPDATE_LOOKBOOK,
                                     success -> dialog.setMessage("업로드 성공!").setFinishListener(this::finish).finish(true),
@@ -87,13 +83,10 @@ public class CreateLookBookActivity extends AppCompatActivity {
     }
 
     private void getLinkPostData() {
-        linkPostRecycler.showShimmerAdapter();
-
         FirebaseLoadUserPost
                 .LoadUserPosts(user.getPostID(),
                         postModels -> {
                             if (postAdapter != null) {
-                                linkPostRecycler.hideShimmerAdapter();
                                 for (int i = 0; i < postModels.size(); i++)
                                     checkedPost.add(false);
                                 postModelList = postModels;

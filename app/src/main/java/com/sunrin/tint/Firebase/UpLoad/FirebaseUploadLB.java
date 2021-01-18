@@ -27,19 +27,29 @@ public class FirebaseUploadLB {
         String id = DateUtil.getFileNameWithDate();
         lookBookModel.setId("LB_" + id);
 
-        UserModel userModel = UserCache.getUser(context);
-        lookBookModel.setUserName(userModel.getName());
-        lookBookModel.setUserEmail(userModel.getEmail());
+        UserModel user = UserCache.getUser(context);
+
+        if (user == null) {
+            onUploadFailureListener.onUploadFailed("유저 정보를 찾을 수 없습니다.");
+            return;
+        }
+        lookBookModel.setUserName(user.getName());
+        lookBookModel.setUserEmail(user.getEmail());
 
         if (lookBookModel.getMainImage() != null && !checkImageExtension(lookBookModel.getMainImage())) {
             onUploadFailureListener.onUploadFailed("올바른 형식의 이미지를 업로드 해주세요 (jpeg/png)");
             return;
         }
 
-//        if (links == null || links.isEmpty()) {
-//            onUploadFailureListener.onUploadFailed("게시물을 하나 이상 선택해주세요.");
-//            return;
-//        }
+        if (user.getPostID().isEmpty()) {
+            onUploadFailureListener.onUploadFailed("먼저 게시물을 하나 이상 등록해주세요!");
+            return;
+        }
+
+        if (lookBookModel.getLinkList().isEmpty()) {
+            onUploadFailureListener.onUploadFailed("게시물을 하나 이상 선택해주세요.");
+            return;
+        }
 
         uploadImage(lookBookModel.getMainImage(), id,
                 uri -> uploadLookBook(uri.toString(), lookBookModel,

@@ -17,7 +17,6 @@ public class LookBookModel implements Serializable {
     public LookBookModel(List<String> linkList, String mainImage) {
         this.linkList = linkList;
         this.mainImage = mainImage;
-        this.linkList = new ArrayList<>();
         this.id = this.userName = this.userEmail = "";
         this.date = DateUtil.getDateFormat();
     }

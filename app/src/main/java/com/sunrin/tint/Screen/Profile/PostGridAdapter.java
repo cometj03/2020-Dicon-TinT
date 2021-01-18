@@ -1,11 +1,13 @@
 package com.sunrin.tint.Screen.Profile;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,8 @@ import com.sunrin.tint.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class PostGridAdapter extends RecyclerView.Adapter<PostGridAdapter.ItemViewHolder> implements Filterable {
 
@@ -44,7 +48,9 @@ public class PostGridAdapter extends RecyclerView.Adapter<PostGridAdapter.ItemVi
                 emptyView.setVisibility(View.GONE);
     }
 
-    public List<PostModel> getList(){ return mDataFiltered; }
+    public List<PostModel> getList() {
+        return mDataFiltered;
+    }
 
 
     @NonNull
@@ -87,8 +93,12 @@ public class PostGridAdapter extends RecyclerView.Adapter<PostGridAdapter.ItemVi
 
                 Filter filter = Filter.valueOf(constraint.toString());
 
-                if (constraint.toString().length() <= 0) {
-                    mDataFiltered = mData;
+                Log.e(TAG, "performFiltering: asdfasdf : " + constraint.toString());
+
+                if (constraint.toString().equals("ALL")) {
+                    FilterResults results = new FilterResults();
+                    results.values = mData;
+                    return results;
                 } else {
                     // 필터로 찾은 후 반환
                     mDataFiltered = new ArrayList<PostModel>() {
