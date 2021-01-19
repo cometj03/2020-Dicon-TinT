@@ -13,10 +13,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserPost;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPosts;
 import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.Profile.PostGridAdapter;
+import com.sunrin.tint.Screen.Show.ShowPostActivity;
 import com.sunrin.tint.Util.UserCache;
 
 public class StorageActivity extends AppCompatActivity {
@@ -57,8 +58,8 @@ public class StorageActivity extends AppCompatActivity {
     }
 
     private void getStoragePost() {
-        FirebaseLoadUserPost
-                .LoadUserPosts(user.getStorageID(),
+        FirebaseLoadPosts
+                .LoadPosts(user.getStorageID(),
                         postModels -> {
                             if (adapter != null) {
                                 adapter.setList(postModels);

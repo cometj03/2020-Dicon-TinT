@@ -25,9 +25,9 @@ import com.github.okdroid.checkablechipview.CheckableChipView;
 import com.google.android.material.chip.ChipGroup;
 import com.sunrin.tint.Filter;
 import com.sunrin.tint.Models.PostModel;
-import com.sunrin.tint.Screen.ShowPostActivity;
+import com.sunrin.tint.Screen.Show.ShowPostActivity;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPost;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadAllPost;
 import com.sunrin.tint.Util.UserCache;
 import com.sunrin.tint.View.LoadingDialog;
 
@@ -245,8 +245,8 @@ public class FeedFragment extends Fragment {
                 shimmerRecyclerView.hideShimmerAdapter();   // recyclerView loading stop
         }, 500);
 
-        FirebaseLoadPost
-                .LoadPosts(
+        FirebaseLoadAllPost
+                .LoadAllPosts(
                         postModels -> {
                             if (adapter != null) {
                                 allLoaded = true;

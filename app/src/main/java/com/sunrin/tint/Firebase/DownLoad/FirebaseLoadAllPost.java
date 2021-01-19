@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class FirebaseLoadPost {
+public class FirebaseLoadAllPost {
 
     private static OnLoadFailureListener onLoadFailureListener;
 
@@ -23,7 +23,7 @@ public class FirebaseLoadPost {
         void onLoadFailed(String errorMsg);
     }
 
-    public static void LoadPosts(OnLoadSuccessListener s, OnLoadFailureListener f) {
+    public static void LoadAllPosts(OnLoadSuccessListener s, OnLoadFailureListener f) {
         onLoadFailureListener = f;
 
         List<PostModel> list = new ArrayList<>();

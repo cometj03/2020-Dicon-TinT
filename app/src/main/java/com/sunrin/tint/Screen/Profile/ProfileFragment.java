@@ -24,19 +24,21 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.sunrin.tint.Filter;
-import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserLB;
-import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserPost;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadLBs;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPosts;
 import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Screen.MainActivity;
-import com.sunrin.tint.Screen.ShowLBActivity;
-import com.sunrin.tint.Screen.ShowPostActivity;
+import com.sunrin.tint.Screen.Show.ShowLBActivity;
+import com.sunrin.tint.Screen.Show.ShowPostActivity;
 import com.sunrin.tint.Screen.SplashActivity;
 import com.sunrin.tint.Screen.StorageActivity;
 import com.sunrin.tint.Util.CreateUtil;
 import com.sunrin.tint.Util.ImagePickerUtil;
 import com.sunrin.tint.Util.SharedPreferenceUtil;
 import com.sunrin.tint.Util.UserCache;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -60,7 +62,7 @@ public class ProfileFragment extends Fragment {
     ProfileLookBookAdapter lookBookAdapter;
     PostGridAdapter postAdapter;
 
-    private UserModel userModel;
+    private UserModel user;
 
     @Nullable
     @Override
@@ -69,13 +71,13 @@ public class ProfileFragment extends Fragment {
 
         init(view);
 
-        userModel = UserCache.getUser(mContext);
+        user = UserCache.getUser(mContext);
 
-        assert userModel != null;
-        tv_username.setText(userModel.getName());
-        tv_status.setText(userModel.getStatus());
+        assert user != null;
+        tv_username.setText(user.getName());
+        tv_status.setText(user.getStatus());
         Glide.with(profile)
-                .load(userModel.getProfile())
+                .load(user.getProfile())
                 .placeholder(R.drawable.profile_empty_feed) // 사진이 로딩 되기 전 미리보기 이미지
                 .error(R.drawable.profile_empty_feed)       // 사진 불러오지 못했을 때
                 .into(profile);
@@ -148,7 +150,8 @@ public class ProfileFragment extends Fragment {
 
         lookBookAdapter.setOnItemClickListener((v, position) -> {
             Intent intent = new Intent(mContext, ShowLBActivity.class);
-            intent.putExtra("lb_item", lookBookAdapter.getList().get(position));
+            intent.putExtra("click_position", position);
+            intent.putStringArrayListExtra("lb_list", (ArrayList<String>) user.getLookBookID());
             startActivity(intent);
         });
 
@@ -176,8 +179,8 @@ public class ProfileFragment extends Fragment {
     private void getLookBookData() {
         lookBook_Recycler.showShimmerAdapter();
 
-        FirebaseLoadUserLB
-                .LoadUserLookBooks(userModel.getLookBookID(),
+        FirebaseLoadLBs
+                .LoadLookBooks(user.getLookBookID(),
                         lookBookModels -> {
                             if (lookBookAdapter != null) {
                                 lookBook_Recycler.hideShimmerAdapter();
@@ -194,8 +197,8 @@ public class ProfileFragment extends Fragment {
     private void getPostData() {
         post_Recycler.showShimmerAdapter();
 
-        FirebaseLoadUserPost
-                .LoadUserPosts(userModel.getPostID(),
+        FirebaseLoadPosts
+                .LoadPosts(user.getPostID(),
                         postModels -> {
                             if (postAdapter != null) {
                                 post_Recycler.hideShimmerAdapter();

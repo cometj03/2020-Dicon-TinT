@@ -5,13 +5,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.Util.FirebaseErrorUtil;
-import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPost;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class FirebaseLoadUserPost {
+public class FirebaseLoadPosts {
 
     // Variables
     private static int tmp, listSize;
@@ -19,7 +18,7 @@ public class FirebaseLoadUserPost {
     private static List<String> IDs;
 
     // Listeners
-    private static FirebaseLoadPost.OnLoadFailureListener onLoadFailureListener;
+    private static FirebaseLoadAllPost.OnLoadFailureListener onLoadFailureListener;
     private static OnPostSuccessListener onPostSuccessListener;
     private static OnSuccessListener<DocumentSnapshot> onSuccessListener;
 
@@ -29,7 +28,7 @@ public class FirebaseLoadUserPost {
 
 
     // MainFunction
-    public static void LoadUserPosts(List<String> postIDs, OnPostSuccessListener s, FirebaseLoadPost.OnLoadFailureListener f) {
+    public static void LoadPosts(List<String> postIDs, OnPostSuccessListener s, FirebaseLoadAllPost.OnLoadFailureListener f) {
         // 데이터 초기화
         tmp = 0;
         listSize = postIDs.size();

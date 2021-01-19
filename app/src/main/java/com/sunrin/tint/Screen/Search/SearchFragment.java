@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Screen.ShowPostActivity;
-import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPost;
+import com.sunrin.tint.Screen.Show.ShowPostActivity;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadAllPost;
 
 import java.util.ArrayList;
 
@@ -185,7 +185,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     private void getData(){
         //Firebase에서 전체 데이터 가져오기
-        FirebaseLoadPost.LoadPosts(
+        FirebaseLoadAllPost.LoadAllPosts(
                 postModels -> {
                     postAll = (ArrayList<PostModel>) postModels;
                 },

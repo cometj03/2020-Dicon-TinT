@@ -1,4 +1,4 @@
-package com.sunrin.tint.Screen;
+package com.sunrin.tint.Screen.Show;
 
 import android.os.Bundle;
 import android.util.TypedValue;

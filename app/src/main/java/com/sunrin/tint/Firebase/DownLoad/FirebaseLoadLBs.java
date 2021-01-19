@@ -5,12 +5,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sunrin.tint.Models.LookBookModel;
 import com.sunrin.tint.Util.FirebaseErrorUtil;
-import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPost;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirebaseLoadUserLB {
+public class FirebaseLoadLBs {
 
     // LB : LookBook
 
@@ -20,7 +19,7 @@ public class FirebaseLoadUserLB {
     private static List<String> IDs;
 
     // Listeners
-    private static FirebaseLoadPost.OnLoadFailureListener onLoadFailureListener;
+    private static FirebaseLoadAllPost.OnLoadFailureListener onLoadFailureListener;
     private static OnLookBookSuccessListener onLookBookSuccessListener;
     private static OnSuccessListener<DocumentSnapshot> onSuccessListener;
 
@@ -30,7 +29,7 @@ public class FirebaseLoadUserLB {
 
 
     // MainFunction
-    public static void LoadUserLookBooks(List<String> lookBookIDs, OnLookBookSuccessListener s, FirebaseLoadPost.OnLoadFailureListener f) {
+    public static void LoadLookBooks(List<String> lookBookIDs, OnLookBookSuccessListener s, FirebaseLoadAllPost.OnLoadFailureListener f) {
         // 데이터 초기화
         tmp = 0;
         listSize = lookBookIDs.size();

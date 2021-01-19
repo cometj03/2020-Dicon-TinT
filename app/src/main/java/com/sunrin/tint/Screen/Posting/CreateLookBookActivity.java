@@ -1,7 +1,6 @@
 package com.sunrin.tint.Screen.Posting;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,7 +15,7 @@ import com.sunrin.tint.Models.LookBookModel;
 import com.sunrin.tint.Models.PostModel;
 import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
-import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadUserPost;
+import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPosts;
 import com.sunrin.tint.Screen.Profile.PostGridAdapter;
 import com.sunrin.tint.Firebase.UpLoad.FirebaseUploadLB;
 import com.sunrin.tint.Util.UserCache;
@@ -83,8 +82,8 @@ public class CreateLookBookActivity extends AppCompatActivity {
     }
 
     private void getLinkPostData() {
-        FirebaseLoadUserPost
-                .LoadUserPosts(user.getPostID(),
+        FirebaseLoadPosts
+                .LoadPosts(user.getPostID(),
                         postModels -> {
                             if (postAdapter != null) {
                                 for (int i = 0; i < postModels.size(); i++)
