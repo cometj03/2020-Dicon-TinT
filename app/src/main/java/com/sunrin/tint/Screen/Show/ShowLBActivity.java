@@ -49,6 +49,7 @@ public class ShowLBActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.lookbook_container);
         adapter = new SlideLBAdapter(getSupportFragmentManager(), fragmentList);
+        viewPager.setPageTransformer(true, new ZoomAnimation());
         viewPager.setAdapter(adapter);
     }
 
