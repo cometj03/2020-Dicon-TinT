@@ -20,6 +20,8 @@ import java.util.List;
 
 public class FirebaseUploadPost {
 
+    // TODO: Decrease image size
+
     private static List<String> urlList;
     private static OnUploadFailureListener onUploadFailureListener;
 

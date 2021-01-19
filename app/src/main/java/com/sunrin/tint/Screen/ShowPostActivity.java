@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.sunrin.tint.Models.PostModel;
+import com.sunrin.tint.Models.UserModel;
 import com.sunrin.tint.R;
 import com.sunrin.tint.Firebase.FirebaseDeletePost;
 import com.sunrin.tint.Util.UserCache;
@@ -36,8 +37,9 @@ public class ShowPostActivity extends AppCompatActivity {
     TextView titleText, subtitleText, contentText;
     ViewGroup imagesContainer;
 
-    private boolean userIsAuthor;
+    private boolean authorIsUser, isContainsStorage;
     private PostModel data;
+    private final int Delete_From_Storage = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,14 +58,21 @@ public class ShowPostActivity extends AppCompatActivity {
         contentText.setText(data.getContent());
         showImageList(data.getImages());
 
-        userIsAuthor = false;
+        isContainsStorage = authorIsUser = false;
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null && user.getEmail() != null) {
             String userEmail = user.getEmail();
             String authorEmail = data.getUserEmail();
             // 작성자와 현재 로그인 된 사용자가 같을 때
             // 삭제, 수정 할 수 있게 해줌.
-            userIsAuthor = userEmail.equals(authorEmail);
+            authorIsUser = userEmail.equals(authorEmail);
+        }
+
+        UserModel userCache = UserCache.getUser(this);
+        if (userCache != null && userCache.getStorageID().contains(data.getId())) {
+            // 이 게시물이 사용자의 보관함 안에 들어있을 때
+            isContainsStorage = true;
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -105,12 +114,12 @@ public class ShowPostActivity extends AppCompatActivity {
 
     private void onClickDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("경고").setMessage("정말 '" + data.getTitle() + "' 을(를) 삭제 하시겠습니까?");
+        builder.setTitle("경고 : " + data.getTitle()).setMessage("정말 이 게시물을 삭제 하시겠습니까?\n복구할 수 없습니다.");
 
         builder.setPositiveButton("삭제", (dialog, which) -> {
 
             LoadingDialog loadingDialog = new LoadingDialog(this);
-            loadingDialog.setMessage("포스트 삭제 중...").show();
+            loadingDialog.setMessage("게시물 삭제 중...").show();
 
             // 파이어베이스에 있는 포스트 삭제
             FirebaseDeletePost
@@ -133,18 +142,43 @@ public class ShowPostActivity extends AppCompatActivity {
         builder.setCancelable(true).show();
     }
 
-    private void onClickModify() {
+    private void onClickModifyPost() {
         // TODO: 수정 기능 추가
         Toast.makeText(this, "수정 기능은 개발중에 있습니다 조금만 기다려주세요!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onClickDeleteFromStorage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(data.getTitle()).setMessage("정말 이 게시물을 보관함에서 삭제 하시겠습니까?");
+
+        builder.setPositiveButton("삭제", (dialog, which) -> {
+
+            LoadingDialog loadingDialog = new LoadingDialog(this);
+            loadingDialog.setMessage("보관함에서 삭제 중...").show();
+
+            UserCache.updateUser(this, data.getId(), null, UserCache.DELETE_POST_FROM_STORAGE,
+                    a -> loadingDialog.setMessage("성공적으로 처리되었습니다.").setFinishListener(this::finish).finish(true),
+                    errMsg -> loadingDialog.setMessage(errMsg).finish(false));
+        });
+
+        builder.setNegativeButton("취소", (dialog, which) -> {});
+
+        builder.setCancelable(true).show();
     }
 
     // Toolbar에 메뉴를 인플레이트 함
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // return super.onCreateOptionsMenu(menu);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.post_delete_and_modify_menu, menu);
-        return userIsAuthor;
+        super.onCreateOptionsMenu(menu);
+
+        if (authorIsUser) {
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.post_delete_and_modify_menu, menu);
+        }
+        if (isContainsStorage) // 메뉴 새로 하나 생성
+            menu.add(0, Delete_From_Storage, 0, "보관함에서 삭제");
+
+        return authorIsUser || isContainsStorage;
     }
 
     @Override
@@ -156,10 +190,13 @@ public class ShowPostActivity extends AppCompatActivity {
                 return true;
             case R.id.post_item_delete:
                 onClickDelete();
-                return userIsAuthor;
+                return authorIsUser;
             case R.id.post_item_modify:
-                onClickModify();
-                return userIsAuthor;
+                onClickModifyPost();
+                return authorIsUser;
+            case Delete_From_Storage:
+                onClickDeleteFromStorage();
+                return isContainsStorage;
             default:
                 return super.onOptionsItemSelected(item);
         }

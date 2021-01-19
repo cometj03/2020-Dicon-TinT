@@ -22,6 +22,7 @@ public class UserCache {
     public static final int UPDATE_LOOKBOOK = 2;
     public static final int UPDATE_FILTERS = 3;
     public static final int DELETE_POST = 4;
+    public static final int DELETE_POST_FROM_STORAGE = 5;
 
     public static void setUser(Context context, UserModel userModel) {
         Gson gson = new Gson();
@@ -39,35 +40,44 @@ public class UserCache {
 
     public static void updateUser(Context context, String value, List<Filter> filterList, int tmp,
                                   OnSuccessListener<Void> s, onUpdateFailureListener f) {
-        UserModel userModel = getUser(context);
-        if (userModel == null)
+        UserModel user = getUser(context);
+        if (user == null) {
+            f.onUpdateFailed("유저 정보를 찾을 수 없습니다.");
             return;
+        }
         switch (tmp) {
             case UPDATE_POST:
-                userModel.addPostID(value);
+                user.addPostID(value);
                 break;
             case UPDATE_STORAGE:
-                if (userModel.getStorageID().contains(value)) {
+                if (user.getStorageID().contains(value)) {
                     // 이미 보관함에 존재함
                     f.onUpdateFailed("이미 보관함에 존재합니다.");
                     return;
                 }
-                userModel.addStorageID(value);
+                user.addStorageID(value);
                 break;
             case UPDATE_LOOKBOOK:
-                userModel.addLookBookID(value);
+                user.addLookBookID(value);
                 break;
             case UPDATE_FILTERS:
-                userModel.setUserFilters(filterList);
+                user.setUserFilters(filterList);
                 break;
             case DELETE_POST:
-                userModel.deletePostID(value);
+                user.deletePostID(value);
+                break;
+            case DELETE_POST_FROM_STORAGE:
+                if (!user.getStorageID().contains(value)) {
+                    f.onUpdateFailed("해당 게시물을 찾을 수 없습니다.");
+                    return;
+                }
+                user.deletePostIDFromStorage(value);
                 break;
             default:
                 return;
         }
-        FirebaseUpdateUser.updateUser(userModel, s, f);
-        setUser(context, userModel);
+        FirebaseUpdateUser.updateUser(user, s, f);
+        setUser(context, user);
     }
 
     public static void logout(Context context) {

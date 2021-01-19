@@ -14,6 +14,8 @@ import com.sunrin.tint.Util.FirebaseErrorUtil;
 
 public class FirebaseUploadProfile {
 
+    // TODO: Decrease image size
+
     private static OnUploadFailureListener onUploadFailureListener;
 
     public interface OnUploadSuccessListener {

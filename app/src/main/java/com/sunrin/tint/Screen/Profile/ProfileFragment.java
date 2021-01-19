@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
         btn_filterMenu.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(getActivity(), v);  //v는 클릭된 뷰를 의미
 
-            popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
+            popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
 
                 String[] filterNames = getResources().getStringArray(R.array.FilterNames);

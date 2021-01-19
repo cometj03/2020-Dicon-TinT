@@ -44,7 +44,7 @@ public class UserModel {
         this.userFilters = new ArrayList<>();
     }
 
-    // add IDs
+    // ADD
     public void addPostID(String id) {
         this.postID.add(id);
     }
@@ -57,16 +57,20 @@ public class UserModel {
         this.lookBookID.add(id);
     }
 
-    // delete IDs
+    // DELETE
     public void deletePostID(String id) {
         this.postID.remove(id);
     }
 
+    public void deletePostIDFromStorage(String id) {
+        this.storageID.remove(id);
+    }
+
+    // *** get set *** //
     public String getName() {
         return name;
     }
 
-    // *** get set *** //
     public void setName(String name) {
         this.name = name;
     }

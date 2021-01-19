@@ -18,6 +18,7 @@ import com.sunrin.tint.Util.UserCache;
 public class FirebaseUploadLB {
 
     // LB : LookBook
+    // TODO: Decrease image size
 
     private static FirebaseUploadPost.OnUploadFailureListener onUploadFailureListener;
 
