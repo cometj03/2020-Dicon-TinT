@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.sunrin.tint.Models.LookBookModel;
@@ -20,7 +21,7 @@ public class ShowLBActivity extends AppCompatActivity {
 
     // TODO: Complete this activity
 
-    ViewPager2 viewPager2;
+    ViewPager viewPager;
     SlideLBAdapter adapter;
     private List<ShowLBFragment> fragmentList;
 
@@ -46,8 +47,9 @@ public class ShowLBActivity extends AppCompatActivity {
             }
         };
 
-        viewPager2 = findViewById(R.id.lookbook_container);
+        viewPager = findViewById(R.id.lookbook_container);
         adapter = new SlideLBAdapter(getSupportFragmentManager(), fragmentList);
+        viewPager.setAdapter(adapter);
     }
 
     @Override
