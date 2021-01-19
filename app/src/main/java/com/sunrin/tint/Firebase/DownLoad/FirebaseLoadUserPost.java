@@ -8,6 +8,7 @@ import com.sunrin.tint.Util.FirebaseErrorUtil;
 import com.sunrin.tint.Firebase.DownLoad.FirebaseLoadPost;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class FirebaseLoadUserPost {
@@ -65,6 +66,7 @@ public class FirebaseLoadUserPost {
 
     private static void AddPost(PostModel postModel) {
         postList.add(postModel);
+        postList.sort(Comparator.reverseOrder());
         if (postList.size() < listSize) {
             loadUserPost(IDs.get(tmp));
             return;
