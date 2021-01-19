@@ -3,12 +3,12 @@ package com.sunrin.tint.Screen.Show;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
-public class ZoomAnimation implements ViewPager.PageTransformer {
+public class ZoomAnimation implements ViewPager2.PageTransformer {
 
     private static final float MIN_SCALE = 0.85f;
-    private static final float MIN_ALPHA = 0.6f;
+    private static final float MIN_ALPHA = 0.5f;
 
     @Override
     public void transformPage(@NonNull View page, float position) {
@@ -34,6 +34,7 @@ public class ZoomAnimation implements ViewPager.PageTransformer {
 
             // Fade the page relative to its size.
             page.setAlpha(MIN_ALPHA + (scaleFactor - MIN_SCALE) / (1 - MIN_SCALE) * (1 - MIN_ALPHA));
+
         } else {    // (1, Infinity)
             // This page is way off-screen to the right.
             page.setAlpha(0);

@@ -60,7 +60,7 @@ public class FirebaseLoadLBs {
                 .document(id)
                 .get()
                 .addOnSuccessListener(onSuccessListener)
-                .addOnFailureListener(e ->  onLoadFailureListener.onLoadFailed(
+                .addOnFailureListener(e -> onLoadFailureListener.onLoadFailed(
                         FirebaseErrorUtil.getErrorMessage(e, "데이터를 불러오지 못했습니다.")));
     }
 

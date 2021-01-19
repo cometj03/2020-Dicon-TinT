@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="6 hours age"
+                android:text="6시간 전"
                 android:textColor="@color/gray_200"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toTopOf="@+id/feed_userName"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="4dp"
-                android:text="userName"
+                android:text="닉네임"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/feed_userProfile"
                 app:layout_constraintStart_toEndOf="@+id/feed_userProfile" />
