@@ -16,6 +16,8 @@ import gun0912.tedbottompicker.TedBottomPicker;
 
 public class ImagePickerUtil {
 
+    // TODO: Apply Dark Mode
+
     private static PermissionListener permissionListener;
     private static List<Uri> selectedImages;
 

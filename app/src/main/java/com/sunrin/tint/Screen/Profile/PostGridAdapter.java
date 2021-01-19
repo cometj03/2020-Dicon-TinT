@@ -91,15 +91,10 @@ public class PostGridAdapter extends RecyclerView.Adapter<PostGridAdapter.ItemVi
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
 
-                Filter filter = Filter.valueOf(constraint.toString());
-
-                Log.e(TAG, "performFiltering: asdfasdf : " + constraint.toString());
-
-                if (constraint.toString().equals("ALL")) {
-                    FilterResults results = new FilterResults();
-                    results.values = mData;
-                    return results;
+                if (constraint.toString().equals("ALL") || constraint.length() <= 0) {
+                    mDataFiltered = mData;
                 } else {
+                    Filter filter = Filter.valueOf(constraint.toString());
                     // 필터로 찾은 후 반환
                     mDataFiltered = new ArrayList<PostModel>() {
                         {

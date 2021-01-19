@@ -97,7 +97,6 @@ public class ProfileFragment extends Fragment {
 
                 switch (item.getItemId()) {
                     case R.id.popup_all:
-                        // TODO: WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY???????????
                         title = "전체 ▼";
                         filterString = "ALL";
                         break;
